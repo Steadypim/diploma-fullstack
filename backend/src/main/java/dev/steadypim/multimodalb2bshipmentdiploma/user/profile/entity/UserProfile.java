@@ -1,14 +1,15 @@
 package dev.steadypim.multimodalb2bshipmentdiploma.user.profile.entity;
 
 import dev.steadypim.multimodalb2bshipmentdiploma.general.BaseEntity;
-import dev.steadypim.multimodalb2bshipmentdiploma.user.account.entity.UserAccount;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.enums.UserType;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import static jakarta.persistence.EnumType.STRING;
-import static jakarta.persistence.FetchType.EAGER;
 import static lombok.AccessLevel.PRIVATE;
 
 @Table(name = "user_profile")
@@ -20,10 +21,11 @@ import static lombok.AccessLevel.PRIVATE;
 @Builder
 @FieldDefaults(level = PRIVATE)
 public class UserProfile extends BaseEntity {
-    @OneToOne(fetch = EAGER)
-    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
-    @MapsId
-    UserAccount userAccount;
+    @Column(name = "email", unique = true)
+    String email;
+
+    @Column(name = "password")
+    String password;
 
     @Enumerated(STRING)
     UserType userType;
