@@ -1,15 +1,15 @@
-package dev.steadypim.multimodalb2bshipmentdiploma.user.profile.controller;
+package dev.steadypim.multimodalb2bshipmentdiploma.user.profile.api;
 
 import dev.steadypim.multimodalb2bshipmentdiploma.jwt.JWTUtil;
-import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.dtos.UserProfileRegistrationDTO;
-import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.mapper.UserProfileMapper;
+import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.api.dtos.UserProfileDTO;
+import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.api.dtos.UserProfileRegistrationDTO;
+import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.api.mapper.UserProfileMapper;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
@@ -32,6 +32,11 @@ public class UserProfileController {
         return ResponseEntity.ok()
                 .header(AUTHORIZATION, jwtToken)
                 .build();
+    }
+
+    @GetMapping("/")
+    public List<UserProfileDTO> getAllUsers(){
+        return mapper.toDtoList(service.getAll());
     }
 
 }
