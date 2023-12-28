@@ -4,7 +4,6 @@ import dev.steadypim.multimodalb2bshipmentdiploma.user.enums.UserType;
 
 public record UserProfileDTO(
         String email,
-        String password,
         UserType userType,
         String firstName,
         String lastName,
