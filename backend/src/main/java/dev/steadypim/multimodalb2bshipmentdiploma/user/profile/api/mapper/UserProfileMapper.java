@@ -17,4 +17,6 @@ public interface UserProfileMapper {
     UserProfile toEntity(UserProfileRegistrationDTO dto);
 
     List<UserProfileDTO> toDtoList(List<UserProfile> userProfiles);
+
+    UserProfileDTO toDto(UserProfile userProfile);
 }

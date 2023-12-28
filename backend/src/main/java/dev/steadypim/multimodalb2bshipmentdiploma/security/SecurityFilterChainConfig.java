@@ -29,7 +29,12 @@ public class SecurityFilterChainConfig {
         http.cors(Customizer.withDefaults());
         http
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers(POST, "/user/register").permitAll()
+                        .requestMatchers(
+                                POST,
+                                "/user/register",
+                                "/auth/login"
+                        )
+                        .permitAll()
                         .anyRequest()
                         .authenticated());
         http.sessionManagement(session ->
