@@ -1,6 +1,7 @@
 package dev.steadypim.multimodalb2bshipmentdiploma.security;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -12,27 +13,27 @@ import java.util.List;
 @Configuration
 public class CorsConfig {
 
-    @Value("#{'${allowed-origins}'.split(',')}")
+    @Value("#{'${cors.allowed-origins}'.split(',')}")
     private List<String> allowedOrigins;
 
-    @Value("#{'${allowed-methods}'.split(',')}")
+    @Value("#{'${cors.allowed-methods}'.split(',')}")
     private List<String> allowedMethods;
 
-    @Value("#{'${allowed-headers}'.split(',')}")
+    @Value("#{'${cors.allowed-headers}'.split(',')}")
     private List<String> allowedHeaders;
 
-    @Value("#{'${exposed-headers}'.split(',')}")
+    @Value("#{'${cors.exposed-headers}'.split(',')}")
     private List<String> exposedHeaders;
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource(){
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(allowedOrigins);
         configuration.setAllowedMethods(allowedMethods);
         configuration.setAllowedHeaders(allowedHeaders);
         configuration.setExposedHeaders(exposedHeaders);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/", configuration);
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 }
