@@ -1,5 +1,11 @@
 import axios from "axios";
 
+const getAuthConfig = () => ({
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`
+    }
+})
+
 export const login = async (usernameAndPassword) => {
     try {
         return await axios.post(

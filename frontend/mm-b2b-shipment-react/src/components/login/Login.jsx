@@ -71,13 +71,13 @@ const LoginForm = () => {
                             label={"Адрес электронной почты"}
                             name={"username"}
                             type={"email"}
-                            placeHolder={"example@shipment.com"}
+                            placeholder={"example@shipment.com"}
                         />
                         <MyTextInput
                         label={"Пароль"}
                         name={"password"}
                         type={"password"}
-                        placeHolder={"Введите пароль"}
+                        placeholder={"Введите пароль"}
                     />
                         <Button disabled={!isValid || isSubmitting} type={"submit"} colorScheme='teal' textColor='white'>Войти</Button>
                     </Stack>

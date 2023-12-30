@@ -20,9 +20,9 @@ const AuthProvider = ({ children }) => {
                 //save the token
                 console.log(jwtToken)
                 setUserProfile({
-                    ...res.data.UserProfileDTO
+                    ...res.data.userProfileDTO
                 })
-                resolve();
+                resolve(res);
             }).catch(err => {
                 reject(err);
             })
