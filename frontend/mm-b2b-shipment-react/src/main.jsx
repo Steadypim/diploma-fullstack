@@ -6,9 +6,10 @@ import {ChakraProvider} from "@chakra-ui/react";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import AuthProvider from "./components/context/AuthContext.jsx";
 import Login from "./components/login/Login.jsx";
-import { createStandaloneToast } from '@chakra-ui/react'
+import {createStandaloneToast} from '@chakra-ui/react'
+import ProtectedRoute from "./components/shared/ProtectedRoute.jsx";
 
-const { ToastContainer, toast } = createStandaloneToast()
+const {ToastContainer, toast} = createStandaloneToast()
 
 const router = createBrowserRouter([
     {
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/main",
-        element: <App/>
+        element: <ProtectedRoute><App /></ProtectedRoute>
     }
 ])
 
@@ -29,7 +30,7 @@ ReactDOM
                 <AuthProvider>
                     <RouterProvider router={router}/>
                 </AuthProvider>
-                <ToastContainer />
+                <ToastContainer/>
             </ChakraProvider>
         </React.StrictMode>,
     )
