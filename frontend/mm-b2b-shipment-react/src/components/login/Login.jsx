@@ -82,7 +82,7 @@ const LoginForm = () => {
                         type={"password"}
                         placeholder={"Введите пароль"}
                     />
-                        <Button disabled={!isValid || isSubmitting} type={"submit"} colorScheme='teal' textColor='white'>Войти</Button>
+                        <Button disabled={!isValid || isSubmitting} type={"submit"}>Войти</Button>
                     </Stack>
                 </Form>
             )}
