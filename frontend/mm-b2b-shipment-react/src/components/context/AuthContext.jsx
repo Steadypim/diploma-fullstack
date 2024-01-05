@@ -13,7 +13,7 @@ const AuthContext = createContext({});
 const AuthProvider = ({ children }) => {
     const [userProfile, setUserProfile] = useState(null);
 
-    useEffect(() => {
+    const setUserProfileFromToken = () => {
         let token = localStorage.getItem("access_token");
         if(token){
             token = jwtDecode(token);
@@ -22,7 +22,13 @@ const AuthProvider = ({ children }) => {
                 userType: token.scopes
             })
         }
+    }
+
+    useEffect(() => {
+        setUserProfileFromToken()
     })
+
+
 
     const login = async (usernameAndPassword) => {
         return new Promise((resolve, reject) => {
@@ -68,7 +74,8 @@ const AuthProvider = ({ children }) => {
             userProfile,
             login,
             logout,
-            isUserAuthenticated
+            isUserAuthenticated,
+            setUserProfileFromToken
         }}>
             {children}
         </AuthContext.Provider>

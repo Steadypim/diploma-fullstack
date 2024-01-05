@@ -10,13 +10,14 @@ import {
     Heading,
     Input,
     Stack,
-    Image, Alert, AlertIcon, Box,
+    Image, Alert, AlertIcon, Box, Link,
 } from '@chakra-ui/react'
 import {Formik, Form, useField} from "formik";
 import * as Yup from 'yup';
 import {useAuth} from "../context/AuthContext.jsx";
 import {errorNotification} from "../../services/notification.js";
 import {useNavigate} from "react-router-dom";
+import {useEffect} from "react";
 
 const MyTextInput = ({label, ...props}) => {
     const [field, meta] = useField(props);
@@ -90,12 +91,26 @@ const LoginForm = () => {
 }
 
 const Login = () => {
+
+    const { userProfile } = useAuth();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if ( userProfile ) {
+            navigate("/main");
+        }
+
+    })
+
     return (
         <Stack minH={'100vh'} direction={{base: 'column', md: 'row'}}>
             <Flex p={8} flex={1} align={'center'} justify={'center'}>
                 <Stack spacing={4} w={'full'} maxW={'md'}>
-                    <Heading fontSize={'2xl'} mb={15}>Войдите в свой аккаунт</Heading>
+                    <Heading fontSize={'2xl'} mb={15}>Войдите в свой аккаунт ⚓</Heading>
                     <LoginForm/>
+                    <Link color={"blue.500"} href={"/signup"}>
+                        Еще нет аккаунта? Зарегистрироваться.
+                    </Link>
                 </Stack>
             </Flex>
             <Flex flex={1}>

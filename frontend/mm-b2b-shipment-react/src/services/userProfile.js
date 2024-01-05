@@ -16,3 +16,14 @@ export const login = async (usernameAndPassword) => {
         throw e;
     }
 }
+
+export const saveUser = async (userProfile) => {
+    try {
+        return await axios.post(
+            `${import.meta.env.VITE_API_BASE_URL}/user/register`,
+            userProfile
+        )
+    } catch (e) {
+        throw e;
+    }
+}
