@@ -69,6 +69,11 @@
             <artifactId>mapstruct</artifactId>
             <version>${org.mapstruct.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.graphhopper</groupId>
+            <artifactId>directions-api-client-hc</artifactId>
+            <version>8.0</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -65,7 +65,6 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:6.0.13" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:6.0.13" level="project" />
     <orderEntry type="library" name="Maven: jakarta.annotation:jakarta.annotation-api:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:2.0.9" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aspects:6.0.13" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:3.1.5" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:3.1.5" level="project" />
@@ -136,6 +135,21 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.15.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.15.3" level="project" />
     <orderEntry type="library" name="Maven: org.mapstruct:mapstruct:1.5.5.Final" level="project" />
+    <orderEntry type="library" name="Maven: com.graphhopper:directions-api-client-hc:8.0" level="project" />
+    <orderEntry type="library" name="Maven: com.graphhopper:graphhopper-web-api:8.0" level="project" />
+    <orderEntry type="library" name="Maven: com.graphhopper.external:jackson-datatype-jts:2.14" level="project" />
+    <orderEntry type="library" name="Maven: org.locationtech.jts:jts-core:1.19.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.3" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.woodstox:stax2-api:4.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.woodstox:woodstox-core:6.5.1" level="project" />
+    <orderEntry type="library" name="Maven: com.squareup.okhttp3:okhttp:4.10.0" level="project" />
+    <orderEntry type="library" name="Maven: com.squareup.okio:okio-jvm:3.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.8.22" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.8.22" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains:annotations:13.0" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:2.0.9" level="project" />
   </component>
   <component name="SonarLintModuleSettings">
     <option name="uniqueId" value="5f61906b-d63c-402e-9677-63ceb2c9ef99" />

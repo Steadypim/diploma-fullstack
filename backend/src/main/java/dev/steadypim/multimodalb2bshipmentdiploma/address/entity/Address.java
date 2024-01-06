@@ -35,4 +35,31 @@ public class Address extends BaseEntity {
 
     @Column(name = "house_number")
     Integer houseNumber;
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+
+        if (country != null && !country.isEmpty()) {
+            result.append(country).append(", ");
+        }
+
+        if (city != null && !city.isEmpty()) {
+            result.append(city).append(", ");
+        }
+
+        if (street != null && !street.isEmpty()) {
+            result.append(street).append(", ");
+        }
+
+        if (postalCode != null && !postalCode.isEmpty()) {
+            result.append(postalCode).append(", ");
+        }
+
+        if (houseNumber != null) {
+            result.append(houseNumber);
+        }
+
+        return result.toString();
+    }
 }
