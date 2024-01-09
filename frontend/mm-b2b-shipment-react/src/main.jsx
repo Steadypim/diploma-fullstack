@@ -9,6 +9,10 @@ import Login from "./components/login/Login.jsx";
 import {createStandaloneToast} from '@chakra-ui/react'
 import ProtectedRoute from "./components/shared/ProtectedRoute.jsx";
 import Signup from "./components/signup/Signup.jsx";
+import Home from "./pages/Home.jsx";
+import CalculateRoutes from "./pages/CalculateRoutes.jsx";
+import Warehouses from "./pages/Warehouses.jsx";
+import Shipments from "./pages/Shipments.jsx";
 
 const {ToastContainer, toast} = createStandaloneToast()
 
@@ -23,7 +27,19 @@ const router = createBrowserRouter([
     },
     {
         path: "/main",
-        element: <ProtectedRoute><App /></ProtectedRoute>
+        element: <ProtectedRoute><Home /></ProtectedRoute>
+    },
+    {
+        path: "/calculate",
+        element: <ProtectedRoute><CalculateRoutes/></ProtectedRoute>
+    },
+    {
+        path: "/warehouse",
+        element:<ProtectedRoute><Warehouses/></ProtectedRoute>
+    },
+    {
+        path: "/service",
+        element: <ProtectedRoute><Shipments/></ProtectedRoute>
     }
 ])
 

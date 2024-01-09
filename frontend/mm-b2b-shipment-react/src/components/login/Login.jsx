@@ -2,10 +2,7 @@
 
 import {
     Button,
-    Checkbox,
     Flex,
-    Text,
-    FormControl,
     FormLabel,
     Heading,
     Input,

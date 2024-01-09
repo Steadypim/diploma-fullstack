@@ -9,7 +9,6 @@ import {
     VStack,
     Icon,
     useColorModeValue,
-    Link,
     Drawer,
     DrawerContent,
     Text,
@@ -22,18 +21,20 @@ import {
     Image
 } from '@chakra-ui/react';
 import {
-    FiHome,
-    FiTrendingUp,
     FiMenu,
     FiBell,
     FiChevronDown,
 } from 'react-icons/fi';
-import {useAuth} from "../context/AuthContext.jsx";
 
-const LinkItems = [
-    {name: 'Главная', icon: FiHome},
-    {name: 'Расчёт маршрутов', icon: FiTrendingUp},
-];
+import {
+    LuWarehouse,
+    LuTruck,
+    LuCalculator,
+    LuHome
+} from "react-icons/lu";
+import {useAuth} from "../context/AuthContext.jsx";
+import {useNavigate} from "react-router-dom";
+
 
 export default function SidebarWithHeader({children}) {
     const {isOpen, onOpen, onClose} = useDisclosure();
@@ -66,6 +67,9 @@ export default function SidebarWithHeader({children}) {
 
 
 const SidebarContent = ({onClose, ...rest}) => {
+
+    const {userProfile} = useAuth();
+
     return (
         <Box
             transition="3s ease"
@@ -89,49 +93,71 @@ const SidebarContent = ({onClose, ...rest}) => {
                 />
                 <CloseButton display={{base: 'flex', md: 'none'}} onClick={onClose}/>
             </Flex>
-            {LinkItems.map((link) => (
-                <NavItem key={link.name} icon={link.icon}>
-                    {link.name}
+            <NavItem icon={LuHome} to={"/main"}>
+                Главная
+            </NavItem>
+            {userProfile?.userType == "LOGISTICIAN" ? (
+                <NavItem icon={LuCalculator} to={"/calculate"}>
+                    Расчёт маршрутов
                 </NavItem>
-            ))}
+            ) : null}
+            {userProfile?.userType == "TRANSPORT_COMPANY_REP" ? (
+                <NavItem icon={LuTruck} to={"/service"}>
+                    Мои перевозки
+                </NavItem>
+            ) : null}
+            {userProfile?.userType == "WAREHOUSE_REP" ? (
+                <NavItem icon={LuWarehouse} to={"/warehouse"}>
+                    Мои склады
+                </NavItem>
+            ) : null}
         </Box>
     );
 };
 
 
-const NavItem = ({icon, children, ...rest}) => {
+const NavItem = ({icon, children, to, ...rest}) => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        if (to) {
+            navigate(to);
+        }
+    };
+
     return (
-        <Flex
-            align="center"
-            p="4"
-            mx="4"
-            borderRadius="lg"
-            role="group"
-            cursor="pointer"
-            _hover={{
-                bg: 'gray.600',
-                color: 'white',
-            }}
-            {...rest}>
-            {icon && (
-                <Icon
-                    mr="4"
-                    fontSize="16"
-                    _groupHover={{
-                        color: 'white',
-                    }}
-                    as={icon}
-                />
-            )}
-            {children}
-        </Flex>
-        // </Link>
-    );
+            <Flex
+                align="center"
+                p="4"
+                mx="4"
+                borderRadius="lg"
+                role="group"
+                cursor="pointer"
+                _hover={{
+                    bg: 'gray.600',
+                    color: 'white',
+                }}
+                onClick={handleClick}
+                {...rest}>
+                {icon && (
+                    <Icon
+                        mr="4"
+                        fontSize="16"
+                        _groupHover={{
+                            color: 'white',
+                        }}
+                        as={icon}
+                    />
+                )}
+                {children}
+            </Flex>
+    )
+        ;
 };
 
 
 const MobileNav = ({onOpen, ...rest}) => {
-    const { logout, userProfile } = useAuth();
+    const {logout, userProfile} = useAuth();
 
     return (
         <Flex

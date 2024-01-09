@@ -34,7 +34,7 @@ public class Address extends BaseEntity {
     String postalCode;
 
     @Column(name = "house_number")
-    Integer houseNumber;
+    String houseNumber;
 
     @Override
     public String toString() {
@@ -56,7 +56,7 @@ public class Address extends BaseEntity {
             result.append(postalCode).append(", ");
         }
 
-        if (houseNumber != null) {
+        if (houseNumber != null && !houseNumber.isEmpty()) {
             result.append(houseNumber);
         }
 
