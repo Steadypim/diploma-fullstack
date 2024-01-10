@@ -2,6 +2,7 @@ package dev.steadypim.multimodalb2bshipmentdiploma.transport.entity;
 
 import dev.steadypim.multimodalb2bshipmentdiploma.general.BaseEntity;
 import dev.steadypim.multimodalb2bshipmentdiploma.transport.enums.TransportType;
+import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.entity.UserProfile;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -33,4 +34,8 @@ public class Transport extends BaseEntity {
 
     @Column(name = "packaging_requirements")
     String packagingRequirements;
+
+    @ManyToOne
+    @JoinColumn(name = "user_profile_id")
+    UserProfile userProfile;
 }

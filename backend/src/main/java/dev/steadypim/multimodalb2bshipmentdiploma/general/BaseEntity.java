@@ -18,6 +18,10 @@ public abstract class BaseEntity {
         this.id = id;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
