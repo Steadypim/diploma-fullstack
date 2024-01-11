@@ -17,16 +17,16 @@ public class TransportService {
     private final TransportRepository repository;
     private final UserProfileRepository userProfileRepository;
 
-    public Transport create(Transport transport, UUID userProfileId){
-        UserProfile userProfile = userProfileRepository.findById(userProfileId)
-                .orElseThrow( () -> new RuntimeException("User profile not found while creating a transport"));
+    public Transport create(Transport transport, String email) {
+        UserProfile userProfile = userProfileRepository.findUserProfileByEmail(email)
+                                                       .orElseThrow(() -> new RuntimeException("User profile not found while creating a transport"));
         transport.setUserProfile(userProfile);
         return repository.save(transport);
     }
 
-    public void update(Transport transport, UUID uuid){
+    public void update(Transport transport, UUID uuid) {
         Transport transportToUpdate = repository.findById(uuid)
-                .orElseThrow(() -> new RuntimeException("Transport not found"));
+                                                .orElseThrow(() -> new RuntimeException("Transport not found"));
 
         transportToUpdate.setTransportType(transport.getTransportType());
         transportToUpdate.setAverageSpeed(transport.getAverageSpeed());
@@ -37,16 +37,16 @@ public class TransportService {
         repository.save(transportToUpdate);
     }
 
-    public void delete(UUID uuid){
+    public void delete(UUID uuid) {
         repository.deleteById(uuid);
     }
 
-    public Transport get(UUID uuid){
+    public Transport get(UUID uuid) {
         return repository.findById(uuid)
-                .orElseThrow(() -> new RuntimeException("Transport not found"));
+                         .orElseThrow(() -> new RuntimeException("Transport not found"));
     }
 
-    public List<Transport> getAllWithUserId(UUID userProfileId){
-        return repository.findAllByUserProfileId(userProfileId);
+    public List<Transport> getAllWithUserId(String email) {
+        return repository.findAllByUserProfileEmail(email);
     }
 }

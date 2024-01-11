@@ -18,15 +18,15 @@ public class AuthenticationService {
     private final UserProfileMapper mapper;
     private final JWTUtil jwtUtil;
 
-    public AuthenticationResponse login(AuthenticationRequest request){
+    public AuthenticationResponse login(AuthenticationRequest request) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.username(),
                         request.password()
                 )
-        );
+                                                                          );
 
-        UserProfile principal = (UserProfile)authentication.getPrincipal();
+        UserProfile principal = (UserProfile) authentication.getPrincipal();
         UserProfileDTO userProfileDTO = mapper.toDto(principal);
         String token = jwtUtil.issueToken(userProfileDTO.email(), userProfileDTO.userType().toString());
         return new AuthenticationResponse(userProfileDTO, token);

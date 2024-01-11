@@ -2,6 +2,7 @@ package dev.steadypim.multimodalb2bshipmentdiploma.warehouse.entity;
 
 import dev.steadypim.multimodalb2bshipmentdiploma.address.entity.Address;
 import dev.steadypim.multimodalb2bshipmentdiploma.general.BaseEntity;
+import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.entity.UserProfile;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -24,4 +25,8 @@ public class Warehouse extends BaseEntity {
     Double latitude;
 
     Double longitude;
+
+    @ManyToOne
+    @JoinColumn(name = "user_profile_id")
+    UserProfile userProfile;
 }

@@ -16,16 +16,16 @@ public class UserProfileService {
     private final UserProfileRepository repository;
     private final PasswordEncoder passwordEncoder;
 
-    public void register(UserProfile profile){
+    public void register(UserProfile profile) {
         profile.setPassword(passwordEncoder.encode(profile.getPassword()));
         repository.save(profile);
     }
 
-    public Optional<UserProfile> findUserProfileByEmail(String email){
+    public Optional<UserProfile> findUserProfileByEmail(String email) {
         return repository.findUserProfileByEmail(email);
     }
 
-    public List<UserProfile> getAll(){
+    public List<UserProfile> getAll() {
         return repository.findAll();
     }
 }

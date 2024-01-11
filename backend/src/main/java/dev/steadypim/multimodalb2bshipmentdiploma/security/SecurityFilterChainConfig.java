@@ -33,12 +33,12 @@ public class SecurityFilterChainConfig {
                                 POST,
                                 "/user/register",
                                 "/auth/login"
-                        )
+                                        )
                         .permitAll()
                         .anyRequest()
                         .authenticated());
         http.sessionManagement(session ->
-                session.sessionCreationPolicy(STATELESS));
+                                       session.sessionCreationPolicy(STATELESS));
         http.authenticationProvider(authenticationProvider);
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface TransportRepository extends JpaRepository<Transport, UUID> {
-    List<Transport> findAllByUserProfileId(UUID userProfileId);
+    List<Transport> findAllByUserProfileEmail(String email);
 }

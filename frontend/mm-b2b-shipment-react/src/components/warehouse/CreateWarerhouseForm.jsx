@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 import {Alert, AlertIcon, Box, Button, FormLabel, Input, Stack} from "@chakra-ui/react";
 import {successNotification, errorNotification} from "../../services/notification.js";
 import {saveWarehouse} from "../../services/warehouse.js";
+import {jwtDecode} from "jwt-decode";
 
 const MyTextInput = ({label, ...props}) => {
     const [field, meta] = useField(props);
@@ -46,21 +47,25 @@ const CreateUserProfileForm = () => {
                 })}
                 onSubmit={(warehouse, {setSubmitting}) => {
                     setSubmitting(true);
-                    saveWarehouse(warehouse)
-                        .then(res => {
-                            console.log(res);
-                            successNotification(
-                                "Склад добавлен",
+                    let token = localStorage.getItem("access_token");
+                    if(token){
+                        token = jwtDecode(token);
+                        saveWarehouse(warehouse, token.sub)
+                            .then(res => {
+                                console.log(res);
+                                successNotification(
+                                    "Склад добавлен",
+                                )
+                            }).catch(err => {
+                            console.log(err);
+                            errorNotification(
+                                err.code,
+                                "Ошибка сохранения"
                             )
-                        }).catch(err => {
-                        console.log(err);
-                        errorNotification(
-                            err.code,
-                            "Ошибка сохранения"
-                        )
-                    }).finally(() => {
-                        setSubmitting(false);
-                    })
+                        }).finally(() => {
+                            setSubmitting(false);
+                        })
+                    }
                 }}
             >
                 {({isValid, isSubmitting}) => (

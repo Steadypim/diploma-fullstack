@@ -5,10 +5,10 @@ const getAuthConfig = () => ({
         Authorization: `Bearer ${localStorage.getItem("access_token")}`
     }
 })
-export const saveWarehouse = async (warehouse) => {
+export const saveWarehouse = async (warehouse, email) => {
     try {
         return await axios.post(
-            `${import.meta.env.VITE_API_BASE_URL}/warehouse/create`,
+            `${import.meta.env.VITE_API_BASE_URL}/warehouse/${email}`,
             warehouse,
             getAuthConfig()
         )

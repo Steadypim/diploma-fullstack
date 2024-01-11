@@ -30,12 +30,12 @@ public class UserProfileController {
         String jwtToken = jwtUtil.issueToken(dto.email(), dto.type());
 
         return ResponseEntity.ok()
-                .header(AUTHORIZATION, jwtToken)
-                .build();
+                             .header(AUTHORIZATION, jwtToken)
+                             .build();
     }
 
     @GetMapping("/")
-    public List<UserProfileDTO> getAllUsers(){
+    public List<UserProfileDTO> getAllUsers() {
         return mapper.toDtoList(service.getAll());
     }
 

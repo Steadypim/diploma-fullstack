@@ -39,7 +39,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         String subject = jwtUtil.getSubject(jwt);
 
         if (subject != null &&
-                SecurityContextHolder.getContext().getAuthentication() == null) {
+            SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(subject);
 
             if (jwtUtil.isTokenValid(jwt, userDetails.getUsername())) {
@@ -49,7 +49,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                         );
                 authenticationToken.setDetails(
                         new WebAuthenticationDetailsSource().buildDetails(request)
-                );
+                                              );
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }

@@ -18,12 +18,11 @@ public class JWTUtil {
     private static final SecretKey key = Jwts.SIG.HS256.key().build();
 
 
-
     public String issueToken(String subject) {
         return issueToken(subject, Map.of());
     }
 
-    public String issueToken(String subject, String ...scopes) {
+    public String issueToken(String subject, String... scopes) {
         return issueToken(subject, Map.of("scopes", scopes));
     }
 
@@ -41,7 +40,7 @@ public class JWTUtil {
                 .compact();
     }
 
-    public String getSubject(String token){
+    public String getSubject(String token) {
         return getClaims(token).getSubject();
     }
 
