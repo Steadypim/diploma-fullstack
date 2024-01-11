@@ -1,4 +1,4 @@
-package dev.steadypim.multimodalb2bshipmentdiploma.transport.api.dtos;
+package dev.steadypim.multimodalb2bshipmentdiploma.transport.api.dto;
 
 import dev.steadypim.multimodalb2bshipmentdiploma.transport.enums.TransportType;
 
@@ -11,6 +11,6 @@ public record TransportDTO(
         Integer holdingVolume,
         Integer averageSpeed,
         String packagingRequirements,
-        UUID user_profile_id
+        UUID userProfileId
 ) {
 }

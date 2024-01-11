@@ -1,4 +1,4 @@
-package dev.steadypim.multimodalb2bshipmentdiploma.warehouse.api.dtos;
+package dev.steadypim.multimodalb2bshipmentdiploma.warehouse.api.dto;
 
 public record WarehouseAddressDTO(
         String country,

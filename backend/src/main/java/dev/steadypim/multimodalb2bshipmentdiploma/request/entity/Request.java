@@ -20,7 +20,7 @@ import static lombok.AccessLevel.PRIVATE;
 @FieldDefaults(level = PRIVATE)
 public class Request extends BaseEntity {
     @OneToOne(fetch = EAGER)
-    @JoinColumn(name = "user_profile_id", referencedColumnName = "id", updatable = false, nullable = false)
+    @JoinColumn(name = "userProfileId", referencedColumnName = "id", updatable = false, nullable = false)
     UserProfile userProfile;
 
     @Column(name = "request_name", length = 50)

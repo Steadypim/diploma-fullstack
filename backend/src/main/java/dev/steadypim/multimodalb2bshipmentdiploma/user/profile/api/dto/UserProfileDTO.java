@@ -1,4 +1,4 @@
-package dev.steadypim.multimodalb2bshipmentdiploma.user.profile.api.dtos;
+package dev.steadypim.multimodalb2bshipmentdiploma.user.profile.api.dto;
 
 import dev.steadypim.multimodalb2bshipmentdiploma.user.enums.UserType;
 

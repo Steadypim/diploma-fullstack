@@ -27,6 +27,6 @@ public class Warehouse extends BaseEntity {
     Double longitude;
 
     @ManyToOne
-    @JoinColumn(name = "user_profile_id")
+    @JoinColumn(name = "userProfileId")
     UserProfile userProfile;
 }

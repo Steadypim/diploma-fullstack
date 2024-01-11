@@ -53,10 +53,8 @@ public class WarehouseService {
         repository.deleteById(uuid);
     }
 
-    public List<Warehouse> getAllWithUserEmail(String email){
+    public List<Warehouse> getAllWithUserEmail(String email) {
         return repository.findAllByUserProfileEmail(email);
     }
 
-
-    //todo: сделать, чтобы склады принадлежали определенному юзеру, как с транспортом и реализовать метод getAllWithUserId
 }

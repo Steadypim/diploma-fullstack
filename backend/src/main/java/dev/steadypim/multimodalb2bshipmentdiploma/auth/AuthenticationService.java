@@ -1,7 +1,7 @@
 package dev.steadypim.multimodalb2bshipmentdiploma.auth;
 
 import dev.steadypim.multimodalb2bshipmentdiploma.jwt.JWTUtil;
-import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.api.dtos.UserProfileDTO;
+import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.api.dto.UserProfileDTO;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.api.mapper.UserProfileMapper;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.entity.UserProfile;
 import lombok.RequiredArgsConstructor;

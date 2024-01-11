@@ -1,7 +1,7 @@
 package dev.steadypim.multimodalb2bshipmentdiploma.warehouse.api;
 
-import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.api.dtos.WarehouseAddressDTO;
-import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.api.dtos.WarehouseDTO;
+import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.api.dto.WarehouseAddressDTO;
+import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.api.dto.WarehouseDTO;
 import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.api.mapper.WarehouseMapper;
 import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.entity.Warehouse;
 import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.service.WarehouseService;

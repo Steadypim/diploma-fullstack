@@ -46,7 +46,7 @@ public class TransportService {
                          .orElseThrow(() -> new RuntimeException("Transport not found"));
     }
 
-    public List<Transport> getAllWithUserId(String email) {
+    public List<Transport> getAllWithUserEmail(String email) {
         return repository.findAllByUserProfileEmail(email);
     }
 }

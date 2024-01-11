@@ -1,8 +1,8 @@
 package dev.steadypim.multimodalb2bshipmentdiploma.warehouse.api.mapper;
 
 import dev.steadypim.multimodalb2bshipmentdiploma.address.entity.Address;
-import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.api.dtos.WarehouseAddressDTO;
-import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.api.dtos.WarehouseDTO;
+import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.api.dto.WarehouseAddressDTO;
+import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.api.dto.WarehouseDTO;
 import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.entity.Warehouse;
 import org.mapstruct.Mapper;
 
