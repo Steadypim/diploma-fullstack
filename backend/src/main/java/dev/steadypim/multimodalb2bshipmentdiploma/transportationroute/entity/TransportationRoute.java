@@ -36,6 +36,9 @@ public class TransportationRoute extends BaseEntity {
     @Column(nullable = false)
     BigDecimal price;
 
+    @Column(nullable = false)
+    Double distance;
+
     @ManyToOne
     @JoinColumn(name = "user_profile_id")
     UserProfile userProfile;

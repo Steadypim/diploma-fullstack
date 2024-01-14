@@ -1,5 +1,6 @@
 package dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.service;
 
+import dev.steadypim.multimodalb2bshipmentdiploma.general.distancecalculator.DistanceCalculator;
 import dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.entity.TransportationRoute;
 import dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.repository.TransportationRouteRepository;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.entity.UserProfile;
@@ -18,6 +19,16 @@ public class TransportationRouteService {
     private final UserProfileRepository userProfileRepository;
 
     public TransportationRoute create(TransportationRoute route, String email){
+
+        Double sourceLatitude = route.getSourceWarehouse().getLatitude();
+        Double sourceLongitude = route.getSourceWarehouse().getLongitude();
+        Double destinationLatitude = route.getDestinationWarehouse().getLatitude();
+        Double destinationLongitude = route.getDestinationWarehouse().getLongitude();
+
+        double distance = DistanceCalculator.calculateDistance(sourceLatitude, sourceLongitude, destinationLatitude, destinationLongitude);
+
+        route.setDistance(distance);
+
         UserProfile userProfile = userProfileRepository.findUserProfileByEmail(email)
                                                        .orElseThrow(() -> new RuntimeException("User profile not found while creating a route"));
         route.setUserProfile(userProfile);
@@ -48,4 +59,6 @@ public class TransportationRouteService {
     public List<TransportationRoute> getAllWithUserProfileEmail(String email) {
         return repository.findAllByUserProfileEmail(email);
     }
+
+    //todo: продолжить с расчёта маршрутов
 }
