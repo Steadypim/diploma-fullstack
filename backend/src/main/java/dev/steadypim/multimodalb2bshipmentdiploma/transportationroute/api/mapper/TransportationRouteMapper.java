@@ -33,5 +33,4 @@ public abstract class TransportationRouteMapper {
 
     public abstract List<TransportationRouteDTO> toEntityList(List<TransportationRoute> routes);
 
-
 }

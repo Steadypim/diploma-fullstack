@@ -1,6 +1,6 @@
-package dev.steadypim.multimodalb2bshipmentdiploma.shipments.shipment.repository;
+package dev.steadypim.multimodalb2bshipmentdiploma.shipment.repository;
 
-import dev.steadypim.multimodalb2bshipmentdiploma.shipments.shipment.entity.Shipment;
+import dev.steadypim.multimodalb2bshipmentdiploma.shipment.entity.Shipment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

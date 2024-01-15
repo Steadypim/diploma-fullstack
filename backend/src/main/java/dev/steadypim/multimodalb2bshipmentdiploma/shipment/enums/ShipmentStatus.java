@@ -1,4 +1,4 @@
-package dev.steadypim.multimodalb2bshipmentdiploma.shipments.enums;
+package dev.steadypim.multimodalb2bshipmentdiploma.shipment.enums;
 
 public enum ShipmentStatus {
     CREATED,

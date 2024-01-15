@@ -74,6 +74,11 @@
             <artifactId>directions-api-client-hc</artifactId>
             <version>8.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.jgrapht</groupId>
+            <artifactId>jgrapht-core</artifactId>
+            <version>1.5.2</version>
+        </dependency>
     </dependencies>
 
     <build>

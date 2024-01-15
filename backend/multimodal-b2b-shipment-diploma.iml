@@ -150,6 +150,9 @@
     <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.8.22" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains:annotations:13.0" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:2.0.9" level="project" />
+    <orderEntry type="library" name="Maven: org.jgrapht:jgrapht-core:1.5.2" level="project" />
+    <orderEntry type="library" name="Maven: org.jheaps:jheaps:0.14" level="project" />
+    <orderEntry type="library" name="Maven: org.apfloat:apfloat:1.10.1" level="project" />
   </component>
   <component name="SonarLintModuleSettings">
     <option name="uniqueId" value="5f61906b-d63c-402e-9677-63ceb2c9ef99" />

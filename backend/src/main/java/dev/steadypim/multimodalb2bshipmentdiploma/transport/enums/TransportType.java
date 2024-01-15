@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 public enum TransportType {
     CAR("CAR"),
     TRAIN("TRAIN"),
-    PLANE("PLAIN"),
+    PLANE("PLANE"),
     SHIP("SHIP");
 
     String type;

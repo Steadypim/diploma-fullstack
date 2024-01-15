@@ -3,6 +3,7 @@ package dev.steadypim.multimodalb2bshipmentdiploma.general.distancecalculator;
 public class DistanceCalculator {
     private static final double EARTH_RADIUS = 6371.0;
 
+    //вычисление расстояния между двумя точками на сфере с использованием формулы гаверсинусов
     public static double calculateDistance(double sourceLat, double sourceLon, double destinationLat, double destinationLon) {
 
         double latitudeDifference = Math.toRadians(destinationLat - sourceLat);

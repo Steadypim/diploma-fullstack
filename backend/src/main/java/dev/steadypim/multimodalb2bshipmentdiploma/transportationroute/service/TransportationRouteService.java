@@ -18,7 +18,7 @@ public class TransportationRouteService {
     private final TransportationRouteRepository repository;
     private final UserProfileRepository userProfileRepository;
 
-    public TransportationRoute create(TransportationRoute route, String email){
+    public TransportationRoute create(TransportationRoute route, String email) {
 
         Double sourceLatitude = route.getSourceWarehouse().getLatitude();
         Double sourceLongitude = route.getSourceWarehouse().getLongitude();
@@ -35,9 +35,9 @@ public class TransportationRouteService {
         return repository.save(route);
     }
 
-    public void update(TransportationRoute route, UUID uuid){
+    public void update(TransportationRoute route, UUID uuid) {
         TransportationRoute routeToUpdate = repository.findById(uuid)
-                                                .orElseThrow(() -> new RuntimeException("Route not found"));
+                                                      .orElseThrow(() -> new RuntimeException("Route not found"));
 
         routeToUpdate.setTransport(route.getTransport());
         routeToUpdate.setPrice(route.getPrice());
@@ -60,5 +60,7 @@ public class TransportationRouteService {
         return repository.findAllByUserProfileEmail(email);
     }
 
-    //todo: продолжить с расчёта маршрутов
+    public List<TransportationRoute> getAllTransportationRoutes() {
+        return repository.findAll();
+    }
 }

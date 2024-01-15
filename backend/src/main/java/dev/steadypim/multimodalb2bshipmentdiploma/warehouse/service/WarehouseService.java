@@ -57,4 +57,8 @@ public class WarehouseService {
         return repository.findAllByUserProfileEmail(email);
     }
 
+    public List<Warehouse> getAllWarehouses() {
+        return repository.findAll();
+    }
+
 }
