@@ -5,6 +5,7 @@ import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.api.dto.WarehouseAdd
 import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.api.dto.WarehouseDTO;
 import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.entity.Warehouse;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public interface WarehouseMapper {
 
     Warehouse toEntity(WarehouseDTO dto);
 
+    @Mapping(source = "warehouse.id", target = "warehouseId")
     WarehouseDTO toDto(Warehouse warehouse);
 
     List<WarehouseDTO> toDtoList(List<Warehouse> warehouses);

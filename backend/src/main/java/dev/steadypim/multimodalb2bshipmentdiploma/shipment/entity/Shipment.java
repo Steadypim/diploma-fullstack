@@ -23,12 +23,12 @@ import static lombok.AccessLevel.PRIVATE;
 @FieldDefaults(level = PRIVATE)
 public class Shipment extends BaseEntity {
     @ManyToOne
-    @JoinColumn(name = "destination_warehouse_id")
-    Warehouse destinationWarehouse;
+    @JoinColumn(name = "source_warehouse_id")
+    Warehouse sourceWarehouse;
 
     @ManyToOne
     @JoinColumn(name = "arrival_warehouse_id")
-    Warehouse arrivalWarehouse;
+    Warehouse destinationWarehouse;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "shipment_id")
@@ -44,9 +44,9 @@ public class Shipment extends BaseEntity {
     @JoinColumn(name = "user_profile_id")
     UserProfile userProfile;
 
-    public Shipment(Warehouse destinationWarehouse, Warehouse arrivalWarehouse, List<TransportationRoute> optimalPath, BigDecimal fullPrice) {
+    public Shipment(Warehouse sourceWarehouse, Warehouse destinationWarehouse, List<TransportationRoute> optimalPath, BigDecimal fullPrice) {
+        this.sourceWarehouse = sourceWarehouse;
         this.destinationWarehouse = destinationWarehouse;
-        this.arrivalWarehouse = arrivalWarehouse;
         this.optimalPath = optimalPath;
         this.fullPrice = fullPrice;
     }

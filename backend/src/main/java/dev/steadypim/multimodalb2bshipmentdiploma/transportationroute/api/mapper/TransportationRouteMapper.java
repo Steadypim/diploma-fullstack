@@ -2,6 +2,7 @@ package dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.api.mappe
 
 import dev.steadypim.multimodalb2bshipmentdiploma.transport.service.TransportService;
 import dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.api.dto.TransportationRouteDTO;
+import dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.api.dto.TransportationRouteForShipmentControllerDTO;
 import dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.entity.TransportationRoute;
 import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.service.WarehouseService;
 import org.mapstruct.Mapper;
@@ -32,5 +33,12 @@ public abstract class TransportationRouteMapper {
     public abstract TransportationRouteDTO toDto(TransportationRoute route);
 
     public abstract List<TransportationRouteDTO> toEntityList(List<TransportationRoute> routes);
+
+    @Mapping(source = "route.sourceWarehouse.id", target = "sourceWarehouse.warehouseId")
+    @Mapping(source = "route.destinationWarehouse.id", target = "destinationWarehouse.warehouseId")
+    @Mapping(source = "route.transport.userProfile.id", target = "transport.userProfileId")
+    @Mapping(source = "route.userProfile.id", target = "userProfileId")
+    public abstract TransportationRouteForShipmentControllerDTO toTransportationRouteForShipmentControllerDTO(TransportationRoute route);
+
 
 }
