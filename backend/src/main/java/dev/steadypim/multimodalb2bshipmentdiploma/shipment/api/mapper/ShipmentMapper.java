@@ -6,6 +6,8 @@ import dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.api.mapper
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 @Mapper(componentModel = SPRING, uses = TransportationRouteMapper.class)
@@ -13,4 +15,6 @@ public interface ShipmentMapper {
     @Mapping(source = "sourceWarehouse.id", target = "sourceWarehouse.warehouseId")
     @Mapping(source = "destinationWarehouse.id", target = "destinationWarehouse.warehouseId")
     ShipmentDTO toDto(Shipment shipment);
+
+    List<ShipmentDTO> toDtoList(List<Shipment> shipments);
 }

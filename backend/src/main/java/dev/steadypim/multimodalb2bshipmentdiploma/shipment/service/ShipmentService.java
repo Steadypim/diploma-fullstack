@@ -7,6 +7,9 @@ import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.service.UserProfi
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class ShipmentService {
@@ -21,5 +24,18 @@ public class ShipmentService {
         shipment.setUserProfile(userProfile);
 
         return repository.save(shipment);
+    }
+
+    public void delete(UUID uuid){
+        repository.deleteById(uuid);
+    }
+
+    public Shipment get(UUID uuid){
+        return repository.findById(uuid)
+                .orElseThrow(() -> new RuntimeException("Shipment not found"));
+    }
+
+    public List<Shipment> getAllUserShipments(String email){
+        return repository.findAllByUserProfileEmail(email);
     }
 }

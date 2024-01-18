@@ -9,6 +9,9 @@ import dev.steadypim.multimodalb2bshipmentdiploma.shipment.service.ShipmentServi
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.UUID;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/shipment")
@@ -20,9 +23,24 @@ public class ShipmentController {
 
     @PostMapping("{email}")
     public ShipmentDTO create(@RequestBody CreateShipmentArgument argument,
-                              @PathVariable("email") String email){
+                              @PathVariable("email") String email) {
         Shipment shipment = action.createShipment(argument, email);
 
         return mapper.toDto(shipment);
+    }
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable("id") UUID id){
+        service.delete(id);
+    }
+
+    @GetMapping("{id}")
+    public ShipmentDTO get(@PathVariable("id") UUID id){
+        return mapper.toDto(service.get(id));
+    }
+
+    @GetMapping("all/{email}")
+    public List<ShipmentDTO> getAllUserShipmentsByUserEmail(@PathVariable("email") String email){
+        return mapper.toDtoList(service.getAllUserShipments(email));
     }
 }

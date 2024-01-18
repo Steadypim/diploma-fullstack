@@ -27,7 +27,7 @@ public class Shipment extends BaseEntity {
     Warehouse sourceWarehouse;
 
     @ManyToOne
-    @JoinColumn(name = "arrival_warehouse_id")
+    @JoinColumn(name = "destination_warehouse_id")
     Warehouse destinationWarehouse;
 
     @OneToMany(cascade = CascadeType.ALL)
