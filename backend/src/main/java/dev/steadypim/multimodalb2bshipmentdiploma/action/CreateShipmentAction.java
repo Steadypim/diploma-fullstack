@@ -12,13 +12,12 @@ import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.interfaces.AStarAdmissibleHeuristic;
 import org.jgrapht.alg.shortestpath.AStarShortestPath;
-import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.springframework.stereotype.Component;
-import java.util.Set;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -83,16 +82,13 @@ public class CreateShipmentAction {
 
 
     private GraphPath<Warehouse, TransportationRoute> findShortestPath(Graph<Warehouse, TransportationRoute> graph, Warehouse startPoint, Warehouse endPoint) {
-        AStarShortestPath<Warehouse, TransportationRoute> aStarShortestPath = new AStarShortestPath<>(graph, new AStarAdmissibleHeuristic<Warehouse>() {
-            @Override
-            public double getCostEstimate(Warehouse sourceVertex, Warehouse targetVertex) {
-                double distance = DistanceCalculator.calculateDistance(
-                        sourceVertex.getLatitude(), sourceVertex.getLongitude(),
-                        targetVertex.getLatitude(), targetVertex.getLongitude()
-                                                                      );
-                double currentPathCost = calculateCurrentPathCost(graph, sourceVertex);
-                return distance + currentPathCost;
-            }
+        AStarShortestPath<Warehouse, TransportationRoute> aStarShortestPath = new AStarShortestPath<>(graph, (sourceVertex, targetVertex) -> {
+            double distance = DistanceCalculator.calculateDistance(
+                    sourceVertex.getLatitude(), sourceVertex.getLongitude(),
+                    targetVertex.getLatitude(), targetVertex.getLongitude()
+                                                                  );
+            double currentPathCost = calculateCurrentPathCost(graph, sourceVertex);
+            return distance + currentPathCost;
         });
 
         return aStarShortestPath.getPath(startPoint, endPoint);
