@@ -9,6 +9,9 @@ public record TransportationRouteDTO(
         UUID destinationWarehouseId,
         UUID transportId,
         BigDecimal price,
-        UUID userProfileId
+        UUID userProfileId,
+        String sourceWarehouseName,
+        String destinationWarehouseName,
+        String transportName
 ) {
 }

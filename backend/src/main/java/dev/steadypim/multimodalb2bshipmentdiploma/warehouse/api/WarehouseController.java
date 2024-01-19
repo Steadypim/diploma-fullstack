@@ -54,4 +54,9 @@ public class WarehouseController {
         return mapper.toDtoList(service.getAllWithUserEmail(email));
     }
 
+    @GetMapping
+    public List<WarehouseDTO> getAllWarehouses(){
+        return mapper.toDtoList(service.getAllWarehouses());
+    }
+
 }

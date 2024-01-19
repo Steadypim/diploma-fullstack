@@ -16,3 +16,14 @@ export const saveWarehouse = async (warehouse, email) => {
         throw e;
     }
 }
+
+export const getAllWarehouses = async () => {
+    try{
+        return await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/warehouse`,
+            getAuthConfig()
+        )
+    }catch (e) {
+        throw e;
+    }
+}

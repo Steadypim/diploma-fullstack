@@ -30,7 +30,7 @@ import {
     LuWarehouse,
     LuTruck,
     LuCalculator,
-    LuHome
+    LuHome, LuShip
 } from "react-icons/lu";
 import {useAuth} from "../context/AuthContext.jsx";
 import {useNavigate} from "react-router-dom";
@@ -102,13 +102,18 @@ const SidebarContent = ({onClose, ...rest}) => {
                 </NavItem>
             ) : null}
             {userProfile?.userType == "TRANSPORT_COMPANY_REP" ? (
-                <NavItem icon={LuTruck} to={"/service"}>
+                <NavItem icon={LuShip} to={"/service"}>
                     Мои перевозки
                 </NavItem>
             ) : null}
             {userProfile?.userType == "WAREHOUSE_REP" ? (
                 <NavItem icon={LuWarehouse} to={"/warehouse"}>
                     Мои склады
+                </NavItem>
+            ) : null}
+            {userProfile?.userType == "TRANSPORT_COMPANY_REP" ? (
+                <NavItem icon={LuTruck} to={"/transport"}>
+                    Мой транспорт
                 </NavItem>
             ) : null}
         </Box>
@@ -187,12 +192,7 @@ const MobileNav = ({onOpen, ...rest}) => {
             </Text>
 
             <HStack spacing={{base: '0', md: '6'}}>
-                <IconButton
-                    size="lg"
-                    variant="ghost"
-                    aria-label="open menu"
-                    icon={<FiBell/>}
-                />
+
                 <Flex alignItems={'center'}>
                     <Menu>
                         <MenuButton
@@ -203,7 +203,7 @@ const MobileNav = ({onOpen, ...rest}) => {
                                 <Avatar
                                     size={'sm'}
                                     src={
-                                        'https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                                        'https://images.unsplash.com/photo-1705622445363-7636870b9e7e?q=80&w=1937&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
                                     }
                                 />
                                 <VStack

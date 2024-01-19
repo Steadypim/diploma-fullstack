@@ -12,36 +12,41 @@ import Signup from "./components/signup/Signup.jsx";
 import Home from "./pages/Home.jsx";
 import CalculateRoutes from "./pages/CalculateRoutes.jsx";
 import Warehouses from "./pages/Warehouses.jsx";
-import Shipments from "./pages/Shipments.jsx";
+import TranportationRoutes from "./pages/TranportationRoutes.jsx";
+import Transport from "./pages/Transport.jsx";
 
 const {ToastContainer, toast} = createStandaloneToast()
 
 const router = createBrowserRouter([
-    {
-        path: "",
-        element: <Login/>
-    },
-    {
-        path: "/signup",
-        element: <Signup/>
-    },
-    {
-        path: "/main",
-        element: <ProtectedRoute><Home /></ProtectedRoute>
-    },
-    {
-        path: "/calculate",
-        element: <ProtectedRoute><CalculateRoutes/></ProtectedRoute>
-    },
-    {
-        path: "/warehouse",
-        element:<ProtectedRoute><Warehouses/></ProtectedRoute>
-    },
-    {
-        path: "/service",
-        element: <ProtectedRoute><Shipments/></ProtectedRoute>
-    }
-])
+                                       {
+                                           path: "",
+                                           element: <Login/>
+                                       },
+                                       {
+                                           path: "/signup",
+                                           element: <Signup/>
+                                       },
+                                       {
+                                           path: "/main",
+                                           element: <ProtectedRoute><Home/></ProtectedRoute>
+                                       },
+                                       {
+                                           path: "/calculate",
+                                           element: <ProtectedRoute><CalculateRoutes/></ProtectedRoute>
+                                       },
+                                       {
+                                           path: "/warehouse",
+                                           element: <ProtectedRoute><Warehouses/></ProtectedRoute>
+                                       },
+                                       {
+                                           path: "/service",
+                                           element: <ProtectedRoute><TranportationRoutes/></ProtectedRoute>
+                                       },
+                                       {
+                                           path: "/transport",
+                                           element: <ProtectedRoute><Transport/></ProtectedRoute>
+                                       }
+                                   ])
 
 ReactDOM
     .createRoot(document.getElementById('root'))

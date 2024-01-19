@@ -30,6 +30,9 @@ public abstract class TransportationRouteMapper {
     @Mapping(target = "sourceWarehouseId", source = "sourceWarehouse.id")
     @Mapping(target = "destinationWarehouseId", source = "destinationWarehouse.id")
     @Mapping(target = "transportId", source = "transport.id")
+    @Mapping(target = "sourceWarehouseName", source = "sourceWarehouse.address.city")
+    @Mapping(target = "destinationWarehouseName", source = "destinationWarehouse.address.city")
+    @Mapping(target = "transportName", expression = "java(route.getTransport().getTransportType().toString())")
     public abstract TransportationRouteDTO toDto(TransportationRoute route);
 
     public abstract List<TransportationRouteDTO> toEntityList(List<TransportationRoute> routes);

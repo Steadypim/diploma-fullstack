@@ -26,7 +26,7 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         setUserProfileFromToken()
-    })
+    }, [])
 
 
 
