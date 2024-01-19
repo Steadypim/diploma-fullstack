@@ -1,37 +1,28 @@
 import React from 'react';
 import {
-    IconButton,
     Avatar,
     Box,
     CloseButton,
-    Flex,
-    HStack,
-    VStack,
-    Icon,
-    useColorModeValue,
     Drawer,
     DrawerContent,
-    Text,
-    useDisclosure,
+    Flex,
+    HStack,
+    Icon,
+    IconButton,
+    Image,
     Menu,
     MenuButton,
     MenuDivider,
     MenuItem,
     MenuList,
-    Image
+    Text,
+    useColorModeValue,
+    useDisclosure,
+    VStack
 } from '@chakra-ui/react';
-import {
-    FiMenu,
-    FiBell,
-    FiChevronDown,
-} from 'react-icons/fi';
+import {FiChevronDown, FiMenu,} from 'react-icons/fi';
 
-import {
-    LuWarehouse,
-    LuTruck,
-    LuCalculator,
-    LuHome, LuShip
-} from "react-icons/lu";
+import {LuCalculator, LuHome, LuShip, LuTruck, LuWarehouse} from "react-icons/lu";
 import {useAuth} from "../context/AuthContext.jsx";
 import {useNavigate} from "react-router-dom";
 

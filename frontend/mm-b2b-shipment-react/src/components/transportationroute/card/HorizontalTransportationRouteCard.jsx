@@ -1,4 +1,4 @@
-import {Card, CardBody, CardFooter, Heading, Stack, Image, Button, Text, Badge} from "@chakra-ui/react";
+import {Badge, Card, CardBody, Heading, Stack, Text} from "@chakra-ui/react";
 
 export default function HorizontalTransportationRouteCard({sourceWarehouseName, destinationWarehouseName, transportName, price}) {
 

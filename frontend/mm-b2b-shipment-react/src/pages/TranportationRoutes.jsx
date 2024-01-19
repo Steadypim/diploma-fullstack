@@ -12,7 +12,7 @@ const TranportationRoutes = () => {
 
     const [transportationRoutes, setTransportationRoutes] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [err, setError] = useState("");
+    const [, setError] = useState("");
 
     useEffect(() => {
         setLoading(true);
