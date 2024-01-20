@@ -10,7 +10,7 @@ import Signup from "./components/signup/Signup.jsx";
 import Home from "./pages/Home.jsx";
 import CalculateRoutes from "./pages/CalculateRoutes.jsx";
 import Warehouses from "./pages/Warehouses.jsx";
-import TranportationRoutes from "./pages/TranportationRoutes.jsx";
+import TranportationRoutes from "./pages/TransportationRoutes.jsx";
 import Transport from "./pages/Transport.jsx";
 
 const {ToastContainer, toast} = createStandaloneToast()

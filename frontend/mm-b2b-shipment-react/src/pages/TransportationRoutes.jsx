@@ -8,16 +8,17 @@ import {errorNotification} from "../services/notification.js";
 import {jwtDecode} from "jwt-decode";
 import CreateTransportationRouteDrawer from "../components/transportationroute/CreateTransportationRouteDrawer.jsx";
 
-const TranportationRoutes = () => {
+const TransportationRoutes = () => {
 
     const [transportationRoutes, setTransportationRoutes] = useState([]);
     const [loading, setLoading] = useState(false);
     const [, setError] = useState("");
 
-    useEffect(() => {
+
+    const fetchTransportationRoutes = () => {
         setLoading(true);
         let token = localStorage.getItem("access_token");
-        if(token){
+        if (token) {
             token = jwtDecode(token);
             getTransportationRoutesByUserEmail(token.sub).then(res => {
                 setTransportationRoutes(res.data)
@@ -31,8 +32,12 @@ const TranportationRoutes = () => {
                 setLoading(false)
             })
         }
+    }
 
-    }, []);
+    useEffect(() => {
+        fetchTransportationRoutes();
+    }, [])
+
 
     if (loading) {
         return (
@@ -51,7 +56,9 @@ const TranportationRoutes = () => {
     if(transportationRoutes.length <= 0){
         return (
             <SidebarWithHeader>
-                <CreateTransportationRouteDrawer/>
+                <CreateTransportationRouteDrawer
+                    fetchTransportationRoutes={fetchTransportationRoutes}
+                />
                 <Text>Вы еще не создали ни одной перевозки</Text>
             </SidebarWithHeader>
         )
@@ -59,18 +66,22 @@ const TranportationRoutes = () => {
 
     return (
         <SidebarWithHeader>
-            <Box mb={4}><CreateTransportationRouteDrawer /></Box>
+            <Box mb={4}><CreateTransportationRouteDrawer
+                fetchTransportationRoutes={fetchTransportationRoutes}
+            /></Box>
             {transportationRoutes.map((transportationRoute, index ) => (
-                <Box key={index} mb={4}>
+                <Box key={transportationRoute.id} mb={4}>
                 <HorizontalTransportationRouteCard key = {index}
                                                    sourceWarehouseName={transportationRoute.sourceWarehouseName}
                                                    destinationWarehouseName={transportationRoute.destinationWarehouseName}
                                                    transportName={transportationRoute.transportName}
                                                    price={transportationRoute.price}
+                                                   id={transportationRoute.id}
+                                                   fetchTransportationRoutes={fetchTransportationRoutes}
                 /> </Box>
             ))}
         </SidebarWithHeader>
     )
 }
 
-export default TranportationRoutes;
+export default TransportationRoutes;

@@ -21,11 +21,11 @@ import static lombok.AccessLevel.PRIVATE;
 @AllArgsConstructor
 @FieldDefaults(level = PRIVATE)
 public class TransportationRoute extends BaseEntity {
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "source_warehouse_id", nullable = false)
     Warehouse sourceWarehouse;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "destination_warehouse_id", nullable = false)
     Warehouse destinationWarehouse;
 

@@ -49,7 +49,7 @@ const transportTranslation = {
     PLANE: 'Самолет',
 };
 
-const CreateTransportationRouteForm = () => {
+const CreateTransportationRouteForm = ({fetchTransportationRoutes}) => {
 
     const [warehouses, setWarehouses] = useState([]);
     const [transports, setTransports] = useState([]);
@@ -122,6 +122,7 @@ const CreateTransportationRouteForm = () => {
                                 successNotification(
                                     "Перевозка добавлена",
                                 )
+                                fetchTransportationRoutes()
                             }).catch(err => {
                             console.log(err);
                             errorNotification(

@@ -13,7 +13,7 @@ import {
 import {LuPanelLeftClose, LuPanelRightClose} from "react-icons/lu";
 import CreateTransportationRouteForm from "./CreateTransportationRouteForm.jsx";
 
-const CreateTransportationRouteDrawer = () => {
+const CreateTransportationRouteDrawer = ({fetchTransportationRoutes}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     return (
@@ -35,7 +35,9 @@ const CreateTransportationRouteDrawer = () => {
                     </DrawerHeader>
 
                     <DrawerBody>
-                        <CreateTransportationRouteForm/>
+                        <CreateTransportationRouteForm
+                            fetchTransportationRoutes={fetchTransportationRoutes}
+                        />
                     </DrawerBody>
 
                     <DrawerFooter borderTopWidth='1px'>

@@ -1,6 +1,8 @@
-import {Badge, Card, CardBody, Heading, Stack, Text} from "@chakra-ui/react";
+import {Badge, Card, CardBody, CardFooter, Heading, Stack, Text} from "@chakra-ui/react";
+import DeleteButton from "../../button/DeleteButton.jsx";
+import {deleteTransportationRoute} from "../../../services/transportationRoute.js";
 
-export default function HorizontalTransportationRouteCard({sourceWarehouseName, destinationWarehouseName, transportName, price}) {
+export default function HorizontalTransportationRouteCard({sourceWarehouseName, destinationWarehouseName, transportName, price, id, fetchTransportationRoutes}) {
 
     const transportTranslation = {
         SHIP: 'Корабль',
@@ -15,6 +17,7 @@ export default function HorizontalTransportationRouteCard({sourceWarehouseName, 
             direction={{base: 'column', sm: 'row'}}
             overflow='hidden'
             variant='outline'
+            size={'sm'}
         >
 
 
@@ -27,7 +30,11 @@ export default function HorizontalTransportationRouteCard({sourceWarehouseName, 
                     </Text>
 
                     <Badge variant='outline' colorScheme='green' fontSize='1.0em'>{price} ₽</Badge>
+
                 </CardBody>
+                <CardFooter>
+                    <DeleteButton onDelete={() => deleteTransportationRoute(id)} fetchEntity={fetchTransportationRoutes}/>
+                </CardFooter>
             </Stack>
         </Card>);
 }
