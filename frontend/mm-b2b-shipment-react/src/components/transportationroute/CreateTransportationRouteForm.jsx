@@ -8,6 +8,7 @@ import {saveTransportationRoute} from "../../services/transportationRoute.js";
 import {useEffect, useState} from "react";
 import {getTransportByUserEmail} from "../../services/transport.js";
 
+// eslint-disable-next-line react/prop-types
 const MyTextInput = ({label, ...props}) => {
     const [field, meta] = useField(props);
     return (
@@ -24,14 +25,34 @@ const MyTextInput = ({label, ...props}) => {
     );
 };
 
+// eslint-disable-next-line react/prop-types
+const MySelect = ({label, ...props}) => {
+    const [field, meta] = useField(props);
+    return (
+        <Box>
+            <FormLabel htmlFor={props.id || props.name}>{label}</FormLabel>
+            <Select {...field} {...props} />
+            {meta.touched && meta.error ? (
+                <Alert className="error" status={"error"} mt={2}>
+                    <AlertIcon/>
+                    {meta.error}
+                </Alert>
+            ) : null}
+        </Box>
+    );
+};
+
+const transportTranslation = {
+    SHIP: 'Корабль',
+    TRAIN: 'Поезд',
+    CAR: 'Автомобиль',
+    PLANE: 'Самолет',
+};
 
 const CreateTransportationRouteForm = () => {
 
-    const [departureWarehouse, setDepartureWarehouse] = useState('');
-    const [arrivalWarehouse, setArrivalWarehouse] = useState('');
     const [warehouses, setWarehouses] = useState([]);
     const [transports, setTransports] = useState([]);
-    const [selectedTransport, setSelectedTransport] = useState('');
     const [, setError] = useState("");
 
     useEffect(() => {
@@ -39,8 +60,12 @@ const CreateTransportationRouteForm = () => {
             try {
                 const response = await getAllWarehouses();
                 setWarehouses(response.data);
-            } catch (error) {
-                console.error('Ошибка при получении данных о складах:', error);
+            } catch (err) {
+                setError(err.response.data.message)
+                errorNotification(
+                    err.code,
+                    err.response.data.message
+                )
             }
         };
 
@@ -65,13 +90,6 @@ const CreateTransportationRouteForm = () => {
         };
         fetchTransports();
     }, [])
-
-    const transportTranslation = {
-        SHIP: 'Корабль',
-        TRAIN: 'Поезд',
-        CAR: 'Автомобиль',
-        PLANE: 'Самолет',
-    };
 
 
     return (
@@ -120,44 +138,36 @@ const CreateTransportationRouteForm = () => {
                     <Form>
                         <Stack spacing={"24px"}>
 
-                            <Select
-                                placeholder="Выберите склад отправления"
-                                value={departureWarehouse}
-                                onChange={(e) => setDepartureWarehouse(e.target.value)}
-                            >
+                            <MySelect label="Склад отправления" name="sourceWarehouseId">
+                                <option value="">Выбрать склад</option>
                                 {warehouses.map((warehouse) => (
                                     <option key={warehouse.warehouseId} value={warehouse.warehouseId}>
-                                        {warehouse.address.city}
+                                        {warehouse.address.city}, {warehouse.address.street}
                                     </option>
                                 ))}
-                            </Select>
+                            </MySelect>
 
-                            <Select
-                                placeholder="Выберите склад получения"
-                                value={arrivalWarehouse}
-                                onChange={(e) => setArrivalWarehouse(e.target.value)}
-                            >
+                            <MySelect label="Склад получения" name="destinationWarehouseId">
+                                <option value="">Выбрать склад</option>
                                 {warehouses.map((warehouse) => (
                                     <option key={warehouse.warehouseId} value={warehouse.warehouseId}>
-                                        {warehouse.address.city}
+                                        {warehouse.address.city}, {warehouse.address.street}
                                     </option>
                                 ))}
-                            </Select>
+                            </MySelect>
 
-                            <Select
-                                placeholder="Выберите транспорт"
-                                value={selectedTransport}
-                                onChange={(e) => setSelectedTransport(e.target.value)}
-                            >
+                            <MySelect label="Транспорт" name="transportId">
+                                <option value="">Выбрать транспорт</option>
                                 {transports.map((transport) => (
-                                    <option key={transport.id} value={transport.transportType}>
+                                    <option key={transport.id} value={transport.id}>
                                         {`${transportTranslation[transport.transportType] || transport.transportType} - 
                                          Грузоподъемность: ${transport.liftingCapacity} кг, 
                                          Объем: ${transport.holdingVolume} л, 
                                          Средняя скорость: ${transport.averageSpeed} км/ч`}
                                     </option>
                                 ))}
-                            </Select>
+                            </MySelect>
+
 
                             <MyTextInput
                                 label="Цена"
