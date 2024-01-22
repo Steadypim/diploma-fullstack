@@ -4,7 +4,7 @@ import {Alert, AlertIcon, Box, Button, FormLabel, Input, Select, Stack} from "@c
 import {errorNotification, successNotification} from "../../services/notification.js";
 import {getAllWarehouses} from "../../services/warehouse.js";
 import {jwtDecode} from "jwt-decode";
-import {saveTransportationRoute} from "../../services/transportationRoute.js";
+import {saveTransportationRoute, updateTransportationRoute} from "../../services/transportationRoute.js";
 import {useEffect, useState} from "react";
 import {getTransportByUserEmail} from "../../services/transport.js";
 import {LuSave} from "react-icons/lu";
@@ -50,7 +50,7 @@ const transportTranslation = {
     PLANE: 'Самолет',
 };
 
-const CreateTransportationRouteForm = ({fetchTransportationRoutes}) => {
+const CreateTransportationRouteForm = ({fetchEntity, entity}) => {
 
     const [warehouses, setWarehouses] = useState([]);
     const [transports, setTransports] = useState([]);
@@ -116,19 +116,18 @@ const CreateTransportationRouteForm = ({fetchTransportationRoutes}) => {
                     setSubmitting(true);
                     let token = localStorage.getItem("access_token");
                     if (token) {
-                        token = jwtDecode(token);
-                        saveTransportationRoute(transportationRoute, token.sub)
+                        updateTransportationRoute(transportationRoute, entity.id)
                             .then(res => {
                                 console.log(res);
                                 successNotification(
-                                    "Перевозка добавлена",
+                                    "Перевозка обновлена",
                                 )
-                                fetchTransportationRoutes()
+                                fetchEntity()
                             }).catch(err => {
                             console.log(err);
                             errorNotification(
                                 err.code,
-                                "Ошибка сохранения"
+                                "Ошибка обновления"
                             )
                         }).finally(() => {
                             setSubmitting(false);
@@ -141,7 +140,7 @@ const CreateTransportationRouteForm = ({fetchTransportationRoutes}) => {
                         <Stack spacing={"24px"}>
 
                             <MySelect label="Склад отправления" name="sourceWarehouseId">
-                                <option value="">Выбрать склад</option>
+                                <option value="">{entity.sourceWarehouseName}</option>
                                 {warehouses.map((warehouse) => (
                                     <option key={warehouse.warehouseId} value={warehouse.warehouseId}>
                                         {warehouse.address.city}, {warehouse.address.street}
@@ -150,7 +149,7 @@ const CreateTransportationRouteForm = ({fetchTransportationRoutes}) => {
                             </MySelect>
 
                             <MySelect label="Склад получения" name="destinationWarehouseId">
-                                <option value="">Выбрать склад</option>
+                                <option value="">{entity.destinationWarehouseName}</option>
                                 {warehouses.map((warehouse) => (
                                     <option key={warehouse.warehouseId} value={warehouse.warehouseId}>
                                         {warehouse.address.city}, {warehouse.address.street}
@@ -159,7 +158,7 @@ const CreateTransportationRouteForm = ({fetchTransportationRoutes}) => {
                             </MySelect>
 
                             <MySelect label="Транспорт" name="transportId">
-                                <option value="">Выбрать транспорт</option>
+                                <option value="">{transportTranslation[entity.transportName] || entity.transportName}</option>
                                 {transports.map((transport) => (
                                     <option key={transport.id} value={transport.id}>
                                         {`${transportTranslation[transport.transportType] || transport.transportType} - 
@@ -175,7 +174,7 @@ const CreateTransportationRouteForm = ({fetchTransportationRoutes}) => {
                                 label="Цена"
                                 name="price"
                                 type="price"
-                                placeholder="Укажите цену перевозки"
+                                placeholder={entity.price}
                             />
 
                             <Button disabled={!isValid || isSubmitting} type="submit" leftIcon={<LuSave />}>Сохранить</Button>

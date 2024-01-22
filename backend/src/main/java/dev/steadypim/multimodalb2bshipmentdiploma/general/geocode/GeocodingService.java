@@ -21,7 +21,7 @@ public class GeocodingService {
     public Map<String, Double> geocodeAddress(Address address) throws Exception {
         String API_KEY = "e1a874e4-9f7f-4cb8-868f-a69e7bf72388";
         Request request = new Request.Builder()
-                .url("https://graphhopper.com/api/1/geocode?q=" + address.toString() + "&locale=ru&key=" + API_KEY + "&provider=nominatim&limit=1")
+                .url("https://graphhopper.com/api/1/geocode?q=" + address.toString() + "&locale=ru&key=" + API_KEY + "&limit=1")
                 .get()
                 .build();
 

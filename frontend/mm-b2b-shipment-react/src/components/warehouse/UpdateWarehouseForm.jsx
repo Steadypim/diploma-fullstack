@@ -2,7 +2,7 @@ import {Form, Formik, useField} from 'formik';
 import * as Yup from 'yup';
 import {Alert, AlertIcon, Box, Button, FormLabel, Input, Stack} from "@chakra-ui/react";
 import {successNotification, errorNotification} from "../../services/notification.js";
-import {saveWarehouse} from "../../services/warehouse.js";
+import {saveWarehouse, updateWarehouse} from "../../services/warehouse.js";
 import {jwtDecode} from "jwt-decode";
 import {LuSave} from "react-icons/lu";
 import React from "react";
@@ -12,7 +12,7 @@ const MyTextInput = ({label, ...props}) => {
     return (
         <Box>
             <FormLabel htmlFor={props.id || props.name}>{label}</FormLabel>
-            <Input className="text-input" {...field} {...props} />
+            <Input className="text-input" {...field} {...props}/>
             {meta.touched && meta.error ? (
                 <Alert className="error" status={"error"} mt={2}>
                     <AlertIcon/>
@@ -23,47 +23,46 @@ const MyTextInput = ({label, ...props}) => {
     );
 };
 
-const CreateUserProfileForm = ({fetchWarehouses}) => {
+const UpdateWarehouseForm = ({fetchEntity, entity}) => {
+    const {address, warehouseId} = entity;
     return (
         <>
             <Formik
-                initialValues={{
-                    country: '',
-                    region: '',
-                    city: '',
-                    street: '',
-                    postalCode: '',
-                    houseNumber: ''
-                }}
+                initialValues={
+                    address
+                }
                 validationSchema={Yup.object({
-                    country: Yup.string()
-                        .required('Обязательное поле'),
-                    region: Yup.string()
-                        .required('Обязательное поле'),
-                    city: Yup.string()
-                        .required('Обязательное поле'),
-                    street: Yup.string()
-                        .required('Обязательное поле'),
-                    postalCode: Yup.string(),
-                    houseNumber: Yup.string()
-                })}
-                onSubmit={(warehouse, {setSubmitting}) => {
+                                                 country: Yup.string()
+                                                             .required('Обязательное поле'),
+                                                 region: Yup.string()
+                                                            .required('Обязательное поле'),
+                                                 city: Yup.string()
+                                                          .required('Обязательное поле'),
+                                                 street: Yup.string()
+                                                            .required('Обязательное поле'),
+                                                 postalCode: Yup.string(),
+                                                 houseNumber: Yup.string()
+                                             })}
+                onSubmit={(values, {setSubmitting}) => {
                     setSubmitting(true);
                     let token = localStorage.getItem("access_token");
-                    if(token){
+                    if (token) {
                         token = jwtDecode(token);
-                        saveWarehouse(warehouse, token.sub)
+                        const warehouseDTO = {
+                            address: values
+                        };
+                        updateWarehouse(warehouseDTO, warehouseId)
                             .then(res => {
                                 console.log(res);
                                 successNotification(
-                                    "Склад добавлен",
+                                    "Склад обновлен",
                                 )
-                                fetchWarehouses()
+                                fetchEntity()
                             }).catch(err => {
                             console.log(err);
                             errorNotification(
                                 err.code,
-                                "Ошибка сохранения"
+                                "Ошибка обновления"
                             )
                         }).finally(() => {
                             setSubmitting(false);
@@ -71,7 +70,7 @@ const CreateUserProfileForm = ({fetchWarehouses}) => {
                     }
                 }}
             >
-                {({isValid, isSubmitting}) => (
+                {({isValid, isSubmitting, dirty}) => (
                     <Form>
                         <Stack spacing={"24px"}>
 
@@ -117,7 +116,8 @@ const CreateUserProfileForm = ({fetchWarehouses}) => {
                                 placeholder="Введите номер дома"
                             />
 
-                            <Button disabled={!isValid || isSubmitting} type="submit" leftIcon={<LuSave />}>Сохранить</Button>
+                            <Button disabled={!(isValid && dirty) || isSubmitting} type="submit"
+                                    leftIcon={<LuSave/>}>Изменить</Button>
                         </Stack>
                     </Form>
                 )}
@@ -126,4 +126,4 @@ const CreateUserProfileForm = ({fetchWarehouses}) => {
     );
 };
 
-export default CreateUserProfileForm;
+export default UpdateWarehouseForm;

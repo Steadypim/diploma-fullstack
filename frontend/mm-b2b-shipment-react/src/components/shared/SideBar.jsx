@@ -151,6 +151,12 @@ const NavItem = ({icon, children, to, ...rest}) => {
         ;
 };
 
+const userTypeTranslation = {
+    LOGISTICIAN: 'ЛОГИСТИКА',
+    TRANSPORT_COMPANY_REP: 'ПЕРЕВОЗКИ',
+    WAREHOUSE_REP: 'ХРАНЕНИЕ',
+};
+
 
 const MobileNav = ({onOpen, ...rest}) => {
     const {logout, userProfile} = useAuth();
@@ -206,7 +212,7 @@ const MobileNav = ({onOpen, ...rest}) => {
                                         {userProfile?.email}
                                     </Text>
                                     <Text fontSize="xs" color="gray.600">
-                                        {userProfile?.userType}
+                                        {userTypeTranslation[userProfile?.userType] || userProfile?.userType}
                                     </Text>
                                 </VStack>
                                 <Box display={{base: 'none', md: 'flex'}}>

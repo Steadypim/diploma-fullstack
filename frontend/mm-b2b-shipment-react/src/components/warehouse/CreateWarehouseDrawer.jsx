@@ -14,12 +14,12 @@ import {
 import {useField} from "formik";
 import CreateWarerhouseForm from "./CreateWarerhouseForm.jsx";
 
-const CreateWarehouseDrawer = () => {
+const CreateWarehouseDrawer = ({fetchWarehouses}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     return (
         <>
-            <Button leftIcon={<LuPanelRightClose  />} colorScheme='teal' onClick={onOpen}>
+            <Button leftIcon={<LuPanelRightClose  />} colorScheme='green' onClick={onOpen}>
                 Добавить склад
             </Button>
             <Drawer
@@ -35,13 +35,15 @@ const CreateWarehouseDrawer = () => {
                     </DrawerHeader>
 
                     <DrawerBody>
-                        <CreateWarerhouseForm/>
+                        <CreateWarerhouseForm
+                            fetchWarehouses={fetchWarehouses}
+                        />
                     </DrawerBody>
 
                     <DrawerFooter borderTopWidth='1px'>
                         <Button
                             leftIcon={<LuPanelLeftClose />}
-                            colorScheme={"teal"}
+                            colorScheme={"red"}
                             onClick={onClose}>
                             Закрыть
                         </Button>

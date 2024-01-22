@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import {errorNotification, successNotification} from "../../services/notification.js";
+import {RiDeleteBin2Line} from "react-icons/ri";
 
 const DeleteButton = ({onDelete, fetchEntity}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -15,7 +16,7 @@ const DeleteButton = ({onDelete, fetchEntity}) => {
 
     return (
         <>
-            <Button colorScheme='red' onClick={onOpen} size={"sm"} variant={'outline'}>
+            <Button colorScheme='red' onClick={onOpen} size={"sm"} variant={'outline'} leftIcon={<RiDeleteBin2Line />}>
                 Удалить
             </Button>
 
@@ -40,7 +41,7 @@ const DeleteButton = ({onDelete, fetchEntity}) => {
                                 onDelete().then(res => {
                                     console.log(res)
                                     successNotification(
-                                        "Перевозка удалена",
+                                        "Успешно удалено",
                                     )
                                     fetchEntity();
                                     onClose()

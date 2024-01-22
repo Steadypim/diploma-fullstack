@@ -30,6 +30,18 @@ export const saveTransportationRoute = async (transportationRoute, email) => {
     }
 }
 
+export const updateTransportationRoute = async (transportationRoute, id) => {
+    try {
+        return await axios.put(
+            `${import.meta.env.VITE_API_BASE_URL}/transportationRoute/${id}`,
+            transportationRoute,
+            getAuthConfig()
+        )
+    } catch (e) {
+        throw e;
+    }
+}
+
 
 export const deleteTransportationRoute = async (id) => {
     try {

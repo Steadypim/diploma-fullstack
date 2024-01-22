@@ -18,7 +18,7 @@ const CreateTransportationRouteDrawer = ({fetchTransportationRoutes}) => {
 
     return (
         <>
-            <Button leftIcon={<LuPanelRightClose  />} colorScheme='teal' onClick={onOpen}>
+            <Button leftIcon={<LuPanelRightClose  />} colorScheme='green' onClick={onOpen}>
                 Добавить перевозку
             </Button>
             <Drawer
@@ -43,7 +43,7 @@ const CreateTransportationRouteDrawer = ({fetchTransportationRoutes}) => {
                     <DrawerFooter borderTopWidth='1px'>
                         <Button
                             leftIcon={<LuPanelLeftClose />}
-                            colorScheme={"teal"}
+                            colorScheme={"red"}
                             onClick={onClose}>
                             Закрыть
                         </Button>
