@@ -13,7 +13,7 @@ export default function WarehouseCard({warehouse, fetchWarehouses}) {
     const {address, warehouseId} = warehouse;
 
     return (
-        <Card size={'sm'} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+        <Card size={'sm'} style={{ display: 'flex', flexDirection: 'column', height: '100%' }} variant='outline'>
             <CardHeader>
                 <Heading size='md'>{address.city}, {address.region}</Heading>
             </CardHeader>

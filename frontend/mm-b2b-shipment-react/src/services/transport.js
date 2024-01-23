@@ -16,3 +16,38 @@ export const getTransportByUserEmail = async (email) => {
         throw e;
     }
 }
+
+export const saveTransport = async (transport, email) => {
+    try {
+        return await axios.post(
+            `${import.meta.env.VITE_API_BASE_URL}/transport/${email}`,
+            transport,
+            getAuthConfig()
+        )
+    } catch (e) {
+        throw e;
+    }
+}
+
+export const deleteTransport = async (id) => {
+    try {
+        return await axios.delete(
+            `${import.meta.env.VITE_API_BASE_URL}/transport/${id}`,
+            getAuthConfig()
+        )
+    } catch (e) {
+        throw e;
+    }
+}
+
+export const updateTransport = async (transport, id) => {
+    try {
+        return await axios.put(
+            `${import.meta.env.VITE_API_BASE_URL}/transport/${id}`,
+            transport,
+            getAuthConfig()
+        )
+    } catch (e) {
+        throw e;
+    }
+}

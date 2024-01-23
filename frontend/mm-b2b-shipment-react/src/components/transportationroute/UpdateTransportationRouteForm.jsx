@@ -4,7 +4,7 @@ import {Alert, AlertIcon, Box, Button, FormLabel, Input, Select, Stack} from "@c
 import {errorNotification, successNotification} from "../../services/notification.js";
 import {getAllWarehouses} from "../../services/warehouse.js";
 import {jwtDecode} from "jwt-decode";
-import {saveTransportationRoute, updateTransportationRoute} from "../../services/transportationRoute.js";
+import {updateTransportationRoute} from "../../services/transportationRoute.js";
 import {useEffect, useState} from "react";
 import {getTransportByUserEmail} from "../../services/transport.js";
 import {LuSave} from "react-icons/lu";
@@ -50,7 +50,7 @@ const transportTranslation = {
     PLANE: 'Самолет',
 };
 
-const CreateTransportationRouteForm = ({fetchEntity, entity}) => {
+const UpdateTransportationRouteForm = ({fetchEntity, entity}) => {
 
     const [warehouses, setWarehouses] = useState([]);
     const [transports, setTransports] = useState([]);
@@ -96,12 +96,9 @@ const CreateTransportationRouteForm = ({fetchEntity, entity}) => {
     return (
         <>
             <Formik
-                initialValues={{
-                    sourceWarehouseId: '',
-                    destinationWarehouseId: '',
-                    transportId: '',
-                    price: '',
-                }}
+                initialValues={
+                    entity
+                }
                 validationSchema={Yup.object({
                                                  sourceWarehouseId: Yup.string()
                                                                        .required('Обязательное поле'),
@@ -135,7 +132,7 @@ const CreateTransportationRouteForm = ({fetchEntity, entity}) => {
                     }
                 }}
             >
-                {({isValid, isSubmitting}) => (
+                {({isValid, isSubmitting, dirty}) => (
                     <Form>
                         <Stack spacing={"24px"}>
 
@@ -174,10 +171,10 @@ const CreateTransportationRouteForm = ({fetchEntity, entity}) => {
                                 label="Цена"
                                 name="price"
                                 type="price"
-                                placeholder={entity.price}
+                                placeholder="Введите стоимость перевозки"
                             />
 
-                            <Button disabled={!isValid || isSubmitting} type="submit" leftIcon={<LuSave />}>Сохранить</Button>
+                            <Button disabled={!(isValid && dirty) || isSubmitting} type="submit" leftIcon={<LuSave />}>Изменить</Button>
                         </Stack>
                     </Form>
                 )}
@@ -186,4 +183,5 @@ const CreateTransportationRouteForm = ({fetchEntity, entity}) => {
     );
 };
 
-export default CreateTransportationRouteForm;
+
+export default UpdateTransportationRouteForm;
