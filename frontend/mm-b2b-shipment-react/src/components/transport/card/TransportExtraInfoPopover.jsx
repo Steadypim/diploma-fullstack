@@ -1,15 +1,13 @@
 import {
-    Box, Button, ButtonGroup, IconButton,
+    Button,
     Popover,
-    PopoverArrow,
     PopoverBody,
     PopoverCloseButton,
-    PopoverContent, PopoverFooter,
+    PopoverContent,
     PopoverHeader,
     PopoverTrigger,
     Text
 } from "@chakra-ui/react";
-import {IoEllipsisHorizontalOutline} from "react-icons/io5";
 import React from "react";
 
 const TransportExtraInfoPopover = ({packagingRequirements}) => {

@@ -1,7 +1,6 @@
 import {Card, CardBody, CardFooter, CardHeader, Divider, Heading, Icon, Stack, Text} from "@chakra-ui/react";
 import DeleteButton from "../../button/DeleteButton.jsx";
 import UpdateButton from "../../button/UpdateButton.jsx";
-import UpdateTransportationRouteForm from "../../transportationroute/UpdateTransportationRouteForm.jsx";
 import React from "react";
 import {deleteWarehouse} from "../../../services/warehouse.js";
 import {MdOutlineWarehouse} from "react-icons/md";

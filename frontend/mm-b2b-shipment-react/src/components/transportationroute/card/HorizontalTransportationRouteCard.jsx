@@ -1,16 +1,4 @@
-import {
-    Badge,
-    Card,
-    CardBody,
-    CardFooter, CardHeader,
-    Heading,
-    Stack,
-    Stat,
-    StatHelpText,
-    StatLabel,
-    StatNumber,
-    Text
-} from "@chakra-ui/react";
+import {Card, CardBody, CardFooter, Stack, Stat, StatHelpText, StatLabel, StatNumber, Text} from "@chakra-ui/react";
 import DeleteButton from "../../button/DeleteButton.jsx";
 import {deleteTransportationRoute} from "../../../services/transportationRoute.js";
 import UpdateButton from "../../button/UpdateButton.jsx";

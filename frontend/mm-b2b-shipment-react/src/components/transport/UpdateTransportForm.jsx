@@ -1,12 +1,11 @@
 import {Form, Formik, useField} from 'formik';
 import * as Yup from 'yup';
 import {Alert, AlertIcon, Box, Button, FormLabel, Input, Select, Stack} from "@chakra-ui/react";
-import {successNotification, errorNotification} from "../../services/notification.js";
-import {saveWarehouse} from "../../services/warehouse.js";
+import {errorNotification, successNotification} from "../../services/notification.js";
 import {jwtDecode} from "jwt-decode";
 import {LuSave} from "react-icons/lu";
 import React from "react";
-import {saveTransport, updateTransport} from "../../services/transport.js";
+import {updateTransport} from "../../services/transport.js";
 
 const MyTextInput = ({label, ...props}) => {
     const [field, meta] = useField(props);
