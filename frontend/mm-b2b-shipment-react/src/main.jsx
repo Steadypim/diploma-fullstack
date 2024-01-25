@@ -8,7 +8,7 @@ import Login from "./components/login/Login.jsx";
 import ProtectedRoute from "./components/shared/ProtectedRoute.jsx";
 import Signup from "./components/signup/Signup.jsx";
 import Home from "./pages/Home.jsx";
-import CalculateRoutes from "./pages/CalculateRoutes.jsx";
+import Shipment from "./pages/Shipment.jsx";
 import Warehouses from "./pages/Warehouses.jsx";
 import TranportationRoutes from "./pages/TransportationRoutes.jsx";
 import Transport from "./pages/Transport.jsx";
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
                                        },
                                        {
                                            path: "/calculate",
-                                           element: <ProtectedRoute><CalculateRoutes/></ProtectedRoute>
+                                           element: <ProtectedRoute><Shipment/></ProtectedRoute>
                                        },
                                        {
                                            path: "/warehouse",
