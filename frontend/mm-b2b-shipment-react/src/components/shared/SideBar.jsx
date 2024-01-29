@@ -25,6 +25,7 @@ import {FiChevronDown, FiMenu,} from 'react-icons/fi';
 import {LuCalculator, LuHome, LuShip, LuTruck, LuWarehouse} from "react-icons/lu";
 import {useAuth} from "../context/AuthContext.jsx";
 import {useNavigate} from "react-router-dom";
+import {MdOutlineRequestQuote} from "react-icons/md";
 
 
 export default function SidebarWithHeader({children}) {
@@ -97,9 +98,19 @@ const SidebarContent = ({onClose, ...rest}) => {
                     Мои перевозки
                 </NavItem>
             ) : null}
+            {userProfile?.userType == "TRANSPORT_COMPANY_REP" ? (
+                <NavItem icon={MdOutlineRequestQuote} to={"/servicereqs"}>
+                    Мои заявки
+                </NavItem>
+            ) : null}
             {userProfile?.userType == "WAREHOUSE_REP" ? (
                 <NavItem icon={LuWarehouse} to={"/warehouse"}>
                     Мои склады
+                </NavItem>
+            ) : null}
+            {userProfile?.userType == "WAREHOUSE_REP" ? (
+                <NavItem icon={MdOutlineRequestQuote} to={"/warehousereqs"}>
+                    Мои заявки
                 </NavItem>
             ) : null}
             {userProfile?.userType == "TRANSPORT_COMPANY_REP" ? (
