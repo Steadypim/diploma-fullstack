@@ -19,7 +19,7 @@ public interface StorageRequestMapper {
 
     List<StorageRequestDTO> toDtoList(List<StorageRequest> request);
 
-    StorageRequest toUpdateDto(StorageUpdateStatusDTO updateStatusDTO);
+    StorageRequest toUpdateEntity(StorageUpdateStatusDTO updateStatusDTO);
 
     @Mapping(source = "request.warehouse.id", target = "warehouseId")
     @Mapping(source = "request.warehouse.address", target = "address")

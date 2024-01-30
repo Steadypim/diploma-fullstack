@@ -4,12 +4,10 @@ import dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.api.dto.Tr
 import dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.api.mapper.TransportationRequestMapper;
 import dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.service.TransportationRequestService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("transportationRequest")
@@ -23,5 +21,14 @@ public class TransportationRequestController {
             @PathVariable("email") String email
                                                                              ){
         return mapper.toTransportationRouteForShipmentControllerDTOList(service.getAllForShipmentByUserProfileEmail(email));
+    }
+
+    @PutMapping("{id}")
+    public TransportationRequestDTO updateStatus(
+            @PathVariable("id") UUID id,
+            @RequestBody TransportationRequestDTO statusDTO
+                                                      ){
+
+        return mapper.toTransportationRouteForShipmentControllerDTO(service.updateStatus(statusDTO, id));
     }
 }

@@ -29,6 +29,6 @@ public class StorageRequestController {
             @PathVariable("id") UUID id,
             @RequestBody StorageUpdateStatusDTO statusDTO
                                         ){
-        return mapper.toDtoAfterUpdate(service.updateStatus(mapper.toUpdateDto(statusDTO), id));
+        return mapper.toDtoAfterUpdate(service.updateStatus(mapper.toUpdateEntity(statusDTO), id));
     }
 }
