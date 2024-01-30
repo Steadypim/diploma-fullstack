@@ -16,5 +16,8 @@ public interface ShipmentMapper {
     @Mapping(source = "destinationWarehouse.id", target = "destinationWarehouse.warehouseId")
     ShipmentDTO toDto(Shipment shipment);
 
+
+
     List<ShipmentDTO> toDtoList(List<Shipment> shipments);
 }
+

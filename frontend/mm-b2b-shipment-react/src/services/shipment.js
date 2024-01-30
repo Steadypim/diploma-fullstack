@@ -17,3 +17,14 @@ export const saveShipment = async (shipment, email) => {
         throw e;
     }
 }
+
+export const getAllShipmentsByUserProfileEmail = async (email) => {
+    try {
+        return await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/shipment/all/${email}`,
+            getAuthConfig()
+        )
+    } catch (e) {
+        throw e;
+    }
+}

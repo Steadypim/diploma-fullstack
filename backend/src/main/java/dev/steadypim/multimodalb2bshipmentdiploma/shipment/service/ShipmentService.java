@@ -29,6 +29,7 @@ public class ShipmentService {
                                          .orElseThrow(() -> new RuntimeException("User not found while creating shipment"));
 
         shipment.setUserProfile(userProfile);
+        shipment.setRequestStatus(PENDING);
 
         Shipment shipmentForSave = repository.save(shipment);
 

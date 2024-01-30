@@ -93,6 +93,11 @@ const SidebarContent = ({onClose, ...rest}) => {
                     Расчёт маршрутов
                 </NavItem>
             ) : null}
+            {userProfile?.userType == "LOGISTICIAN" ? (
+                <NavItem icon={LuCalculator} to={"/myrequests"}>
+                    Мои заявки
+                </NavItem>
+            ) : null}
             {userProfile?.userType == "TRANSPORT_COMPANY_REP" ? (
                 <NavItem icon={LuShip} to={"/service"}>
                     Мои перевозки

@@ -1,16 +1,7 @@
-import {
-    Button,
-    Popover,
-    PopoverBody,
-    PopoverCloseButton,
-    PopoverContent,
-    PopoverHeader,
-    PopoverTrigger,
-    Text
-} from "@chakra-ui/react";
+import {Button, Popover, PopoverBody, PopoverCloseButton, PopoverContent, PopoverTrigger, Text} from "@chakra-ui/react";
 import React from "react";
 
-const TransportExtraInfoPopover = ({packagingRequirements}) => {
+const ExtraInfoPopover = ({info}) => {
     const initialFocusRef = React.useRef()
     return (
         <Popover
@@ -22,13 +13,10 @@ const TransportExtraInfoPopover = ({packagingRequirements}) => {
                 <Button size={'lg'} variant='link'>...</Button>
             </PopoverTrigger>
             <PopoverContent color='white' bg='gray.700'>
-                <PopoverHeader pt={4} fontWeight='bold' border='0'>
-                    Требования к упаковке:
-                </PopoverHeader>
                 <PopoverCloseButton/>
                 <PopoverBody>
                     <Text as={'samp'}>
-                        {packagingRequirements}
+                        {info}
                     </Text>
                 </PopoverBody>
 
@@ -37,4 +25,4 @@ const TransportExtraInfoPopover = ({packagingRequirements}) => {
     )
 }
 
-export default TransportExtraInfoPopover;
+export default ExtraInfoPopover;

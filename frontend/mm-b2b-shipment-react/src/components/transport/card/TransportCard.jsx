@@ -1,14 +1,12 @@
-import {Card, CardBody, CardFooter, CardHeader, Divider, Heading, Icon, Stack, Text} from "@chakra-ui/react";
+import {Card, CardBody, CardFooter, Divider, Icon, Stack, Text} from "@chakra-ui/react";
 import DeleteButton from "../../button/DeleteButton.jsx";
 import UpdateButton from "../../button/UpdateButton.jsx";
 import React from "react";
 import {GiCargoShip, GiCommercialAirplane} from "react-icons/gi";
 import {FaTrain} from "react-icons/fa";
 import {FaTruckFast} from "react-icons/fa6";
-import UpdateWarehouseForm from "../../warehouse/UpdateWarehouseForm.jsx";
 import {deleteTransport} from "../../../services/transport.js";
-import TransportExtraInfoPopover from "./TransportExtraInfoPopover.jsx";
-import {MdOutlineWarehouse} from "react-icons/md";
+import ExtraInfoPopover from "../../shared/ExtraInfoPopover.jsx";
 import UpdateTransportForm from "../UpdateTransportForm.jsx";
 
 
@@ -33,7 +31,7 @@ export default function TransportCard({transport, fetchTansports}) {
                         <strong>Грузоподъёмность:</strong> {transport.liftingCapacity} кг<br/>
                         <strong>Объём:</strong> {transport.holdingVolume} м³<br/>
                         <strong>Средняя скорость:</strong> {transport.averageSpeed} км/ч
-                        <TransportExtraInfoPopover packagingRequirements={transport.packagingRequirements}/>
+                        <ExtraInfoPopover info={transport.packagingRequirements}/>
                     </Text>
                 </CardBody>
                 <Divider/>

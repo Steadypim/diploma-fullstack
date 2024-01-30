@@ -1,6 +1,7 @@
 package dev.steadypim.multimodalb2bshipmentdiploma.shipment.entity;
 
 import dev.steadypim.multimodalb2bshipmentdiploma.general.BaseEntity;
+import dev.steadypim.multimodalb2bshipmentdiploma.general.enums.RequestStatus;
 import dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.entity.TransportationRoute;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.entity.UserProfile;
 import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.entity.Warehouse;
@@ -30,7 +31,7 @@ public class Shipment extends BaseEntity {
     @JoinColumn(name = "destination_warehouse_id")
     Warehouse destinationWarehouse;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany()
     @JoinColumn(name = "shipment_id")
     List<TransportationRoute> optimalPath;
 
@@ -43,6 +44,10 @@ public class Shipment extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_profile_id")
     UserProfile userProfile;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    RequestStatus requestStatus;
 
     public Shipment(Warehouse sourceWarehouse, Warehouse destinationWarehouse, List<TransportationRoute> optimalPath, BigDecimal fullPrice) {
         this.sourceWarehouse = sourceWarehouse;
