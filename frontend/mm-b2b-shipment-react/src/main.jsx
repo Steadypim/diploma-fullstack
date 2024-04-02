@@ -49,19 +49,19 @@ const router = createBrowserRouter([
                                            element: <ProtectedRoute><Transport/></ProtectedRoute>
                                        },
                                        {
-                                           path:"/warehousereqs",
+                                           path: "/warehousereqs",
                                            element: <ProtectedRoute><WarehouseRequests/></ProtectedRoute>
                                        },
                                        {
-                                           path:"/servicereqs",
+                                           path: "/servicereqs",
                                            element: <ProtectedRoute><TransportationRequests/></ProtectedRoute>
                                        },
                                        {
-                                           path:"/myrequests",
+                                           path: "/myrequests",
                                            element: <ProtectedRoute><LogisticianRequests/></ProtectedRoute>
                                        },
                                        {
-                                           path:"/profile",
+                                           path: "/profile",
                                            element: <ProtectedRoute><UserProfile/></ProtectedRoute>
                                        }
                                    ])

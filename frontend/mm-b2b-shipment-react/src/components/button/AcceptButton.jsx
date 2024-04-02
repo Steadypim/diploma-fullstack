@@ -5,7 +5,7 @@ import {AiOutlineCheckCircle} from "react-icons/ai";
 
 const AcceptButton = ({changeStatus, fetchEntity}) => {
 
-    const { onClose } = useDisclosure()
+    const {onClose} = useDisclosure()
 
     return (
         <>
@@ -15,7 +15,7 @@ const AcceptButton = ({changeStatus, fetchEntity}) => {
                     successNotification("Заявка одобрена")
                     fetchEntity();
                     onClose()
-                }).catch(err =>{
+                }).catch(err => {
                     errorNotification(
                         "Не удалось одобрить заявку",
                         err.code,
@@ -25,7 +25,7 @@ const AcceptButton = ({changeStatus, fetchEntity}) => {
                     onClose()
                 })
             }
-            } size={"sm"} variant={'outline'} leftIcon={<AiOutlineCheckCircle />}>
+            } size={"sm"} variant={'outline'} leftIcon={<AiOutlineCheckCircle/>}>
                 Принять
             </Button>
         </>

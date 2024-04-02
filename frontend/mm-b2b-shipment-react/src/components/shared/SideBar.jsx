@@ -12,7 +12,6 @@ import {
     Image,
     Menu,
     MenuButton,
-    MenuDivider,
     MenuItem,
     MenuList,
     Text,
@@ -141,31 +140,31 @@ const NavItem = ({icon, children, to, ...rest}) => {
     };
 
     return (
-            <Flex
-                align="center"
-                p="4"
-                mx="4"
-                borderRadius="lg"
-                role="group"
-                cursor="pointer"
-                _hover={{
-                    bg: 'gray.600',
-                    color: 'white',
-                }}
-                onClick={handleClick}
-                {...rest}>
-                {icon && (
-                    <Icon
-                        mr="4"
-                        fontSize="16"
-                        _groupHover={{
-                            color: 'white',
-                        }}
-                        as={icon}
-                    />
-                )}
-                {children}
-            </Flex>
+        <Flex
+            align="center"
+            p="4"
+            mx="4"
+            borderRadius="lg"
+            role="group"
+            cursor="pointer"
+            _hover={{
+                bg: 'gray.600',
+                color: 'white',
+            }}
+            onClick={handleClick}
+            {...rest}>
+            {icon && (
+                <Icon
+                    mr="4"
+                    fontSize="16"
+                    _groupHover={{
+                        color: 'white',
+                    }}
+                    as={icon}
+                />
+            )}
+            {children}
+        </Flex>
     )
         ;
 };
@@ -175,7 +174,6 @@ const userTypeTranslation = {
     TRANSPORT_COMPANY_REP: 'ПЕРЕВОЗКИ',
     WAREHOUSE_REP: 'ХРАНЕНИЕ',
 };
-
 
 
 const MobileNav = ({onOpen, ...rest}) => {

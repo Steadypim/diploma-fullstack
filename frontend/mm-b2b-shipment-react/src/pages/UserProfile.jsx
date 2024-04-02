@@ -1,4 +1,4 @@
-import {Alert, AlertIcon, Avatar, Box, Button, Flex, FormLabel, Grid, Image, Input, Spinner} from "@chakra-ui/react";
+import {Alert, AlertIcon, Box, Button, Flex, FormLabel, Grid, Image, Input, Spinner} from "@chakra-ui/react";
 
 import {Form, Formik, useField} from 'formik';
 import * as Yup from 'yup';
@@ -114,17 +114,17 @@ const UserProfile = ({fetchEntity, entity}) => {
             >
                 {({isValid, isSubmitting, dirty}) => (
                     <Form>
-                        <Grid templateColumns="1fr 2fr" gap={6} alignItems="center"  p={"5%"}>
+                        <Grid templateColumns="1fr 2fr" gap={6} alignItems="center" p={"5%"}>
                             <Flex gridColumn={1} justifyContent="center">
                                 <Image w={256} h={256}
-                                        src={
-                                            userProfile?.userType == "TRANSPORT_COMPANY_REP"
-                                            ? "transp.png"
-                                            : userProfile?.userType == "LOGISTICIAN"
-                                              ? "logist.png"
-                                              : userProfile?.userType == "WAREHOUSE_REP"
-                                                ? 'wh.png'
-                                                : ''}
+                                       src={
+                                           userProfile?.userType == "TRANSPORT_COMPANY_REP"
+                                           ? "transp.png"
+                                           : userProfile?.userType == "LOGISTICIAN"
+                                             ? "logist.png"
+                                             : userProfile?.userType == "WAREHOUSE_REP"
+                                               ? 'wh.png'
+                                               : ''}
                                 />
                             </Flex>
                             <Flex direction="column" gridColumn="2 / span 2">
@@ -175,7 +175,7 @@ const UserProfile = ({fetchEntity, entity}) => {
                                 mt={4}
                                 disabled={!(isValid && dirty) || isSubmitting}
                                 type="submit"
-                                leftIcon={<LuSave />}
+                                leftIcon={<LuSave/>}
                             >
                                 Сохранить
                             </Button>
