@@ -22,7 +22,7 @@ public class TransportationRequest extends BaseEntity {
     @JoinColumn(name = "transportation_id", nullable = false)
     TransportationRoute transportationRoute;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "shipment_id", nullable = false)
     private Shipment shipment;
 

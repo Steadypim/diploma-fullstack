@@ -3,10 +3,12 @@ package dev.steadypim.multimodalb2bshipmentdiploma.user.profile.api;
 import dev.steadypim.multimodalb2bshipmentdiploma.jwt.JWTUtil;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.api.dto.UserProfileDTO;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.api.dto.UserProfileRegistrationDTO;
+import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.api.dto.UserProfileUpdateDto;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.api.mapper.UserProfileMapper;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,6 +39,18 @@ public class UserProfileController {
     @GetMapping("/")
     public List<UserProfileDTO> getAllUsers() {
         return mapper.toDtoList(service.getAll());
+    }
+
+    @GetMapping("{email}")
+    public UserProfileDTO getUser(@PathVariable("email") String email) {
+        return mapper.toDto(service.findUserProfileByEmail(email)
+                                   .orElseThrow(() -> new UsernameNotFoundException("Username: " + email + " not found")));
+    }
+
+    @PutMapping("/update/{email}")
+    public UserProfileDTO update(@PathVariable("email") String email,
+                                 @RequestBody UserProfileUpdateDto dto){
+        return mapper.toDto(service.update(email, dto));
     }
 
 }

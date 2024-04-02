@@ -15,6 +15,7 @@ import Transport from "./pages/Transport.jsx";
 import WarehouseRequests from "./pages/WarehouseRequests.jsx";
 import TransportationRequests from "./pages/TransportationRequests.jsx";
 import LogisticianRequests from "./pages/LogisticianRequests.jsx";
+import UserProfile from "./pages/UserProfile.jsx";
 
 const {ToastContainer, toast} = createStandaloneToast()
 
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
                                        {
                                            path:"/myrequests",
                                            element: <ProtectedRoute><LogisticianRequests/></ProtectedRoute>
+                                       },
+                                       {
+                                           path:"/profile",
+                                           element: <ProtectedRoute><UserProfile/></ProtectedRoute>
                                        }
                                    ])
 

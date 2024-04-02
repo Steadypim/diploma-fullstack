@@ -14,7 +14,7 @@ import {
     Stack,
     Stat,
     StatLabel,
-    StatNumber,
+    StatNumber, Tag,
     Text
 } from "@chakra-ui/react";
 import React from "react";
@@ -58,7 +58,7 @@ export default function LogisticianRequestCard({logisticianRequest, fetchLogisti
                     <Badge colorScheme={status.colorScheme} >
                         {status.text}
                     </Badge>
-                    <Heading size='md'>Заявка на перезку из {sourceWarehouse.address.city} в {destinationWarehouse.address.city}</Heading>
+                    <Heading size='md'>Заявка на перевозку из {sourceWarehouse.address.city} в {destinationWarehouse.address.city}</Heading>
                 </CardHeader>
                 <CardBody>
 
@@ -66,7 +66,13 @@ export default function LogisticianRequestCard({logisticianRequest, fetchLogisti
                         {optimalPath.map((path, index) => (
                             <ListItem key={index}>
                                 <ListIcon as={transportIcons[path.transport.transportType] || path.transport.transportType} color='green.300' />
-                                {`${path.sourceWarehouse.address.city} -> ${path.destinationWarehouse.address.city}`}
+                                {`${path.sourceWarehouse.address.city} ⟶ ${path.destinationWarehouse.address.city}`}
+                                <Tag ml={'5px'}
+                                     size={'sm'}
+                                     colorScheme='green'
+                                     borderRadius='full'>
+                                    {path.price.toLocaleString('ru-RU')} ₽
+                                </Tag>
                             </ListItem>
                         ))}
                     </List>
@@ -80,10 +86,10 @@ export default function LogisticianRequestCard({logisticianRequest, fetchLogisti
 
 
                 </CardBody>
-                <CardFooter>
-                    {/*<Button variant={'outline'}>Оплатить</Button>*/}
-                    {/*<Button ml={'10px'}>Отменить</Button>*/}
-                </CardFooter>
+                {/*<CardFooter>*/}
+                {/*    /!*<Button variant={'outline'}>Оплатить</Button>*!/*/}
+                {/*    /!*<Button ml={'10px'}>Отменить</Button>*!/*/}
+                {/*</CardFooter>*/}
             </Stack>
         </Card>);
 }

@@ -31,7 +31,7 @@ public class Shipment extends BaseEntity {
     @JoinColumn(name = "destination_warehouse_id")
     Warehouse destinationWarehouse;
 
-    @OneToMany()
+    @OneToMany
     @JoinColumn(name = "shipment_id")
     List<TransportationRoute> optimalPath;
 

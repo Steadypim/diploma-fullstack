@@ -2,10 +2,7 @@ package dev.steadypim.multimodalb2bshipmentdiploma.user.profile.entity;
 
 import dev.steadypim.multimodalb2bshipmentdiploma.general.BaseEntity;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.enums.UserType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.GrantedAuthority;

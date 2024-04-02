@@ -26,6 +26,7 @@ import {LuCalculator, LuHome, LuShip, LuTruck, LuWarehouse} from "react-icons/lu
 import {useAuth} from "../context/AuthContext.jsx";
 import {useNavigate} from "react-router-dom";
 import {MdOutlineRequestQuote} from "react-icons/md";
+import {SlSettings} from "react-icons/sl";
 
 
 export default function SidebarWithHeader({children}) {
@@ -72,15 +73,14 @@ const SidebarContent = ({onClose, ...rest}) => {
             pos="fixed"
             h="full"
             {...rest}>
-            <Flex h="20" flexDirection="column" alignItems="center" mx="8" mb={75} mt={2}
+            <Flex h="20" flexDirection="column" alignItems="center" mx="8" mb={150} mt={2}
                   justifyContent="space-between">
                 <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" mb={5}>
                     B2B Shipment
                 </Text>
                 <Image
-                    borderRadius='full'
-                    boxSize='75px'
-                    src='https://img2.annthegran.com/printart/xlarge/easy_embroidery/pgeedp0669.webp'
+                    boxSize='170px'
+                    src='2.png'
                     alt='B2B Shipment'
                 />
                 <CloseButton display={{base: 'flex', md: 'none'}} onClick={onClose}/>
@@ -123,6 +123,9 @@ const SidebarContent = ({onClose, ...rest}) => {
                     Мой транспорт
                 </NavItem>
             ) : null}
+            <NavItem icon={SlSettings} to={"/profile"}>
+                Настройки
+            </NavItem>
         </Box>
     );
 };
@@ -174,6 +177,7 @@ const userTypeTranslation = {
 };
 
 
+
 const MobileNav = ({onOpen, ...rest}) => {
     const {logout, userProfile} = useAuth();
 
@@ -216,7 +220,13 @@ const MobileNav = ({onOpen, ...rest}) => {
                                 <Avatar
                                     size={'sm'}
                                     src={
-                                        'https://images.unsplash.com/photo-1705622445363-7636870b9e7e?q=80&w=1937&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                                        userProfile?.userType == "TRANSPORT_COMPANY_REP"
+                                        ? "transp.png"
+                                        : userProfile?.userType == "LOGISTICIAN"
+                                          ? "logist.png"
+                                          : userProfile?.userType == "WAREHOUSE_REP"
+                                            ? 'wh.png'
+                                            : ''
                                     }
                                 />
                                 <VStack
@@ -239,8 +249,6 @@ const MobileNav = ({onOpen, ...rest}) => {
                         <MenuList
                             bg={useColorModeValue('white', 'gray.900')}
                             borderColor={useColorModeValue('gray.200', 'gray.700')}>
-                            <MenuItem>Настройки</MenuItem>
-                            <MenuDivider/>
                             <MenuItem onClick={logout}>
                                 Выйти
                             </MenuItem>

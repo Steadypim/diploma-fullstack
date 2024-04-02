@@ -12,7 +12,7 @@ const AcceptButton = ({changeStatus, fetchEntity}) => {
             <Button colorScheme='green' onClick={() => {
                 changeStatus().then(res => {
                     console.log(res)
-                    successNotification("Хранение одобрено")
+                    successNotification("Заявка одобрена")
                     fetchEntity();
                     onClose()
                 }).catch(err =>{
