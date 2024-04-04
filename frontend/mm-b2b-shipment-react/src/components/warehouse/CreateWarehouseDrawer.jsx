@@ -1,25 +1,24 @@
 import {
-    Alert, AlertIcon,
-    Box,
-    Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent,
-    DrawerFooter, DrawerHeader, DrawerOverlay,
-    FormLabel,
-    Input, useDisclosure
+    Button,
+    Drawer,
+    DrawerBody,
+    DrawerCloseButton,
+    DrawerContent,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerOverlay,
+    useDisclosure
 } from "@chakra-ui/react";
 
-import {
-    LuPanelRightClose ,
-    LuPanelLeftClose
-} from "react-icons/lu";
-import {useField} from "formik";
+import {LuPanelLeftClose, LuPanelRightClose} from "react-icons/lu";
 import CreateWarerhouseForm from "./CreateWarerhouseForm.jsx";
 
 const CreateWarehouseDrawer = ({fetchWarehouses}) => {
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const {isOpen, onOpen, onClose} = useDisclosure()
 
     return (
         <>
-            <Button leftIcon={<LuPanelRightClose  />} colorScheme='green' onClick={onOpen}>
+            <Button leftIcon={<LuPanelRightClose/>} colorScheme='facebook' onClick={onOpen}>
                 Добавить склад
             </Button>
             <Drawer
@@ -27,9 +26,9 @@ const CreateWarehouseDrawer = ({fetchWarehouses}) => {
                 placement='right'
                 onClose={onClose}
             >
-                <DrawerOverlay />
+                <DrawerOverlay/>
                 <DrawerContent>
-                    <DrawerCloseButton />
+                    <DrawerCloseButton/>
                     <DrawerHeader borderBottomWidth='1px'>
                         Добавить новый склад
                     </DrawerHeader>
@@ -42,7 +41,7 @@ const CreateWarehouseDrawer = ({fetchWarehouses}) => {
 
                     <DrawerFooter borderTopWidth='1px'>
                         <Button
-                            leftIcon={<LuPanelLeftClose />}
+                            leftIcon={<LuPanelLeftClose/>}
                             colorScheme={"red"}
                             onClick={onClose}>
                             Закрыть

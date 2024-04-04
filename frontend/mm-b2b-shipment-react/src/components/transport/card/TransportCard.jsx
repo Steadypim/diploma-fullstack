@@ -21,12 +21,17 @@ export default function TransportCard({transport, fetchTansports}) {
 
 
     return (
-        <Card size={'sm'} style={{display: 'flex', flexDirection: 'column', height: '100%'}} variant='outline'>
+        <Card size={'sm'} style={{display: 'flex', flexDirection: 'column', height: '100%'}} variant={"outline"}
+              boxShadow="lg"
+              borderColor="gray.200"
+              borderRadius="md"
+              bgGradient="linear(to-r, whiteAlpha.50, blackAlpha.50)"
+              color="white">
             <Stack spacing={0}
                    style={{flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
                 <CardBody
                     style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
-                    <Icon as={transportIcons[transport.transportType]} w={20} h={20} />
+                    <Icon as={transportIcons[transport.transportType]} w={20} h={20}/>
                     <Text>
                         <strong>Грузоподъёмность:</strong> {transport.liftingCapacity} кг<br/>
                         <strong>Объём:</strong> {transport.holdingVolume} м³<br/>

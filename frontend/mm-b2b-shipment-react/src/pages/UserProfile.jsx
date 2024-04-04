@@ -168,7 +168,7 @@ const UserProfile = ({fetchEntity, entity}) => {
                         </Grid>
                         <Flex justifyContent="center">
                             <Button
-                                colorScheme='telegram'
+                                colorScheme='facebook'
                                 variant='solid'
                                 width={'30%'}
                                 size={'md'}

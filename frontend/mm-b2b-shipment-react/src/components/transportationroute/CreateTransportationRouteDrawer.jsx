@@ -14,11 +14,11 @@ import {LuPanelLeftClose, LuPanelRightClose} from "react-icons/lu";
 import CreateTransportationRouteForm from "./CreateTransportationRouteForm.jsx";
 
 const CreateTransportationRouteDrawer = ({fetchTransportationRoutes}) => {
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const {isOpen, onOpen, onClose} = useDisclosure()
 
     return (
         <>
-            <Button leftIcon={<LuPanelRightClose  />} colorScheme='green' onClick={onOpen}>
+            <Button leftIcon={<LuPanelRightClose/>} colorScheme='facebook' onClick={onOpen}>
                 Добавить перевозку
             </Button>
             <Drawer
@@ -27,9 +27,9 @@ const CreateTransportationRouteDrawer = ({fetchTransportationRoutes}) => {
                 onClose={onClose}
                 size={'xl'}
             >
-                <DrawerOverlay />
+                <DrawerOverlay/>
                 <DrawerContent>
-                    <DrawerCloseButton />
+                    <DrawerCloseButton/>
                     <DrawerHeader borderBottomWidth='1px'>
                         Добавить новую перевозку
                     </DrawerHeader>
@@ -42,7 +42,7 @@ const CreateTransportationRouteDrawer = ({fetchTransportationRoutes}) => {
 
                     <DrawerFooter borderTopWidth='1px'>
                         <Button
-                            leftIcon={<LuPanelLeftClose />}
+                            leftIcon={<LuPanelLeftClose/>}
                             colorScheme={"red"}
                             onClick={onClose}>
                             Закрыть

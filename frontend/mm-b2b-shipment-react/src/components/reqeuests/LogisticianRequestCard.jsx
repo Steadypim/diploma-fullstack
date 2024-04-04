@@ -48,7 +48,12 @@ export default function LogisticianRequestCard({logisticianRequest, fetchLogisti
         <Card
             direction={{base: 'column', sm: 'row'}}
             overflow='hidden'
-            variant='outline'
+            variant={"outline"}
+            boxShadow="lg"
+            borderColor="gray.200"
+            borderRadius="md"
+            bgGradient="linear(to-r, whiteAlpha.50, blackAlpha.50)"
+            color="white"
             size={'sm'}
         >
 

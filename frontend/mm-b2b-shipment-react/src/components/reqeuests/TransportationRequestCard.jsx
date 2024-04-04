@@ -22,13 +22,13 @@ import {updateTransportationRequestStatus} from "../../services/tranportationReq
 
 export default function TransportationRequestCard({transportationRequest, fetchTransportationRequest}) {
 
-    const { price, requestStatus, sourceWarehouse, destinationWarehouse, transport, id } = transportationRequest;
+    const {price, requestStatus, sourceWarehouse, destinationWarehouse, transport, id} = transportationRequest;
 
     const transportIcons = {
-        SHIP: <GiCargoShip />,
-        TRAIN: <FaTrain />,
-        CAR: <FaTruckFast />,
-        PLANE: <GiCommercialAirplane />,
+        SHIP: <GiCargoShip/>,
+        TRAIN: <FaTrain/>,
+        CAR: <FaTruckFast/>,
+        PLANE: <GiCommercialAirplane/>,
     };
 
     const formattedPrice = price.toLocaleString('ru-RU', {
@@ -37,19 +37,24 @@ export default function TransportationRequestCard({transportationRequest, fetchT
     });
 
     const statusTranslation = {
-        'PENDING': { text: 'Ожидает', colorScheme: 'gray' },
-        'APPROVED': { text: 'Принят', colorScheme: 'green' },
-        'REJECTED': { text: 'Отклонён', colorScheme: 'red' }
+        'PENDING': {text: 'Ожидает', colorScheme: 'gray'},
+        'APPROVED': {text: 'Принят', colorScheme: 'green'},
+        'REJECTED': {text: 'Отклонён', colorScheme: 'red'}
     }
 
-    const status = statusTranslation[requestStatus] || { text: requestStatus, colorScheme: 'gray' };
+    const status = statusTranslation[requestStatus] || {text: requestStatus, colorScheme: 'gray'};
 
 
     return (
         <Card
             direction={{base: 'column', sm: 'row'}}
             overflow='hidden'
-            variant='outline'
+            variant={"outline"}
+            boxShadow="lg"
+            borderColor="gray.200"
+            borderRadius="md"
+            bgGradient="linear(to-r, whiteAlpha.50, blackAlpha.50)"
+            color="white"
             size={'sm'}
         >
 
@@ -59,7 +64,8 @@ export default function TransportationRequestCard({transportationRequest, fetchT
                     <Badge colorScheme={status.colorScheme}>
                         {status.text}
                     </Badge>
-                    <Heading size='md'>Заявка на перезку из {sourceWarehouse.address.city} в {destinationWarehouse.address.city}</Heading>
+                    <Heading size='md'>Заявка на перезку
+                        из {sourceWarehouse.address.city} в {destinationWarehouse.address.city}</Heading>
                 </CardHeader>
                 <CardBody>
 
@@ -67,14 +73,21 @@ export default function TransportationRequestCard({transportationRequest, fetchT
                     <Stat>
                         <StatLabel fontSize={'16px'}>Цена: </StatLabel>
                         <StatNumber>{formattedPrice}</StatNumber>
-                        <StatHelpText >Транспорт<Text fontSize={"25px"}>{transportIcons[transport.transportType] || transport.transportType}</Text></StatHelpText>
+                        <StatHelpText>Транспорт<Text
+                            fontSize={"25px"}>{transportIcons[transport.transportType] || transport.transportType}</Text></StatHelpText>
                     </Stat>
 
 
                 </CardBody>
                 <CardFooter>
-                    <AcceptButton changeStatus={() => updateTransportationRequestStatus(id, { ...transportationRequest, requestStatus: 'APPROVED' })} fetchEntity={fetchTransportationRequest}/>
-                    <DeclineButton changeStatus={() => updateTransportationRequestStatus(id, { ...transportationRequest, requestStatus: 'REJECTED' })} fetchEntity={fetchTransportationRequest}/>
+                    <AcceptButton changeStatus={() => updateTransportationRequestStatus(id, {
+                        ...transportationRequest,
+                        requestStatus: 'APPROVED'
+                    })} fetchEntity={fetchTransportationRequest}/>
+                    <DeclineButton changeStatus={() => updateTransportationRequestStatus(id, {
+                        ...transportationRequest,
+                        requestStatus: 'REJECTED'
+                    })} fetchEntity={fetchTransportationRequest}/>
                 </CardFooter>
             </Stack>
         </Card>);

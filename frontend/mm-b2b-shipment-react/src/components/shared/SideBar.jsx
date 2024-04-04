@@ -94,32 +94,32 @@ const SidebarContent = ({onClose, ...rest}) => {
             ) : null}
             {userProfile?.userType == "LOGISTICIAN" ? (
                 <NavItem icon={LuCalculator} to={"/myrequests"}>
-                    Мои заявки
+                    Управление заявками
                 </NavItem>
             ) : null}
             {userProfile?.userType == "TRANSPORT_COMPANY_REP" ? (
                 <NavItem icon={LuShip} to={"/service"}>
-                    Мои перевозки
+                    Перевозки
                 </NavItem>
             ) : null}
             {userProfile?.userType == "TRANSPORT_COMPANY_REP" ? (
                 <NavItem icon={MdOutlineRequestQuote} to={"/servicereqs"}>
-                    Мои заявки
+                    Управление заявками
                 </NavItem>
             ) : null}
             {userProfile?.userType == "WAREHOUSE_REP" ? (
                 <NavItem icon={LuWarehouse} to={"/warehouse"}>
-                    Мои склады
+                    Склады
                 </NavItem>
             ) : null}
             {userProfile?.userType == "WAREHOUSE_REP" ? (
                 <NavItem icon={MdOutlineRequestQuote} to={"/warehousereqs"}>
-                    Мои заявки
+                    Управление заявками
                 </NavItem>
             ) : null}
             {userProfile?.userType == "TRANSPORT_COMPANY_REP" ? (
                 <NavItem icon={LuTruck} to={"/transport"}>
-                    Мой транспорт
+                    Транспорт
                 </NavItem>
             ) : null}
             <NavItem icon={SlSettings} to={"/profile"}>
