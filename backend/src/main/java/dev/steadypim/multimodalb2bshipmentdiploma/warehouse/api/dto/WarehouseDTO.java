@@ -6,6 +6,8 @@ import java.util.UUID;
 
 public record WarehouseDTO(
         Address address,
-        UUID warehouseId
+        UUID warehouseId,
+        Double latitude,
+        Double longitude
 ) {
 }

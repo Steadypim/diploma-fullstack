@@ -7,6 +7,10 @@ import {jwtDecode} from "jwt-decode";
 import {useEffect, useState} from "react";
 import {LuSave} from "react-icons/lu";
 import {saveShipment} from "../../services/shipment.js";
+import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet'
+import {Icon} from 'leaflet'
+import "leaflet/dist/leaflet.css"
+import "../../index.css"
 
 
 // eslint-disable-next-line react/prop-types
@@ -26,6 +30,11 @@ const MySelect = ({label, ...props}) => {
     );
 };
 
+
+const customIcon = new Icon({
+    iconUrl: "https://cdn-icons-png.flaticon.com/128/12348/12348520.png",
+    iconSize: [38, 38]
+                            })
 
 const CreateShipmentForm = () => {
 
@@ -59,9 +68,9 @@ const CreateShipmentForm = () => {
                 }}
                 validationSchema={Yup.object({
                                                  sourceWarehouse: Yup.string()
-                                                                       .required('Обязательное поле'),
+                                                                     .required('Обязательное поле'),
                                                  destinationWarehouse: Yup.string()
-                                                                            .required('Обязательное поле')
+                                                                          .required('Обязательное поле')
                                              })}
                 onSubmit={(shipment, {setSubmitting}) => {
                     setSubmitting(true);
@@ -77,8 +86,7 @@ const CreateShipmentForm = () => {
                             }).catch(err => {
                             console.log(err);
                             errorNotification(
-                                err.code,
-                                "Ошибка сохранения"
+                                "К сожалению, мы пока не можем доставить туда"
                             )
                         }).finally(() => {
                             setSubmitting(false);
@@ -107,6 +115,23 @@ const CreateShipmentForm = () => {
                                     </option>
                                 ))}
                             </MySelect>
+
+                            <div style={{height: "400px"}}>
+                                <MapContainer center={[57.071625, 87.597474]} zoom={3} style={{height: "100%"}}>
+                                    <TileLayer
+                                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                    />
+                                    {warehouses.map((warehouse) => (
+                                        <Marker key={warehouse.warehouseId}
+                                                position={[warehouse.latitude, warehouse.longitude]} icon={customIcon}>
+                                            <Popup>
+                                                {warehouse.address.city}, {warehouse.address.street}, {warehouse.address.houseNumber}
+                                            </Popup>
+                                        </Marker>
+                                    ))}
+                                </MapContainer>
+                            </div>
 
                             <Button disabled={!isValid || isSubmitting} type="submit" leftIcon={<LuSave />}>Сохранить</Button>
                         </Stack>
