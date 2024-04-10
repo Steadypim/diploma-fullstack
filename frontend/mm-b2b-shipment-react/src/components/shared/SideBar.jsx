@@ -102,21 +102,21 @@ const SidebarContent = ({onClose, ...rest}) => {
                     Перевозки
                 </NavItem>
             ) : null}
-            {userProfile?.userType == "TRANSPORT_COMPANY_REP" ? (
-                <NavItem icon={MdOutlineRequestQuote} to={"/servicereqs"}>
-                    Управление заявками
-                </NavItem>
-            ) : null}
+            {/*{userProfile?.userType == "TRANSPORT_COMPANY_REP" ? (*/}
+            {/*    <NavItem icon={MdOutlineRequestQuote} to={"/servicereqs"}>*/}
+            {/*        Управление заявками*/}
+            {/*    </NavItem>*/}
+            {/*) : null}*/}
             {userProfile?.userType == "WAREHOUSE_REP" ? (
                 <NavItem icon={LuWarehouse} to={"/warehouse"}>
                     Склады
                 </NavItem>
             ) : null}
-            {userProfile?.userType == "WAREHOUSE_REP" ? (
-                <NavItem icon={MdOutlineRequestQuote} to={"/warehousereqs"}>
-                    Управление заявками
-                </NavItem>
-            ) : null}
+            {/*{userProfile?.userType == "WAREHOUSE_REP" ? (*/}
+            {/*    <NavItem icon={MdOutlineRequestQuote} to={"/warehousereqs"}>*/}
+            {/*        Управление заявками*/}
+            {/*    </NavItem>*/}
+            {/*) : null}*/}
             {userProfile?.userType == "TRANSPORT_COMPANY_REP" ? (
                 <NavItem icon={LuTruck} to={"/transport"}>
                     Транспорт

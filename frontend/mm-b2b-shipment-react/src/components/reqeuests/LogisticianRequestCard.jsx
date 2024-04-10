@@ -2,9 +2,9 @@ import {GiCargoShip, GiCommercialAirplane} from "react-icons/gi";
 import {FaTrain} from "react-icons/fa";
 import {FaTruckFast} from "react-icons/fa6";
 import {
-    Badge,
+    Badge, Button,
     Card,
-    CardBody,
+    CardBody, CardFooter,
     CardHeader,
     Heading,
     List,
@@ -17,11 +17,16 @@ import {
     Tag,
     Text
 } from "@chakra-ui/react";
-import React from "react";
+import React, {useState} from "react";
+import QRCode from 'qrcode.react';
+import QRCodeButton from "../button/QRCodeButton.jsx";
+
 
 export default function LogisticianRequestCard({logisticianRequest, fetchLogisticianRequest}) {
 
     const {fullPrice, sourceWarehouse, destinationWarehouse, optimalPath, id, requestStatus} = logisticianRequest;
+
+    const [paymentAmount, setPaymentAmount] = useState('');
 
     const transportIcons = {
         'SHIP': GiCargoShip,
@@ -43,6 +48,21 @@ export default function LogisticianRequestCard({logisticianRequest, fetchLogisti
 
     const status = statusTranslation[requestStatus] || {text: requestStatus, colorScheme: 'gray'};
 
+    const handlePayment = () => {
+        setPaymentAmount(formattedPrice);
+    };
+
+    // Фильтрация маршрутов по точке отправления и сортировка в порядке, соответствующем последовательности точек отправления и прибытия
+    const sortedPaths = [];
+    let currentSource = sourceWarehouse;
+    while (currentSource !== destinationWarehouse) {
+        const currentPath = optimalPath.find(path => path.sourceWarehouse.address.city === currentSource.address.city);
+        if (!currentPath) {
+            break; // если не найден маршрут, прерываем цикл
+        }
+        sortedPaths.push(currentPath);
+        currentSource = currentPath.destinationWarehouse; // следующая точка отправления - точка назначения текущего маршрута
+    }
 
     return (
         <Card
@@ -60,16 +80,13 @@ export default function LogisticianRequestCard({logisticianRequest, fetchLogisti
 
             <Stack spacing={0}>
                 <CardHeader>
-                    <Badge colorScheme={status.colorScheme}>
-                        {status.text}
-                    </Badge>
                     <Heading size='md'>Заявка на перевозку
                         из {sourceWarehouse.address.city} в {destinationWarehouse.address.city}</Heading>
                 </CardHeader>
                 <CardBody>
 
                     <List spacing={3} mb={'10px'}>
-                        {optimalPath.map((path, index) => (
+                        {sortedPaths.map((path, index) => (
                             <ListItem key={index}>
                                 <ListIcon
                                     as={transportIcons[path.transport.transportType] || path.transport.transportType}
@@ -89,16 +106,14 @@ export default function LogisticianRequestCard({logisticianRequest, fetchLogisti
                     <Stat>
                         <StatLabel fontSize={'16px'}>Цена: </StatLabel>
                         <StatNumber>{formattedPrice} </StatNumber>
-                        <Text as={'i'} color={'gray.500'} fontSize={'14px'}>Для оплаты доставки требуется подтверждение
-                            всех компаний, ожидайте</Text>
                     </Stat>
 
 
                 </CardBody>
-                {/*<CardFooter>*/}
-                {/*    /!*<Button variant={'outline'}>Оплатить</Button>*!/*/}
-                {/*    /!*<Button ml={'10px'}>Отменить</Button>*!/*/}
-                {/*</CardFooter>*/}
+                <CardFooter>
+                    <QRCodeButton paymentAmount={formattedPrice} />
+                    {/*<Button ml={'10px'}>Отменить</Button>*/}
+                </CardFooter>
             </Stack>
         </Card>);
 }

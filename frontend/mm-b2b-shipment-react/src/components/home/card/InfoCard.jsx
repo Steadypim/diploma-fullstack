@@ -12,7 +12,7 @@ export default function InfoCard({imageUrl, title, description, to}) {
     };
 
     return (
-        <Card maxW='md' onClick={handleClick}
+        <Card maxW='xxl' onClick={handleClick}
               size={'sm'}
               variant={"outline"}
               boxShadow="lg"

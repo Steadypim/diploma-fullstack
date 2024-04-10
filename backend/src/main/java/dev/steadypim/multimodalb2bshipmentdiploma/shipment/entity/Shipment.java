@@ -31,8 +31,12 @@ public class Shipment extends BaseEntity {
     @JoinColumn(name = "destination_warehouse_id")
     Warehouse destinationWarehouse;
 
-    @OneToMany
-    @JoinColumn(name = "shipment_id")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinTable(
+            name = "shipment_transportation_route",
+            joinColumns = @JoinColumn(name = "shipment_id"),
+            inverseJoinColumns = @JoinColumn(name = "transportation_route_id")
+    )
     List<TransportationRoute> optimalPath;
 
     @Column(name = "optimality_metric")

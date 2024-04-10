@@ -22,7 +22,7 @@ public class StorageRequest extends BaseEntity {
     @JoinColumn(name = "warehouse_id", nullable = false)
     Warehouse warehouse;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "shipment_id", nullable = false)
     private Shipment shipment;
 
