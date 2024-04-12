@@ -13,4 +13,8 @@ public interface StorageRequestRepository extends JpaRepository<StorageRequest, 
     Optional<StorageRequest> findByWarehouseIdAndShipmentId(UUID warehouseId, UUID shipmentId);
 
     List<StorageRequest> findAllByWarehouseUserProfileEmail(String email);
+
+    List<StorageRequest> findAllByShipmentId(UUID shipmentId);
+
+    List<StorageRequest> findAllByShipmentIdAndWarehouseUserProfileEmail(UUID shipmentId, String email);
 }

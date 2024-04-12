@@ -14,6 +14,7 @@ public record TransportationRequestDTO(
         TransportDTO transport,
         BigDecimal price,
         UUID userProfileId,
-        RequestStatus requestStatus
+        RequestStatus requestStatus,
+        UUID shipmentId
 ) {
 }

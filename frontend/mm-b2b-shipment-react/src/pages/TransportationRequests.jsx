@@ -5,13 +5,14 @@ import {jwtDecode} from "jwt-decode";
 import {errorNotification} from "../services/notification.js";
 import {getTransportationRequestByUserEmail} from "../services/tranportationRequests.js";
 import TransportationRequestCard from "../components/reqeuests/TransportationRequestCard.jsx";
+import {useAuth} from "../components/context/AuthContext.jsx";
 
 const TransportationRequests = () => {
 
     const [transportationRequests, setTransportationRequests] = useState([]);
     const [loading, setLoading] = useState(false);
     const [, setError] = useState("");
-
+    const {userProfile} = useAuth();
 
     const fetchTransportationRequests = () => {
         setLoading(true);
@@ -35,6 +36,29 @@ const TransportationRequests = () => {
     useEffect(() => {
         fetchTransportationRequests();
     }, [])
+
+    const groupTransportationRequestsByShipmentId = (transportationRequests) => {
+        const groupedRequests = new Map();
+
+        // Проходимся по всем заявкам на транспортировку
+        transportationRequests.forEach(transportationRequest => {
+            const { shipmentId } = transportationRequest;
+
+            // Если в группировке уже есть запись с таким shipmentId,
+            // добавляем текущую заявку в соответствующий массив
+            if (groupedRequests.has(shipmentId)) {
+                groupedRequests.get(shipmentId).push(transportationRequest);
+            } else {
+                // Если записи с таким shipmentId еще нет,
+                // создаем новый массив и добавляем в него текущую заявку
+                groupedRequests.set(shipmentId, [transportationRequest]);
+            }
+        });
+
+        return groupedRequests;
+    };
+
+    const groupedTransportationRequests = groupTransportationRequestsByShipmentId(transportationRequests);
 
 
     if (loading) {
@@ -61,17 +85,18 @@ const TransportationRequests = () => {
 
     return (
         <SidebarWithHeader>
-            {transportationRequests.map((transportationRequest, index) => (
-                <Box key={transportationRequest.id} mb={4}>
+            {Array.from(groupedTransportationRequests.entries()).map(([shipmentId, requests]) => (
+                <Box key={shipmentId} mb={4}>
                     <TransportationRequestCard
-                        key = {index}
-                        transportationRequest={transportationRequest}
+                        email={userProfile?.email}
+                        shipmentId={shipmentId}  // передаем shipmentId в карточку
+                        transportationRequests={requests}  // передаем массив заявок в карточку
                         fetchTransportationRequest={fetchTransportationRequests}
                     />
                 </Box>
             ))}
         </SidebarWithHeader>
-    )
+    );
 }
 
 export default TransportationRequests;

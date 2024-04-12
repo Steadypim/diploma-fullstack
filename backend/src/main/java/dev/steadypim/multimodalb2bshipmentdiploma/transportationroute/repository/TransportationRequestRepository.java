@@ -13,4 +13,8 @@ public interface TransportationRequestRepository extends JpaRepository<Transport
     Optional<TransportationRequest> findByTransportationRouteIdAndShipmentId(UUID transportationRouteId, UUID shipmentId);
 
     List<TransportationRequest> findAllByTransportationRouteUserProfileEmail(String email);
+
+    List<TransportationRequest> findAllByShipmentId(UUID shipmentId);
+
+    List<TransportationRequest> findAllByShipmentIdAndTransportationRouteUserProfileEmail(UUID shipmentId, String email);
 }

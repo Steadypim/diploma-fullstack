@@ -17,11 +17,11 @@ export const getWarehousesForStorageByUserEmail = async (email) => {
     }
 }
 
-export const updateStorageStatus = async (id, statusDto) => {
+export const updateStorageStatus = async (shipmentId, email, statusesDTO) => {
     try {
         return await axios.put(
-            `${import.meta.env.VITE_API_BASE_URL}/storage/${id}`,
-            statusDto,
+            `${import.meta.env.VITE_API_BASE_URL}/storage/${shipmentId}/${email}`,
+            statusesDTO,
             getAuthConfig()
         )
     } catch (e) {

@@ -14,6 +14,8 @@ public record ShipmentDTO(
         WarehouseDTO destinationWarehouse,
         List<TransportationRouteForShipmentControllerDTO> optimalPath,
         BigDecimal fullPrice,
-        RequestStatus requestStatus
+        RequestStatus requestStatus,
+        RequestStatus storageRequest,
+        RequestStatus transportationRequest
 ) {
 }

@@ -1,4 +1,4 @@
-package dev.steadypim.multimodalb2bshipmentdiploma.action;
+package dev.steadypim.multimodalb2bshipmentdiploma.action.shipment;
 
 import java.util.UUID;
 

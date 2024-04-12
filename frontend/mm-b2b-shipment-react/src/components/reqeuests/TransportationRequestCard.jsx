@@ -2,7 +2,7 @@ import {GiCargoShip, GiCommercialAirplane} from "react-icons/gi";
 import {FaTrain} from "react-icons/fa";
 import {FaTruckFast} from "react-icons/fa6";
 import {
-    Badge,
+    Badge, Box,
     Card,
     CardBody,
     CardFooter,
@@ -20,10 +20,12 @@ import AcceptButton from "../button/AcceptButton.jsx";
 import DeclineButton from "../button/DeclineButton.jsx";
 import {updateTransportationRequestStatus} from "../../services/tranportationRequests.js";
 
-export default function TransportationRequestCard({transportationRequest, fetchTransportationRequest}) {
-
-    const {price, requestStatus, sourceWarehouse, destinationWarehouse, transport, id} = transportationRequest;
-
+export default function TransportationRequestCard({
+                                                      shipmentId,
+                                                      transportationRequests,
+                                                      fetchTransportationRequest,
+                                                      email
+                                                  }) {
     const transportIcons = {
         SHIP: <GiCargoShip/>,
         TRAIN: <FaTrain/>,
@@ -31,20 +33,56 @@ export default function TransportationRequestCard({transportationRequest, fetchT
         PLANE: <GiCommercialAirplane/>,
     };
 
-    const formattedPrice = price.toLocaleString('ru-RU', {
+    const statusTranslation = {
+        'PENDING': {text: 'Ожидает подтверждения', colorScheme: 'gray'},
+        'APPROVED': {text: 'Подтверждена', colorScheme: 'yellow'},
+        'REJECTED': {text: 'Отклонена', colorScheme: 'red'},
+        'PAID': {text: 'Оплачена', colorScheme: 'green'},
+    }
+    // Переменная для хранения суммарной цены всех перевозок
+    let totalPrice = 0;
+
+    // Массив для хранения строк с маршрутами
+    const routeStrings = [];
+
+    transportationRequests.forEach((transportationRequest, index) => {
+        const {sourceWarehouse, destinationWarehouse, price, transport} = transportationRequest;
+
+        // Добавляем цену каждой перевозки к суммарной цене
+        totalPrice += price;
+
+        // Формируем строку с маршрутом и добавляем ее в массив
+        const routeString = (
+            <Text key={index} display="flex" alignItems="center">
+                {/* Иконка транспорта */}
+                <Box mr={2}>
+                    {transportIcons[transport.transportType] || transport.transportType}
+                </Box>
+
+                {/* Разделитель между иконкой и текстом маршрута */}
+                {' '}
+
+                {/* Текст маршрута */}
+                {sourceWarehouse.address.city} ⟶ {destinationWarehouse.address.city}
+            </Text>
+        );
+        routeStrings.push(routeString);
+    });
+
+
+    // Форматируем суммарную цену
+    const formattedTotalPrice = totalPrice.toLocaleString('ru-RU', {
         style: 'currency',
         currency: 'RUB'
     });
 
-    const statusTranslation = {
-        'PENDING': {text: 'Ожидает', colorScheme: 'gray'},
-        'APPROVED': {text: 'Принят', colorScheme: 'green'},
-        'REJECTED': {text: 'Отклонён', colorScheme: 'red'}
-    }
+    // Определяем статус
+    const status = statusTranslation[transportationRequests[0]?.requestStatus] || {
+        text: 'Unknown',
+        colorScheme: 'gray'
+    };
 
-    const status = statusTranslation[requestStatus] || {text: requestStatus, colorScheme: 'gray'};
-
-
+    // Возвращаем карточку
     return (
         <Card
             direction={{base: 'column', sm: 'row'}}
@@ -57,38 +95,43 @@ export default function TransportationRequestCard({transportationRequest, fetchT
             color="white"
             size={'sm'}
         >
-
-
             <Stack spacing={0}>
+                {/* Заголовок */}
                 <CardHeader>
+                    <Heading size='md'>Заявка на перевозку</Heading>
                     <Badge colorScheme={status.colorScheme}>
                         {status.text}
                     </Badge>
-                    <Heading size='md'>Заявка на перезку
-                        из {sourceWarehouse.address.city} в {destinationWarehouse.address.city}</Heading>
                 </CardHeader>
+
+                {/* Тело карточки */}
                 <CardBody>
-
-
+                    {/* Суммарная цена */}
                     <Stat>
-                        <StatLabel fontSize={'16px'}>Цена: </StatLabel>
-                        <StatNumber>{formattedPrice}</StatNumber>
-                        <StatHelpText>Транспорт<Text
-                            fontSize={"25px"}>{transportIcons[transport.transportType] || transport.transportType}</Text></StatHelpText>
+                        <StatLabel fontSize={'16px'}>Суммарная цена: </StatLabel>
+                        <StatNumber>{formattedTotalPrice}</StatNumber>
                     </Stat>
 
-
+                    {/* Маршруты */}
+                    <Text fontSize="lg">Маршруты:</Text>
+                    {routeStrings.map((route, index) => (
+                        <Text key={index}>{route}</Text>
+                    ))}
                 </CardBody>
                 <CardFooter>
-                    <AcceptButton changeStatus={() => updateTransportationRequestStatus(id, {
-                        ...transportationRequest,
-                        requestStatus: 'APPROVED'
-                    })} fetchEntity={fetchTransportationRequest}/>
-                    <DeclineButton changeStatus={() => updateTransportationRequestStatus(id, {
-                        ...transportationRequest,
-                        requestStatus: 'REJECTED'
-                    })} fetchEntity={fetchTransportationRequest}/>
+                    <AcceptButton changeStatus={() => updateTransportationRequestStatus(shipmentId, email,
+                                                                                        {
+                                                                                            transportationStatus: 'APPROVED'
+                                                                                        })}
+                                  fetchEntity={fetchTransportationRequest}/>
+                    <DeclineButton changeStatus={() => updateTransportationRequestStatus(shipmentId, email,
+                                                                                         {
+                                                                                             transportationStatus: 'REJECTED'
+                                                                                         })}
+                                   fetchEntity={fetchTransportationRequest}/>
                 </CardFooter>
             </Stack>
-        </Card>);
+        </Card>
+    );
 }
+

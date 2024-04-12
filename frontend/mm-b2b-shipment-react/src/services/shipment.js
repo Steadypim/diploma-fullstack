@@ -28,3 +28,15 @@ export const getAllShipmentsByUserProfileEmail = async (email) => {
         throw e;
     }
 }
+
+export const updateStatuses = async (id, statusesDTO) => {
+    try {
+        return await axios.put(
+            `${import.meta.env.VITE_API_BASE_URL}/shipment/${id}`,
+            statusesDTO,
+            getAuthConfig()
+        )
+    } catch (e) {
+        throw e;
+    }
+}

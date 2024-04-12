@@ -61,11 +61,11 @@ const LogisticianRequests = () => {
 
     return (
         <SidebarWithHeader>
-            {logisticianRequests.map((logisticianRequests, index) => (
-                <Box key={logisticianRequests.id} mb={4}>
+            {logisticianRequests.map((logisticianRequest, index) => (
+                <Box key={logisticianRequest.id} mb={4}>
                     <LogisticianRequestCard
                         key = {index}
-                        logisticianRequest={logisticianRequests}
+                        logisticianRequest={logisticianRequest}
                         fetchLogisticianRequest={fetchLogisticianRequests}
                     />
                 </Box>

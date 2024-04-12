@@ -2,15 +2,18 @@ import SidebarWithHeader from "../components/shared/SideBar.jsx";
 import {useEffect, useState} from "react";
 import {jwtDecode} from "jwt-decode";
 import {errorNotification} from "../services/notification.js";
-import {SimpleGrid, Spinner, Text} from "@chakra-ui/react";
+import {Box, SimpleGrid, Spinner, Text} from "@chakra-ui/react";
 import {getWarehousesForStorageByUserEmail} from "../services/warehouseRequests.js";
 import WarehouseRequestCard from "../components/reqeuests/WarehouseRequestCard.jsx";
+import TransportationRequestCard from "../components/reqeuests/TransportationRequestCard.jsx";
+import {useAuth} from "../components/context/AuthContext.jsx";
 
 const WarehouseRequests = () => {
 
     const [warehouses, setWarehouses] = useState([]);
     const [loading, setLoading] = useState(false);
     const [, setError] = useState("");
+    const {userProfile} = useAuth();
 
 
     const fetchWarehousesForStorage = () => {
@@ -36,6 +39,28 @@ const WarehouseRequests = () => {
         fetchWarehousesForStorage();
     }, [])
 
+    const groupStorageRequestsByShipmentId = (warehouses) => {
+        const groupedRequests = new Map();
+
+        // Проходимся по всем заявкам на транспортировку
+        warehouses.forEach(warehouse => {
+            const { shipmentId } = warehouse;
+
+            // Если в группировке уже есть запись с таким shipmentId,
+            // добавляем текущую заявку в соответствующий массив
+            if (groupedRequests.has(shipmentId)) {
+                groupedRequests.get(shipmentId).push(warehouse);
+            } else {
+                // Если записи с таким shipmentId еще нет,
+                // создаем новый массив и добавляем в него текущую заявку
+                groupedRequests.set(shipmentId, [warehouse]);
+            }
+        });
+
+        return groupedRequests;
+    };
+
+    const groupedStorageRequests = groupStorageRequestsByShipmentId(warehouses);
 
     if (loading) {
         return (
@@ -61,12 +86,16 @@ const WarehouseRequests = () => {
 
     return (
         <SidebarWithHeader>
-            <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
-                {warehouses.map((warehouse ) => (
-
-                    <WarehouseRequestCard key={warehouse.warehouseId} warehouse={warehouse} fetchWarehousesForStorage={fetchWarehousesForStorage}/>
-
-                ))}</SimpleGrid>
+            {Array.from(groupedStorageRequests.entries()).map(([shipmentId, requests]) => (
+                <Box key={shipmentId} mb={4}>
+                    <WarehouseRequestCard
+                        email={userProfile?.email}
+                        shipmentId={shipmentId}  // передаем shipmentId в карточку
+                        storageRequests={requests}  // передаем массив заявок в карточку
+                        fetchWarehousesForStorage={fetchWarehousesForStorage}
+                    />
+                </Box>
+            ))}
         </SidebarWithHeader>
     )
 }

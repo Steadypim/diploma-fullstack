@@ -1,4 +1,4 @@
-package dev.steadypim.multimodalb2bshipmentdiploma.action;
+package dev.steadypim.multimodalb2bshipmentdiploma.action.shipment;
 
 import dev.steadypim.multimodalb2bshipmentdiploma.general.distancecalculator.DistanceCalculator;
 import dev.steadypim.multimodalb2bshipmentdiploma.shipment.entity.Shipment;
@@ -111,6 +111,7 @@ public class CreateShipmentAction {
                      .map(TransportationRoute::getPrice)
                      .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
+
 }
 
 

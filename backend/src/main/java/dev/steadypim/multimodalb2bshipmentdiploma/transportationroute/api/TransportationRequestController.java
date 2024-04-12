@@ -1,5 +1,7 @@
 package dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.api;
 
+import dev.steadypim.multimodalb2bshipmentdiploma.action.requests.UpdateStorageStatusesAction;
+import dev.steadypim.multimodalb2bshipmentdiploma.shipment.api.dto.ShipmentStatusesDTO;
 import dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.api.dto.TransportationRequestDTO;
 import dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.api.mapper.TransportationRequestMapper;
 import dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.service.TransportationRequestService;
@@ -15,6 +17,7 @@ import java.util.UUID;
 public class TransportationRequestController {
     private final TransportationRequestService service;
     private final TransportationRequestMapper mapper;
+    private final UpdateStorageStatusesAction action;
 
     @GetMapping("{email}")
     public List<TransportationRequestDTO> getAllForShipmentByUserProfileEmail(
@@ -23,12 +26,15 @@ public class TransportationRequestController {
         return mapper.toTransportationRouteForShipmentControllerDTOList(service.getAllForShipmentByUserProfileEmail(email));
     }
 
-    @PutMapping("{id}")
-    public TransportationRequestDTO updateStatus(
-            @PathVariable("id") UUID id,
-            @RequestBody TransportationRequestDTO statusDTO
+    @PutMapping("{id}/{email}")
+    public void updateStatus(
+            @PathVariable("id") UUID shipmentId,
+            @PathVariable("email") String email,
+            @RequestBody ShipmentStatusesDTO statusesDTO
                                                       ){
 
-        return mapper.toTransportationRouteForShipmentControllerDTO(service.updateStatus(statusDTO, id));
+        service.updateStatus(statusesDTO, shipmentId, email);
+
+        action.statusUpdate(shipmentId);
     }
 }

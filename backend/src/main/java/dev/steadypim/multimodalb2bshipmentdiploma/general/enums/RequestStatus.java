@@ -6,7 +6,8 @@ import lombok.NoArgsConstructor;
 public enum RequestStatus {
     PENDING("PENDING"),
     APPROVED("APPROVED"),
-    REJECTED("REJECTED");
+    REJECTED("REJECTED"),
+    PAID("PAID");
 
     String status;
 

@@ -1,8 +1,10 @@
 package dev.steadypim.multimodalb2bshipmentdiploma.shipment.api;
 
-import dev.steadypim.multimodalb2bshipmentdiploma.action.CreateShipmentAction;
-import dev.steadypim.multimodalb2bshipmentdiploma.action.CreateShipmentArgument;
+import dev.steadypim.multimodalb2bshipmentdiploma.action.requests.UpdateStorageStatusesAction;
+import dev.steadypim.multimodalb2bshipmentdiploma.action.shipment.CreateShipmentAction;
+import dev.steadypim.multimodalb2bshipmentdiploma.action.shipment.CreateShipmentArgument;
 import dev.steadypim.multimodalb2bshipmentdiploma.shipment.api.dto.ShipmentDTO;
+import dev.steadypim.multimodalb2bshipmentdiploma.shipment.api.dto.ShipmentStatusesDTO;
 import dev.steadypim.multimodalb2bshipmentdiploma.shipment.api.mapper.ShipmentMapper;
 import dev.steadypim.multimodalb2bshipmentdiploma.shipment.entity.Shipment;
 import dev.steadypim.multimodalb2bshipmentdiploma.shipment.service.ShipmentService;
@@ -20,6 +22,7 @@ public class ShipmentController {
     private final ShipmentService service;
     private final CreateShipmentAction action;
     private final ShipmentMapper mapper;
+    private final UpdateStorageStatusesAction updateStorageStatusesAction;
 
     @PostMapping("{email}")
     public ShipmentDTO create(@RequestBody CreateShipmentArgument argument,
@@ -42,5 +45,16 @@ public class ShipmentController {
     @GetMapping("all/{email}")
     public List<ShipmentDTO> getAllUserShipmentsByUserEmail(@PathVariable("email") String email){
         return mapper.toDtoList(service.getAllUserShipments(email));
+    }
+
+    @PutMapping("{id}")
+    public void updateStatuses(
+            @PathVariable("id") UUID id,
+            @RequestBody ShipmentStatusesDTO requestStatus
+                                                ){
+
+        service.updateStatus(id, requestStatus.requestStatus());
+
+        updateStorageStatusesAction.statusUpdate(id);
     }
 }

@@ -2,9 +2,10 @@ import {GiCargoShip, GiCommercialAirplane} from "react-icons/gi";
 import {FaTrain} from "react-icons/fa";
 import {FaTruckFast} from "react-icons/fa6";
 import {
-    Badge, Button,
+    Badge,
     Card,
-    CardBody, CardFooter,
+    CardBody,
+    CardFooter,
     CardHeader,
     Heading,
     List,
@@ -18,7 +19,6 @@ import {
     Text
 } from "@chakra-ui/react";
 import React, {useState} from "react";
-import QRCode from 'qrcode.react';
 import QRCodeButton from "../button/QRCodeButton.jsx";
 
 
@@ -27,6 +27,11 @@ export default function LogisticianRequestCard({logisticianRequest, fetchLogisti
     const {fullPrice, sourceWarehouse, destinationWarehouse, optimalPath, id, requestStatus} = logisticianRequest;
 
     const [paymentAmount, setPaymentAmount] = useState('');
+
+    const isPending = requestStatus === 'PENDING';
+    const isApproved = requestStatus === 'APPROVED';
+    const isRejected = requestStatus === 'REJECTED';
+    const isPaid = requestStatus === 'PAID';
 
     const transportIcons = {
         'SHIP': GiCargoShip,
@@ -41,9 +46,10 @@ export default function LogisticianRequestCard({logisticianRequest, fetchLogisti
     });
 
     const statusTranslation = {
-        'PENDING': {text: 'Ожидает', colorScheme: 'gray'},
-        'APPROVED': {text: 'Принят', colorScheme: 'green'},
-        'REJECTED': {text: 'Отклонён', colorScheme: 'red'}
+        'PENDING': {text: 'Ожидает подтверждения', colorScheme: 'gray'},
+        'APPROVED': {text: 'Подтверждена', colorScheme: 'yellow'},
+        'REJECTED': {text: 'Отклонена', colorScheme: 'red'},
+        'PAID': {text: 'Оплачена', colorScheme: 'green'},
     }
 
     const status = statusTranslation[requestStatus] || {text: requestStatus, colorScheme: 'gray'};
@@ -81,7 +87,11 @@ export default function LogisticianRequestCard({logisticianRequest, fetchLogisti
             <Stack spacing={0}>
                 <CardHeader>
                     <Heading size='md'>Заявка на перевозку
-                        из {sourceWarehouse.address.city} в {destinationWarehouse.address.city}</Heading>
+                        из {sourceWarehouse.address.city} в {destinationWarehouse.address.city} <br/>
+                        <Badge colorScheme={status.colorScheme}>
+                            {status.text}
+                        </Badge>
+                    </Heading>
                 </CardHeader>
                 <CardBody>
 
@@ -111,7 +121,26 @@ export default function LogisticianRequestCard({logisticianRequest, fetchLogisti
 
                 </CardBody>
                 <CardFooter>
-                    <QRCodeButton paymentAmount={formattedPrice} />
+                    {isPending && (
+                        <Text fontSize={"sm"} as='i'>Заявка успешно оформлена, ожидайте подтверждения компаний для
+                            оплаты.</Text>
+                    )}
+                    {isApproved && (
+                        <Stack direction="column" spacing={2}>
+                            <QRCodeButton paymentAmount={formattedPrice}
+                                          id={id}
+                                          fetchLogisticianRequest={fetchLogisticianRequest}/>
+                            <Text fontSize={"sm"} as='i'>Заявка одобрена, вы можете оплачивать</Text>
+                        </Stack>
+                    )}
+                    {isRejected && (
+                        <Text fontSize={"sm"} as='i'>К сожалению, некоторые компании отказались участвовать в этой
+                            перевозке, пожалуйста, сформируйте новую.</Text>
+                    )}
+                    {isPaid && (
+                        <Text fontSize={"sm"} as='i'>Ваша заявка успешно оплачена, компании уже занимаются
+                            транспортировкой вашего груза.</Text>
+                    )}
                     {/*<Button ml={'10px'}>Отменить</Button>*/}
                 </CardFooter>
             </Stack>

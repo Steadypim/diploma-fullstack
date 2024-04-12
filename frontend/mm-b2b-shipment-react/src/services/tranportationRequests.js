@@ -17,11 +17,11 @@ export const getTransportationRequestByUserEmail = async (email) => {
     }
 }
 
-export const updateTransportationRequestStatus = async (id, statusDto) => {
+export const updateTransportationRequestStatus = async (shipmentId, email, statusesDTO) => {
     try {
         return await axios.put(
-            `${import.meta.env.VITE_API_BASE_URL}/transportationRequest/${id}`,
-            statusDto,
+            `${import.meta.env.VITE_API_BASE_URL}/transportationRequest/${shipmentId}/${email}`,
+            statusesDTO,
             getAuthConfig()
         )
     } catch (e) {

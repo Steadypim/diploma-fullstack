@@ -9,6 +9,7 @@ public record StorageRequestDTO(
         UUID id,
         Address address,
         UUID warehouseId,
-        RequestStatus requestStatus
+        RequestStatus requestStatus,
+        UUID shipmentId
 ) {
 }

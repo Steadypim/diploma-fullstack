@@ -1,55 +1,72 @@
-import {Badge, Card, CardBody, CardFooter, CardHeader, Divider, Heading, Icon, Stack, Text} from "@chakra-ui/react";
+import {Badge, Card, CardBody, CardFooter, CardHeader, Heading, Stack, Text} from "@chakra-ui/react";
 import React from "react";
-import {MdOutlineWarehouse} from "react-icons/md";
 import AcceptButton from "../button/AcceptButton.jsx";
 import DeclineButton from "../button/DeclineButton.jsx";
 import {updateStorageStatus} from "../../services/warehouseRequests.js";
 
 
-export default function WarehouseRequestCard({warehouse, fetchWarehousesForStorage}) {
-
-    const {address, warehouseId, requestStatus, id} = warehouse;
+export default function WarehouseRequestCard({storageRequests, fetchWarehousesForStorage, email, shipmentId}) {
 
     const statusTranslation = {
-        'PENDING': {text: 'Ожидает', colorScheme: 'gray'},
-        'APPROVED': {text: 'Принят', colorScheme: 'green'},
-        'REJECTED': {text: 'Отклонён', colorScheme: 'red'}
+        'PENDING': {text: 'Ожидает подтверждения', colorScheme: 'gray'},
+        'APPROVED': {text: 'Подтверждена', colorScheme: 'yellow'},
+        'REJECTED': {text: 'Отклонена', colorScheme: 'red'},
+        'PAID': {text: 'Оплачена', colorScheme: 'green'},
     }
 
-    const status = statusTranslation[requestStatus] || {text: requestStatus, colorScheme: 'gray'};
+    const storageStrings = [];
+
+    storageRequests.forEach((storageRequest, index) => {
+        const {address} = storageRequest;
+
+        const storageString = (
+            <Text key={index} display="flex" alignItems="center">
+                • {address.country}, {address.region}, {address.city}, {address.street}, {address.houseNumber}
+            </Text>
+        );
+        storageStrings.push(storageString);
+    });
+
+    const status = statusTranslation[storageRequests[0]?.requestStatus] || {text: 'Unknown', colorScheme: 'gray'};
 
     return (
-        <Card size={'sm'} style={{display: 'flex', flexDirection: 'column', height: '100%'}} variant={"outline"}
-              boxShadow="lg"
-              borderColor="gray.200"
-              borderRadius="md"
-              bgGradient="linear(to-r, whiteAlpha.50, blackAlpha.50)"
-              color="white">
-            <CardHeader>
-                <Badge colorScheme={status.colorScheme}>
-                    {status.text}
-                </Badge>
-                <Heading size='md'>Заявка на хранение {address.city}, {address.region}</Heading>
-            </CardHeader>
-            <Stack spacing={0}
-                   style={{flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
-                <CardBody
-                    style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
-                    <Icon as={MdOutlineWarehouse} w={20} h={20}/>
-                    <Text>
-                        <strong>Страна:</strong> {address.country}<br/>
-                        <strong>Улица:</strong> {address.street}, д.{address.houseNumber}<br/>
-                        <strong>Почтовый индекс:</strong> {address.postalCode || "Нет"}<br/>
-                    </Text>
+        <Card
+            direction={{base: 'column', sm: 'row'}}
+            overflow='hidden'
+            variant={"outline"}
+            boxShadow="lg"
+            borderColor="gray.200"
+            borderRadius="md"
+            bgGradient="linear(to-r, whiteAlpha.50, blackAlpha.50)"
+            color="white"
+            size={'sm'}
+        >
+            <Stack spacing={0}>
+                {/* Заголовок */}
+                <CardHeader>
+                    <Heading size='md'>Заявка на хранение</Heading>
+                    <Badge colorScheme={status.colorScheme}>
+                        {status.text}
+                    </Badge>
+                </CardHeader>
+
+                {/* Тело карточки */}
+                <CardBody>
+                    {/* Хранения */}
+                    <Text fontSize="lg">Склады:</Text>
+                    {storageStrings.map((storage, index) => (
+                        <Text key={index}>{storage}</Text>
+                    ))}
                 </CardBody>
-                <Divider/>
                 <CardFooter>
-                    <AcceptButton
-                        changeStatus={() => updateStorageStatus(id, {...warehouse, requestStatus: 'APPROVED'})}
-                        fetchEntity={fetchWarehousesForStorage}/>
-                    <DeclineButton
-                        changeStatus={() => updateStorageStatus(id, {...warehouse, requestStatus: 'REJECTED'})}
-                        fetchEntity={fetchWarehousesForStorage}/>
+                    <AcceptButton changeStatus={() => updateStorageStatus(shipmentId, email,
+                                                                          {
+                                                                              storageStatus: 'APPROVED'
+                                                                          })} fetchEntity={fetchWarehousesForStorage}/>
+                    <DeclineButton changeStatus={() => updateStorageStatus(shipmentId, email,
+                                                                           {
+                                                                               storageStatus: 'REJECTED'
+                                                                           })} fetchEntity={fetchWarehousesForStorage}/>
                 </CardFooter>
             </Stack>
         </Card>

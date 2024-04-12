@@ -1,8 +1,8 @@
 package dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.service;
 
 import dev.steadypim.multimodalb2bshipmentdiploma.general.enums.RequestStatus;
+import dev.steadypim.multimodalb2bshipmentdiploma.shipment.api.dto.ShipmentStatusesDTO;
 import dev.steadypim.multimodalb2bshipmentdiploma.shipment.entity.Shipment;
-import dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.api.dto.TransportationRequestDTO;
 import dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.entity.TransportationRequest;
 import dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.entity.TransportationRoute;
 import dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.repository.TransportationRequestRepository;
@@ -28,10 +28,27 @@ public class TransportationRequestService {
         return repository.findAllByTransportationRouteUserProfileEmail(email);
     }
 
-    public TransportationRequest updateStatus(TransportationRequestDTO request, UUID id){
-        TransportationRequest requestToUpdate = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Заявка на перевозку не найдена"));
-        requestToUpdate.setRequestStatus(request.requestStatus());
-        return repository.save(requestToUpdate);
+    public void updateStatus(ShipmentStatusesDTO statusesDTO, UUID shipmentId, String email){
+        List<TransportationRequest> requestToUpdate = repository.findAllByShipmentIdAndTransportationRouteUserProfileEmail(shipmentId, email);
+
+        RequestStatus transportationStatus = statusesDTO.transportationStatus();
+
+        if (transportationStatus != null) {
+            requestToUpdate.forEach(req -> req.setRequestStatus(transportationStatus));
+        }
+
+        repository.saveAll(requestToUpdate);
+    }
+
+    public void updateStatusById(UUID transportationId, RequestStatus status){
+        TransportationRequest transportationRequest = repository.findById(transportationId).orElseThrow(() -> new RuntimeException("Transportation not found"));
+
+        transportationRequest.setRequestStatus(status);
+
+        repository.save(transportationRequest);
+    }
+
+    public List<TransportationRequest> findAllByShipmentId(UUID shipmentId){
+        return repository.findAllByShipmentId(shipmentId);
     }
 }

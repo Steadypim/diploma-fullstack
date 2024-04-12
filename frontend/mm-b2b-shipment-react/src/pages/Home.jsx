@@ -52,7 +52,7 @@ const Home = () => {
                         <Grid
                             templateColumns={{
                                 base: "1fr",
-                                md: "repeat(2, 1fr)"
+                                md: "repeat(3, 1fr)"
                             }} // Один столбец на мобильных устройствах, три столбца на более крупных устройствах
                             gap={{base: 4, md: 8}}
                         >
@@ -62,12 +62,12 @@ const Home = () => {
                                 description="Управляйте своими складскими пространствами в одном месте. Добавляйте, удаляйте и редактируйте их в соответствии с вашими потребностями."
                                 to="/warehouse"
                             />
-                            {/*<InfoCard*/}
-                            {/*    imageUrl="infoCard/application.png"*/}
-                            {/*    title="Управление заявками"*/}
-                            {/*    description="Будьте в курсе всех заявок на хранение. Легко отслеживайте, управляйте и обрабатывайте запросы к вашей компании в удобной форме."*/}
-                            {/*    to="/warehousereqs"*/}
-                            {/*/>*/}
+                            <InfoCard
+                                imageUrl="infoCard/application.png"
+                                title="Управление заявками"
+                                description="Будьте в курсе всех заявок на хранение. Легко отслеживайте, управляйте и обрабатывайте запросы к вашей компании в удобной форме."
+                                to="/warehousereqs"
+                            />
                             <InfoCard
                                 imageUrl="infoCard/settings.png"
                                 title="Настройки"
@@ -81,7 +81,7 @@ const Home = () => {
                     <GridItem rowSpan={1} colSpan={1} justifySelf="center" // Выравнивание по горизонтали
                               alignSelf="center">
                         <Grid
-                            templateColumns={{base: "1fr", md: "repeat(3, 1fr)"}}
+                            templateColumns={{base: "1fr", md: "repeat(4, 1fr)"}}
                             gap={{base: 4, md: 8}}
                         >
                             <InfoCard
@@ -90,12 +90,12 @@ const Home = () => {
                                 description="Управляйте вашими перевозками в одном месте. Добавляйте, удаляйте и настраивайте информацию о ваших транспортировках с легкостью."
                                 to="/service"
                             />
-                            {/*<InfoCard*/}
-                            {/*    imageUrl="infoCard/application.png"*/}
-                            {/*    title="Управление заявками"*/}
-                            {/*    description="Будьте в курсе всех заявок на перевозку. Легко отслеживайте, управляйте и обрабатывайте запросы к вашей компании в удобной форме."*/}
-                            {/*    to="/servicereqs"*/}
-                            {/*/>*/}
+                            <InfoCard
+                                imageUrl="infoCard/application.png"
+                                title="Управление заявками"
+                                description="Будьте в курсе всех заявок на перевозку. Легко отслеживайте, управляйте и обрабатывайте запросы к вашей компании в удобной форме."
+                                to="/servicereqs"
+                            />
                             <InfoCard
                                 imageUrl="infoCard/transport.png"
                                 title="Транспорт"
