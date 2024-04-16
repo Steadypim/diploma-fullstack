@@ -63,7 +63,12 @@ function RequestInfo({shipment}) {
                         )}
                         <Divider mt={'10px'} mb={'10px'}/>
 
-                        <Text align={'center'} fontSize={'xl'}>{shipment ? shipment.name : 'Unknown'}</Text>
+                        <Text align={'center'} fontSize={'xl'}>
+                            Груз: {shipment ? shipment.name : 'Unknown'}
+                        </Text>
+
+
+                        <Divider mt={'10px'} mb={'10px'}/>
                         {shipment && (
                             <>
                                 <Text>
