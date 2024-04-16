@@ -1,5 +1,6 @@
 package dev.steadypim.multimodalb2bshipmentdiploma.user.profile.service;
 
+import dev.steadypim.multimodalb2bshipmentdiploma.address.entity.Address;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.api.dto.UserProfileUpdateDto;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.entity.UserProfile;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.repository.UserProfileRepository;
@@ -31,17 +32,31 @@ public class UserProfileService {
         return repository.findAll();
     }
 
-    public UserProfile update(String email, UserProfileUpdateDto dto){
+    public UserProfile update(String email, UserProfileUpdateDto dto) {
         UserProfile profile = repository.findUserProfileByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Username: " + email + " not found"));
 
         profile.setEmail(dto.email());
-        if(dto.password() != null){
+        if (dto.password() != null) {
             profile.setPassword(passwordEncoder.encode(dto.password()));
         }
         profile.setFirstName(dto.firstName());
         profile.setPatronymic(dto.patronymic());
         profile.setLastName(dto.lastName());
         profile.setPhone(dto.phone());
+        profile.setINN(dto.INN());
+        profile.setOGRN(dto.OGRN());
+        profile.setCompanyName(dto.companyName());
+
+        Address address = Address.builder()
+                                 .country(dto.country())
+                                 .region(dto.region())
+                                 .city(dto.city())
+                                 .street(dto.street())
+                                 .houseNumber(dto.houseNumber())
+                                 .postalCode(dto.postalCode())
+                                 .build();
+
+        profile.setAddress(address);
 
         return repository.save(profile);
     }

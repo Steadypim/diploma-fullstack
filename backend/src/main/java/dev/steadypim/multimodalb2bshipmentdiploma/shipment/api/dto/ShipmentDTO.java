@@ -2,6 +2,7 @@ package dev.steadypim.multimodalb2bshipmentdiploma.shipment.api.dto;
 
 import dev.steadypim.multimodalb2bshipmentdiploma.general.enums.RequestStatus;
 import dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.api.dto.TransportationRouteForShipmentControllerDTO;
+import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.api.dto.UserProfileDTO;
 import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.api.dto.WarehouseDTO;
 
 import java.math.BigDecimal;
@@ -16,6 +17,7 @@ public record ShipmentDTO(
         BigDecimal fullPrice,
         RequestStatus requestStatus,
         RequestStatus storageRequest,
-        RequestStatus transportationRequest
+        RequestStatus transportationRequest,
+        UserProfileDTO userProfile
 ) {
 }

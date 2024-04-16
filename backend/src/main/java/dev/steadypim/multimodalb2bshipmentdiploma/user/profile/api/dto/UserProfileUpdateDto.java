@@ -7,6 +7,16 @@ public record UserProfileUpdateDto(
         String lastName,
         String patronymic,
         String phone,
-        String password
+        String password,
+
+        String companyName,
+        String INN,
+        String OGRN,
+        String country,
+        String region,
+        String city,
+        String street,
+        String postalCode,
+        String houseNumber
 ) {
 }

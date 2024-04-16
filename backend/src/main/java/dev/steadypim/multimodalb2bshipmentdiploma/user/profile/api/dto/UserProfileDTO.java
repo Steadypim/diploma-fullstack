@@ -8,6 +8,15 @@ public record UserProfileDTO(
         String firstName,
         String lastName,
         String patronymic,
-        String phone
+        String phone,
+        String companyName,
+        String INN,
+        String OGRN,
+        String country,
+        String region,
+        String city,
+        String street,
+        String postalCode,
+        String houseNumber
 ) {
 }

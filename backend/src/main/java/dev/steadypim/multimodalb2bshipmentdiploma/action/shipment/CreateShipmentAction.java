@@ -111,7 +111,6 @@ public class CreateShipmentAction {
                      .map(TransportationRoute::getPrice)
                      .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
-
 }
 
 

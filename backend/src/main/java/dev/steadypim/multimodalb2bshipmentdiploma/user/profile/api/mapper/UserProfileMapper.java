@@ -18,5 +18,11 @@ public interface UserProfileMapper {
 
     List<UserProfileDTO> toDtoList(List<UserProfile> userProfiles);
 
+    @Mapping(source = "userProfile.address.country", target = "country")
+    @Mapping(source = "userProfile.address.region", target = "region")
+    @Mapping(source = "userProfile.address.city", target = "city")
+    @Mapping(source = "userProfile.address.street", target = "street")
+    @Mapping(source = "userProfile.address.postalCode", target = "postalCode")
+    @Mapping(source = "userProfile.address.houseNumber", target = "houseNumber")
     UserProfileDTO toDto(UserProfile userProfile);
 }

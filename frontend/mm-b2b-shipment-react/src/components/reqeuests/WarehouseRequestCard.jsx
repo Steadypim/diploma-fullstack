@@ -1,11 +1,40 @@
 import {Badge, Card, CardBody, CardFooter, CardHeader, Heading, Stack, Text} from "@chakra-ui/react";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import AcceptButton from "../button/AcceptButton.jsx";
 import DeclineButton from "../button/DeclineButton.jsx";
 import {updateStorageStatus} from "../../services/warehouseRequests.js";
+import {getShipmentById} from "../../services/shipment.js";
+import {errorNotification} from "../../services/notification.js";
+import RequestInfo from "../button/RequestInfo.jsx";
 
 
 export default function WarehouseRequestCard({storageRequests, fetchWarehousesForStorage, email, shipmentId}) {
+
+    const [shipment, setShipment] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [, setError] = useState("");
+
+    const fetchShipment = () => {
+        setLoading(true);
+        let token = localStorage.getItem("access_token");
+        if (token) {
+            getShipmentById(shipmentId).then(res => {
+                setShipment(res.data)
+            }).catch(err => {
+                setError(err.response.data.message)
+                errorNotification(
+                    err.code,
+                    err.response.data.message
+                )
+            }).finally(() => {
+                setLoading(false)
+            })
+        }
+    }
+
+    useEffect(() => {
+        fetchShipment();
+    }, [])
 
     const statusTranslation = {
         'PENDING': {text: 'Ожидает подтверждения', colorScheme: 'gray'},
@@ -57,6 +86,7 @@ export default function WarehouseRequestCard({storageRequests, fetchWarehousesFo
                     {storageStrings.map((storage, index) => (
                         <Text key={index}>{storage}</Text>
                     ))}
+                    <RequestInfo shipment={shipment}/>
                 </CardBody>
                 <CardFooter>
                     <AcceptButton changeStatus={() => updateStorageStatus(shipmentId, email,

@@ -1,5 +1,6 @@
 package dev.steadypim.multimodalb2bshipmentdiploma.user.profile.entity;
 
+import dev.steadypim.multimodalb2bshipmentdiploma.address.entity.Address;
 import dev.steadypim.multimodalb2bshipmentdiploma.general.BaseEntity;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.enums.UserType;
 import jakarta.persistence.*;
@@ -45,6 +46,16 @@ public class UserProfile extends BaseEntity implements UserDetails {
 
     @Column(name = "phone", length = 15)
     String phone;
+
+    String companyName;
+
+    String INN;
+
+    String OGRN;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    Address address;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -15,10 +15,14 @@ import {
     StatNumber,
     Text
 } from "@chakra-ui/react";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import AcceptButton from "../button/AcceptButton.jsx";
 import DeclineButton from "../button/DeclineButton.jsx";
 import {updateTransportationRequestStatus} from "../../services/tranportationRequests.js";
+import {jwtDecode} from "jwt-decode";
+import {getAllShipmentsByUserProfileEmail, getShipmentById} from "../../services/shipment.js";
+import {errorNotification} from "../../services/notification.js";
+import RequestInfo from "../button/RequestInfo.jsx";
 
 export default function TransportationRequestCard({
                                                       shipmentId,
@@ -26,6 +30,32 @@ export default function TransportationRequestCard({
                                                       fetchTransportationRequest,
                                                       email
                                                   }) {
+    const [shipment, setShipment] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [, setError] = useState("");
+
+    const fetchShipment = () => {
+        setLoading(true);
+        let token = localStorage.getItem("access_token");
+        if (token) {
+            getShipmentById(shipmentId).then(res => {
+                setShipment(res.data)
+            }).catch(err => {
+                setError(err.response.data.message)
+                errorNotification(
+                    err.code,
+                    err.response.data.message
+                )
+            }).finally(() => {
+                setLoading(false)
+            })
+        }
+    }
+
+    useEffect(() => {
+        fetchShipment();
+    }, [])
+
     const transportIcons = {
         SHIP: <GiCargoShip/>,
         TRAIN: <FaTrain/>,
@@ -117,6 +147,7 @@ export default function TransportationRequestCard({
                     {routeStrings.map((route, index) => (
                         <Text key={index}>{route}</Text>
                     ))}
+                    <RequestInfo shipment={shipment}/>
                 </CardBody>
                 <CardFooter>
                     <AcceptButton changeStatus={() => updateTransportationRequestStatus(shipmentId, email,

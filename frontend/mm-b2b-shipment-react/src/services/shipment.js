@@ -40,3 +40,14 @@ export const updateStatuses = async (id, statusesDTO) => {
         throw e;
     }
 }
+
+export const getShipmentById = async(id)=> {
+    try {
+        return await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/shipment/${id}`,
+            getAuthConfig()
+        )
+    } catch (e) {
+        throw e;
+    }
+}

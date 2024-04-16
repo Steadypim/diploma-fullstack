@@ -3,7 +3,7 @@ import {Alert, AlertIcon, Box, Button, Flex, FormLabel, Grid, Image, Input, Spin
 import {Form, Formik, useField} from 'formik';
 import * as Yup from 'yup';
 import {jwtDecode} from "jwt-decode";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {LuSave} from "react-icons/lu";
 import {getUserProfileByEmail, updateUser} from "../services/userProfile.js";
 import SidebarWithHeader from "../components/shared/SideBar.jsx";
@@ -82,12 +82,29 @@ const UserProfile = ({fetchEntity, entity}) => {
                                                  email: Yup.string()
                                                            .email('Это должен быть email')
                                                            .required('Обязательное поле'),
-                                                 firstName: Yup.string(),
-                                                 lastName: Yup.string(),
-                                                 patronymic: Yup.string(),
+                                                 firstName: Yup.string().required('Укажите имя'),
+                                                 lastName: Yup.string().required('Укажите фамилию'),
+                                                 patronymic: Yup.string().required('Укажите отчество'),
                                                  password: Yup.string(),
-                                                 phone: Yup.string().matches(phoneRegExp, 'Номер не действительный').max(12, "Номер должен состоять из 11 цифр"),
-                                                 profilePicture: Yup.mixed()
+                                                 phone: Yup.string().matches(phoneRegExp, 'Номер не действительный').max(12, "Номер должен состоять из 11 цифр")
+                                                           .required('Укажите номер телефона'),
+                                                 companyName: Yup.string().required('Укажите название компании'),
+                                                 INN: Yup.string()
+                                                         .min(10, 'ИНН должен содержать 10 символов')
+                                                         .max(10, 'ИНН должен содержать 10 символов')
+                                                     .required('Укажите ИНН'),
+                                                 OGRN:Yup.string()
+                                                         .min(13, 'ОГРН/ОГРНИП должен содержать не менее 13 символов')
+                                                         .max(13, 'ОГРН/ОГРНИП должен содержать не более 15 символов')
+                                                     .required('Укажите ОГРН/ОГРНИП'),
+                                                 country: Yup.string().required('Укажите страну'),
+                                                 region: Yup.string().required('Укажите регион'),
+                                                 city: Yup.string().required('Укажите город'),
+                                                 street: Yup.string().required('Укажите улицу'),
+                                                 postalCode: Yup.string().notRequired(),
+                                                 houseNumber: Yup.string().required('Укажите номер дома')
+
+
                                              })}
                 onSubmit={(updateDto, {setSubmitting}) => {
                     setSubmitting(true);
@@ -114,7 +131,7 @@ const UserProfile = ({fetchEntity, entity}) => {
             >
                 {({isValid, isSubmitting, dirty}) => (
                     <Form>
-                        <Grid templateColumns="1fr 2fr" gap={6} alignItems="center" p={"5%"}>
+                        <Grid templateColumns="1fr 1fr 1fr" gap={6} alignItems="center" p={"5%"} >
                             <Flex gridColumn={1} justifyContent="center">
                                 <Image w={256} h={256}
                                        src={
@@ -127,44 +144,116 @@ const UserProfile = ({fetchEntity, entity}) => {
                                                : ''}
                                 />
                             </Flex>
-                            <Flex direction="column" gridColumn="2 / span 2">
-                                <MyTextInput
-                                    label="Эл.почта"
-                                    name="email"
-                                    type="email"
-                                    placeholder="Укажите электронную почту"
-                                />
-                                <MyTextInput
-                                    label="Фамилия"
-                                    name="lastName"
-                                    type="lastName"
-                                    placeholder="Укажите вашу фамилию"
-                                />
-                                <MyTextInput
-                                    label="Имя"
-                                    name="firstName"
-                                    type="firstName"
-                                    placeholder="Укажите ваше имя"
-                                />
-                                <MyTextInput
-                                    label="Отчество"
-                                    name="patronymic"
-                                    type="patronymic"
-                                    placeholder="Укажите ваше отчество"
-                                />
-                                <MyTextInput
-                                    label="Номер телефона"
-                                    name="phone"
-                                    type="phone"
-                                    placeholder="Укажите ваш номер телефона"
-                                />
-                                <MyTextInput
-                                    label="Пароль"
-                                    name="password"
-                                    type="password"
-                                    placeholder="Можете обновить пароль"
-                                />
-                            </Flex>
+                            <Box gridColumn={2} maxWidth="80%">
+                                <Box mb={4} fontSize="3xl" fontWeight="bold" textAlign="center">
+                                    Персональные данные
+                                </Box>
+                                <Flex direction="column" gap={4}>
+                                    <MyTextInput
+                                        label="Название компании"
+                                        name="companyName"
+                                        type="companyName"
+                                        placeholder="Укажите название компании, которую представляете"
+                                    />
+                                    <MyTextInput
+                                        label="Эл.почта"
+                                        name="email"
+                                        type="email"
+                                        placeholder="Укажите электронную почту"
+                                    />
+                                    <MyTextInput
+                                        label="Фамилия"
+                                        name="lastName"
+                                        type="lastName"
+                                        placeholder="Укажите вашу фамилию"
+                                    />
+                                    <MyTextInput
+                                        label="Имя"
+                                        name="firstName"
+                                        type="firstName"
+                                        placeholder="Укажите ваше имя"
+                                    />
+                                    <MyTextInput
+                                        label="Отчество"
+                                        name="patronymic"
+                                        type="patronymic"
+                                        placeholder="Укажите ваше отчество"
+                                    />
+                                    <MyTextInput
+                                        label="Номер телефона"
+                                        name="phone"
+                                        type="phone"
+                                        placeholder="Укажите ваш номер телефона"
+                                    />
+                                    <MyTextInput
+                                        label="ИНН"
+                                        name="INN"
+                                        type="INN"
+                                        placeholder="Укажите ИНН компании"
+                                    />
+                                    <MyTextInput
+                                        label="ОГРН/ОГРНИП"
+                                        name="OGRN"
+                                        type="OGRN"
+                                        placeholder="Укажите ОГРН/ОГРНИП"
+                                    />
+
+                                    <MyTextInput
+                                        label="Пароль"
+                                        name="password"
+                                        type="password"
+                                        placeholder="Можете обновить пароль"
+                                    />
+                                </Flex>
+                            </Box>
+                            <Box gridColumn={3} maxWidth="80%">
+                                <Box mb={4} fontSize="3xl" fontWeight="bold" textAlign="center">
+                                    Адрес
+                                </Box>
+                                <Flex direction="column" gap={4}>
+                                    <MyTextInput
+                                        label="Страна"
+                                        name="country"
+                                        type="country"
+                                        placeholder="Введите страну"
+                                    />
+
+                                    <MyTextInput
+                                        label="Регион"
+                                        name="region"
+                                        type="region"
+                                        placeholder="Введите регион"
+                                    />
+
+                                    <MyTextInput
+                                        label="Город"
+                                        name="city"
+                                        type="city"
+                                        placeholder="Введите город"
+                                    />
+
+                                    <MyTextInput
+                                        label="Улица"
+                                        name="street"
+                                        type="street"
+                                        placeholder="Введите улицу"
+                                    />
+
+                                    <MyTextInput
+                                        label="Номер дома"
+                                        name="houseNumber"
+                                        type="houseNumber"
+                                        placeholder="Введите номер дома"
+                                    />
+
+                                    <MyTextInput
+                                        label="Почтовый индекс"
+                                        name="postalCode"
+                                        type="postalCode"
+                                        placeholder="Введите почтовый индекс"
+                                    />
+                                </Flex>
+                            </Box>
                         </Grid>
                         <Flex justifyContent="center">
                             <Button
