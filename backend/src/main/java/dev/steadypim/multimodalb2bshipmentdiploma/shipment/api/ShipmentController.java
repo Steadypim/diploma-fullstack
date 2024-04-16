@@ -33,17 +33,17 @@ public class ShipmentController {
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable("id") UUID id){
+    public void delete(@PathVariable("id") UUID id) {
         service.delete(id);
     }
 
     @GetMapping("{id}")
-    public ShipmentDTO get(@PathVariable("id") UUID id){
+    public ShipmentDTO get(@PathVariable("id") UUID id) {
         return mapper.toDto(service.get(id));
     }
 
     @GetMapping("all/{email}")
-    public List<ShipmentDTO> getAllUserShipmentsByUserEmail(@PathVariable("email") String email){
+    public List<ShipmentDTO> getAllUserShipmentsByUserEmail(@PathVariable("email") String email) {
         return mapper.toDtoList(service.getAllUserShipments(email));
     }
 
@@ -51,7 +51,7 @@ public class ShipmentController {
     public void updateStatuses(
             @PathVariable("id") UUID id,
             @RequestBody ShipmentStatusesDTO requestStatus
-                                                ){
+                              ) {
 
         service.updateStatus(id, requestStatus.requestStatus());
 

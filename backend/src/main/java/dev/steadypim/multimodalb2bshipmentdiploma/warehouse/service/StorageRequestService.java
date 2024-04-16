@@ -42,7 +42,7 @@ public class StorageRequestService {
         repository.saveAll(requestToStatusUpdate);
     }
 
-    public void updateStatusById(UUID storageId, RequestStatus status){
+    public void updateStatusById(UUID storageId, RequestStatus status) {
         StorageRequest storageRequest = repository.findById(storageId).orElseThrow(() -> new RuntimeException("Storage not found"));
 
         storageRequest.setRequestStatus(status);

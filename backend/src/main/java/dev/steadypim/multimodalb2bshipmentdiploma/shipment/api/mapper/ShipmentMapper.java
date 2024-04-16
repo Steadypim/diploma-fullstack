@@ -18,7 +18,6 @@ public interface ShipmentMapper {
     ShipmentDTO toDto(Shipment shipment);
 
 
-
     List<ShipmentDTO> toDtoList(List<Shipment> shipments);
 }
 

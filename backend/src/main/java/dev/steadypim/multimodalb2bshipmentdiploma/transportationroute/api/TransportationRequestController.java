@@ -22,7 +22,7 @@ public class TransportationRequestController {
     @GetMapping("{email}")
     public List<TransportationRequestDTO> getAllForShipmentByUserProfileEmail(
             @PathVariable("email") String email
-                                                                             ){
+                                                                             ) {
         return mapper.toTransportationRouteForShipmentControllerDTOList(service.getAllForShipmentByUserProfileEmail(email));
     }
 
@@ -31,7 +31,7 @@ public class TransportationRequestController {
             @PathVariable("id") UUID shipmentId,
             @PathVariable("email") String email,
             @RequestBody ShipmentStatusesDTO statusesDTO
-                                                      ){
+                            ) {
 
         service.updateStatus(statusesDTO, shipmentId, email);
 

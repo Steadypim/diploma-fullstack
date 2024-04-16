@@ -99,7 +99,7 @@ public class CreateShipmentAction {
 
         Set<TransportationRoute> outgoingRoutes = graph.outgoingEdgesOf(currentVertex);
         List<TransportationRoute> routes = outgoingRoutes.stream().toList();
-        for (int i = 0; i < routes.size(); i++){
+        for (int i = 0; i < routes.size(); i++) {
             TransportationRoute route = routes.get(i);
             double transportationPrice = route.getPrice().doubleValue();
             double sourceWarehousePrice = route.getSourceWarehouse().getPrice().doubleValue();
@@ -107,8 +107,7 @@ public class CreateShipmentAction {
             if (i == routes.size() - 1) {
                 double lastWarehousePrice = route.getDestinationWarehouse().getPrice().doubleValue();
                 totalPriceForRoute = transportationPrice + lastWarehousePrice + sourceWarehousePrice;
-            }
-            else {
+            } else {
                 totalPriceForRoute = transportationPrice + sourceWarehousePrice;
             }
             currentPathCost += totalPriceForRoute;

@@ -2,7 +2,6 @@ package dev.steadypim.multimodalb2bshipmentdiploma.warehouse.api.dto;
 
 import dev.steadypim.multimodalb2bshipmentdiploma.address.entity.Address;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 public record WarehouseDTO(

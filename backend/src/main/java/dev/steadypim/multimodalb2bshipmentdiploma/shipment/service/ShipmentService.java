@@ -64,7 +64,7 @@ public class ShipmentService {
     public Shipment updateStatus(UUID id, RequestStatus status) {
         Shipment shipmentToUpdate = repository.findById(id)
                                               .orElseThrow(() -> new RuntimeException("Shipment not found"));
-        if(status != PAID) {
+        if (status != PAID) {
             shipmentToUpdate.setRequestStatus(status);
         }
 

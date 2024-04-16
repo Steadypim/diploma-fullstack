@@ -43,5 +43,4 @@ public abstract class TransportationRouteMapper {
     @Mapping(source = "route.userProfile.id", target = "userProfileId")
     public abstract TransportationRouteForShipmentControllerDTO toTransportationRouteForShipmentControllerDTO(TransportationRoute route);
 
-
 }

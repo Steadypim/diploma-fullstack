@@ -19,16 +19,16 @@ public class TransportationRequestService {
 
     private final TransportationRequestRepository repository;
 
-    public void save(Shipment shipment, TransportationRoute route, RequestStatus requestStatus){
+    public void save(Shipment shipment, TransportationRoute route, RequestStatus requestStatus) {
         Optional<TransportationRequest> existingRequest = repository.findByTransportationRouteIdAndShipmentId(route.getId(), shipment.getId());
         existingRequest.orElseGet(() -> repository.save(new TransportationRequest(route, shipment, requestStatus)));
     }
 
-    public List<TransportationRequest> getAllForShipmentByUserProfileEmail(String email){
+    public List<TransportationRequest> getAllForShipmentByUserProfileEmail(String email) {
         return repository.findAllByTransportationRouteUserProfileEmail(email);
     }
 
-    public void updateStatus(ShipmentStatusesDTO statusesDTO, UUID shipmentId, String email){
+    public void updateStatus(ShipmentStatusesDTO statusesDTO, UUID shipmentId, String email) {
         List<TransportationRequest> requestToUpdate = repository.findAllByShipmentIdAndTransportationRouteUserProfileEmail(shipmentId, email);
 
         RequestStatus transportationStatus = statusesDTO.transportationStatus();
@@ -40,7 +40,7 @@ public class TransportationRequestService {
         repository.saveAll(requestToUpdate);
     }
 
-    public void updateStatusById(UUID transportationId, RequestStatus status){
+    public void updateStatusById(UUID transportationId, RequestStatus status) {
         TransportationRequest transportationRequest = repository.findById(transportationId).orElseThrow(() -> new RuntimeException("Transportation not found"));
 
         transportationRequest.setRequestStatus(status);
@@ -48,7 +48,7 @@ public class TransportationRequestService {
         repository.save(transportationRequest);
     }
 
-    public List<TransportationRequest> findAllByShipmentId(UUID shipmentId){
+    public List<TransportationRequest> findAllByShipmentId(UUID shipmentId) {
         return repository.findAllByShipmentId(shipmentId);
     }
 }

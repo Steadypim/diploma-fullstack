@@ -1,6 +1,5 @@
 package dev.steadypim.multimodalb2bshipmentdiploma.warehouse.service;
 
-import dev.steadypim.multimodalb2bshipmentdiploma.address.entity.Address;
 import dev.steadypim.multimodalb2bshipmentdiploma.general.geocode.GeocodingService;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.entity.UserProfile;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.repository.UserProfileRepository;
@@ -9,7 +8,6 @@ import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.repository.Warehouse
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;

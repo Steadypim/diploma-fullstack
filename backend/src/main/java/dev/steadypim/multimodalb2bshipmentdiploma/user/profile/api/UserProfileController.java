@@ -49,7 +49,7 @@ public class UserProfileController {
 
     @PutMapping("/update/{email}")
     public UserProfileDTO update(@PathVariable("email") String email,
-                                 @RequestBody UserProfileUpdateDto dto){
+                                 @RequestBody UserProfileUpdateDto dto) {
         return mapper.toDto(service.update(email, dto));
     }
 

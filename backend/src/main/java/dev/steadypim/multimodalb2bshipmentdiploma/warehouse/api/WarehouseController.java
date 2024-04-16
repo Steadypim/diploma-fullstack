@@ -55,7 +55,7 @@ public class WarehouseController {
     }
 
     @GetMapping
-    public List<WarehouseDTO> getAllWarehouses(){
+    public List<WarehouseDTO> getAllWarehouses() {
         return mapper.toDtoList(service.getAllWarehouses());
     }
 

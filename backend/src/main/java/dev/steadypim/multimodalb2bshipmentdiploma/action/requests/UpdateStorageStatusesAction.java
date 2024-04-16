@@ -28,7 +28,7 @@ public class UpdateStorageStatusesAction {
 
         Shipment shipment = shipmentService.get(shipmentId);
 
-        if(shipment.getRequestStatus() == PAID){
+        if (shipment.getRequestStatus() == PAID) {
             storageRequests.forEach(request -> storageRequestService.updateStatusById(request.getId(), PAID));
             transportationRequests.forEach(request -> transportationRequestService.updateStatusById(request.getId(), PAID));
             storageRequests = storageRequestService.findAllByShipmentId(shipmentId);
