@@ -9,7 +9,7 @@ import UpdateWarehouseForm from "../UpdateWarehouseForm.jsx";
 
 export default function WarehouseCard({warehouse, fetchWarehouses}) {
 
-    const {address, warehouseId} = warehouse;
+    const {address, warehouseId, price} = warehouse;
 
     return (
         <Card size={'sm'} style={{display: 'flex', flexDirection: 'column', height: '100%'}} variant={"outline"}
@@ -28,8 +28,9 @@ export default function WarehouseCard({warehouse, fetchWarehouses}) {
                     <Icon as={MdOutlineWarehouse} w={20} h={20}/>
                     <Text>
                         <strong>Страна:</strong> {address.country}<br/>
-                        <strong>Улица:</strong> {address.street}, д.{address.houseNumber}<br/>
+                        <strong>Улица:</strong> {address.street}, д. {address.houseNumber}<br/>
                         <strong>Почтовый индекс:</strong> {address.postalCode || "Нет"}<br/>
+                        <strong>Цена за кг:</strong> {price ? `${price} рублей` : "Нет"}<br/>
                     </Text>
                 </CardBody>
                 <Divider/>

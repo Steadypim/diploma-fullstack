@@ -9,6 +9,7 @@ import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.repository.StorageRe
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,7 +22,8 @@ public class StorageRequestService {
 
     public void save(Shipment shipment, Warehouse warehouse, RequestStatus requestStatus) {
         Optional<StorageRequest> existingRequest = repository.findByWarehouseIdAndShipmentId(warehouse.getId(), shipment.getId());
-        existingRequest.orElseGet(() -> repository.save(new StorageRequest(warehouse, shipment, requestStatus)));
+        BigDecimal storagePrice = warehouse.getPrice().multiply(BigDecimal.valueOf(shipment.getWeight()));
+        existingRequest.orElseGet(() -> repository.save(new StorageRequest(warehouse, shipment, requestStatus, storagePrice)));
     }
 
     public List<StorageRequest> getAllForShipmentByUserProfileEmail(String email) {

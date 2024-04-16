@@ -1,4 +1,16 @@
-import {Badge, Card, CardBody, CardFooter, CardHeader, Heading, Stack, Text} from "@chakra-ui/react";
+import {
+    Badge,
+    Card,
+    CardBody,
+    CardFooter,
+    CardHeader,
+    Heading,
+    Stack,
+    Stat,
+    StatLabel,
+    StatNumber, Tag,
+    Text
+} from "@chakra-ui/react";
 import React, {useEffect, useState} from "react";
 import AcceptButton from "../button/AcceptButton.jsx";
 import DeclineButton from "../button/DeclineButton.jsx";
@@ -6,6 +18,8 @@ import {updateStorageStatus} from "../../services/warehouseRequests.js";
 import {getShipmentById} from "../../services/shipment.js";
 import {errorNotification} from "../../services/notification.js";
 import RequestInfo from "../button/RequestInfo.jsx";
+import {TbBuildingWarehouse} from "react-icons/tb";
+import {FaWarehouse} from "react-icons/fa";
 
 
 export default function WarehouseRequestCard({storageRequests, fetchWarehousesForStorage, email, shipmentId}) {
@@ -44,13 +58,21 @@ export default function WarehouseRequestCard({storageRequests, fetchWarehousesFo
     }
 
     const storageStrings = [];
+    let sumOfStoragePrices = null;
 
     storageRequests.forEach((storageRequest, index) => {
         const {address} = storageRequest;
+        const storagePrice = storageRequest.storagePrice;
+        sumOfStoragePrices += storagePrice;
 
         const storageString = (
             <Text key={index} display="flex" alignItems="center">
-                • {address.country}, {address.region}, {address.city}, {address.street}, {address.houseNumber}
+                <FaWarehouse style={{ marginRight: '5px' }}/>{address.country}, {address.region}, {address.city}, {address.street}, {address.houseNumber} <Tag ml={'5px'}
+                                                                                                                    size={'sm'}
+                                                                                                                    colorScheme='green'
+                                                                                                                    borderRadius='full'>
+                {(storagePrice).toLocaleString('ru-RU')} ₽
+            </Tag>
             </Text>
         );
         storageStrings.push(storageString);
@@ -81,6 +103,13 @@ export default function WarehouseRequestCard({storageRequests, fetchWarehousesFo
 
                 {/* Тело карточки */}
                 <CardBody>
+                    <Stat>
+                        <StatLabel fontSize={'16px'}>Оплата: </StatLabel>
+                        <StatNumber>{sumOfStoragePrices.toLocaleString('ru-RU', {
+                            style: 'currency',
+                            currency: 'RUB'
+                        })}</StatNumber>
+                    </Stat>
                     {/* Хранения */}
                     <Text fontSize="lg">Склады:</Text>
                     {storageStrings.map((storage, index) => (

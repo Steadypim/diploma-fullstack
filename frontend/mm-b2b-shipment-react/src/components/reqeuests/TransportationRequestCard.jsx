@@ -101,7 +101,7 @@ export default function TransportationRequestCard({
 
 
     // Форматируем суммарную цену
-    const formattedTotalPrice = totalPrice.toLocaleString('ru-RU', {
+    const formattedTotalPrice = (totalPrice * shipment.weight).toLocaleString('ru-RU', {
         style: 'currency',
         currency: 'RUB'
     });

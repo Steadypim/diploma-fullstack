@@ -24,12 +24,26 @@ const MyTextInput = ({label, ...props}) => {
 };
 
 const UpdateWarehouseForm = ({fetchEntity, entity}) => {
-    const {address, warehouseId} = entity;
+    const {address, warehouseId, price} = entity;
+    const country = address.country
+    const region = address.region
+    const city = address.city
+    const street = address.street
+    const postalCode = address.postalCode
+    const houseNumber = address.houseNumber
     return (
         <>
             <Formik
                 initialValues={
-                    address
+                    {
+                        country: country,
+                        region: region,
+                        city: city,
+                        street: street,
+                        postalCode: postalCode,
+                        houseNumber: houseNumber,
+                        price: price
+                    }
                 }
                 validationSchema={Yup.object({
                                                  country: Yup.string()
@@ -41,7 +55,9 @@ const UpdateWarehouseForm = ({fetchEntity, entity}) => {
                                                  street: Yup.string()
                                                             .required('Обязательное поле'),
                                                  postalCode: Yup.string(),
-                                                 houseNumber: Yup.string()
+                                                 houseNumber: Yup.string(),
+                                                 price: Yup.number().required('Не забудьте указать цену!')
+
                                              })}
                 onSubmit={(values, {setSubmitting}) => {
                     setSubmitting(true);
@@ -49,7 +65,15 @@ const UpdateWarehouseForm = ({fetchEntity, entity}) => {
                     if (token) {
                         token = jwtDecode(token);
                         const warehouseDTO = {
-                            address: values
+                            address: {
+                                country: values.country,
+                                region: values.region,
+                                city: values.city,
+                                street: values.street,
+                                postalCode: values.postalCode,
+                                houseNumber: values.houseNumber
+                            },
+                            price: values.price
                         };
                         updateWarehouse(warehouseDTO, warehouseId)
                             .then(res => {
@@ -114,6 +138,13 @@ const UpdateWarehouseForm = ({fetchEntity, entity}) => {
                                 name="houseNumber"
                                 type="houseNumber"
                                 placeholder="Введите номер дома"
+                            />
+
+                            <MyTextInput
+                                label="Цена за киллограм"
+                                name="price"
+                                type="price"
+                                placeholder="Укажите цену за хранение киллограма груза"
                             />
 
                             <Button disabled={!(isValid && dirty) || isSubmitting} type="submit"

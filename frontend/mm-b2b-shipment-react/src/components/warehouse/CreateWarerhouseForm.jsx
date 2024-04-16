@@ -1,7 +1,7 @@
 import {Form, Formik, useField} from 'formik';
 import * as Yup from 'yup';
 import {Alert, AlertIcon, Box, Button, FormLabel, Input, Stack} from "@chakra-ui/react";
-import {successNotification, errorNotification} from "../../services/notification.js";
+import {errorNotification, successNotification} from "../../services/notification.js";
 import {saveWarehouse} from "../../services/warehouse.js";
 import {jwtDecode} from "jwt-decode";
 import {LuSave} from "react-icons/lu";
@@ -33,24 +33,26 @@ const CreateUserProfileForm = ({fetchWarehouses}) => {
                     city: '',
                     street: '',
                     postalCode: '',
-                    houseNumber: ''
+                    houseNumber: '',
+                    price: ''
                 }}
                 validationSchema={Yup.object({
-                    country: Yup.string()
-                        .required('Обязательное поле'),
-                    region: Yup.string()
-                        .required('Обязательное поле'),
-                    city: Yup.string()
-                        .required('Обязательное поле'),
-                    street: Yup.string()
-                        .required('Обязательное поле'),
-                    postalCode: Yup.string(),
-                    houseNumber: Yup.string()
-                })}
+                                                 price: Yup.number().required('Не забудьте указать цену!'),
+                                                 country: Yup.string()
+                                                             .required('Обязательное поле'),
+                                                 region: Yup.string()
+                                                            .required('Обязательное поле'),
+                                                 city: Yup.string()
+                                                          .required('Обязательное поле'),
+                                                 street: Yup.string()
+                                                            .required('Обязательное поле'),
+                                                 postalCode: Yup.string(),
+                                                 houseNumber: Yup.string()
+                                             })}
                 onSubmit={(warehouse, {setSubmitting}) => {
                     setSubmitting(true);
                     let token = localStorage.getItem("access_token");
-                    if(token){
+                    if (token) {
                         token = jwtDecode(token);
                         saveWarehouse(warehouse, token.sub)
                             .then(res => {
@@ -117,7 +119,15 @@ const CreateUserProfileForm = ({fetchWarehouses}) => {
                                 placeholder="Введите номер дома"
                             />
 
-                            <Button disabled={!isValid || isSubmitting} type="submit" leftIcon={<LuSave />}>Сохранить</Button>
+                            <MyTextInput
+                                label="Цена за киллограм"
+                                name="price"
+                                type="price"
+                                placeholder="Укажите цену за хранение киллограма груза"
+                            />
+
+                            <Button disabled={!isValid || isSubmitting} type="submit"
+                                    leftIcon={<LuSave/>}>Сохранить</Button>
                         </Stack>
                     </Form>
                 )}

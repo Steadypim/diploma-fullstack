@@ -9,6 +9,7 @@ import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.repository.Warehouse
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -21,13 +22,11 @@ public class WarehouseService {
     private final UserProfileRepository userProfileRepository;
     private final GeocodingService geocodingService;
 
-    public Warehouse createWarehouse(Address address, String email) throws Exception {
+    public Warehouse createWarehouse(Warehouse warehouse, String email) throws Exception {
         UserProfile userProfile = userProfileRepository.findUserProfileByEmail(email)
                                                        .orElseThrow(() -> new RuntimeException("User profile not found while creating a warehouse"));
-        Map<String, Double> geocodeResponse = geocodingService.geocodeAddress(address);
+        Map<String, Double> geocodeResponse = geocodingService.geocodeAddress(warehouse.getAddress());
 
-        Warehouse warehouse = new Warehouse();
-        warehouse.setAddress(address);
         warehouse.setLatitude(geocodeResponse.get("lat"));
         warehouse.setLongitude(geocodeResponse.get("lng"));
         warehouse.setUserProfile(userProfile);
@@ -45,6 +44,7 @@ public class WarehouseService {
                                                 .orElseThrow(() -> new RuntimeException("Warehouse not found"));
 
         warehouseToUpdate.setAddress(warehouse.getAddress());
+        warehouseToUpdate.setPrice(warehouse.getPrice());
 
         repository.save(warehouseToUpdate);
     }

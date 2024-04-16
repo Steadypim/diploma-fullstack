@@ -39,7 +39,7 @@ public class CreateShipmentAction {
         GraphPath<Warehouse, TransportationRoute> shortestPath = findShortestPath(graph, startPoint, endPoint);
 
 
-        BigDecimal fullPrice = calculateTotalPrice(shortestPath.getEdgeList());
+        BigDecimal fullPrice = calculateTotalPrice(shortestPath.getEdgeList(), argument.weight());
 
         Shipment shipment = new Shipment(startPoint, endPoint, shortestPath.getEdgeList(), fullPrice, argument.weight(), argument.name(), argument.description());
 
@@ -98,19 +98,47 @@ public class CreateShipmentAction {
         double currentPathCost = 0.0;
 
         Set<TransportationRoute> outgoingRoutes = graph.outgoingEdgesOf(currentVertex);
-        for (TransportationRoute route : outgoingRoutes) {
-            currentPathCost += route.getPrice().doubleValue();
+        List<TransportationRoute> routes = outgoingRoutes.stream().toList();
+        for (int i = 0; i < routes.size(); i++){
+            TransportationRoute route = routes.get(i);
+            double transportationPrice = route.getPrice().doubleValue();
+            double sourceWarehousePrice = route.getSourceWarehouse().getPrice().doubleValue();
+            double totalPriceForRoute;
+            if (i == routes.size() - 1) {
+                double lastWarehousePrice = route.getDestinationWarehouse().getPrice().doubleValue();
+                totalPriceForRoute = transportationPrice + lastWarehousePrice + sourceWarehousePrice;
+            }
+            else {
+                totalPriceForRoute = transportationPrice + sourceWarehousePrice;
+            }
+            currentPathCost += totalPriceForRoute;
+
         }
 
         return currentPathCost;
     }
 
 
-    private BigDecimal calculateTotalPrice(List<TransportationRoute> routes) {
-        return routes.stream()
-                     .map(TransportationRoute::getPrice)
-                     .reduce(BigDecimal.ZERO, BigDecimal::add);
+    private BigDecimal calculateTotalPrice(List<TransportationRoute> routes, double weight) {
+        BigDecimal totalPrice = BigDecimal.ZERO;
+        BigDecimal prevWarehousePricePerKg = null;
+        for (int i = 0; i < routes.size(); i++) {
+            TransportationRoute route = routes.get(i);
+            BigDecimal warehousePricePerKg = route.getSourceWarehouse().getPrice();
+            BigDecimal routePricePerKg = route.getPrice();
+            BigDecimal totalPriceForRoute;
+            if (i == routes.size() - 1) {
+                // Последний маршрут - учитываем цену из склада получения
+                BigDecimal lastWarehousePricePerKg = route.getDestinationWarehouse().getPrice();
+                totalPriceForRoute = BigDecimal.valueOf(weight).multiply(lastWarehousePricePerKg.add(routePricePerKg).add(warehousePricePerKg));
+            } else {
+                totalPriceForRoute = BigDecimal.valueOf(weight).multiply(warehousePricePerKg.add(routePricePerKg));
+            }
+            totalPrice = totalPrice.add(totalPriceForRoute);
+        }
+        return totalPrice;
     }
+
 }
 
 

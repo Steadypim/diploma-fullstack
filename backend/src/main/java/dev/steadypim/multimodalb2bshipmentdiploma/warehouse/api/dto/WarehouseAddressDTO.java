@@ -6,6 +6,7 @@ public record WarehouseAddressDTO(
         String city,
         String street,
         String postalCode,
-        String houseNumber
+        String houseNumber,
+        Double price
 ) {
 }

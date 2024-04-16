@@ -18,7 +18,7 @@ import static lombok.AccessLevel.PRIVATE;
 @AllArgsConstructor
 @FieldDefaults(level = PRIVATE)
 public class TransportationRequest extends BaseEntity {
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "transportation_id", nullable = false)
     TransportationRoute transportationRoute;
 

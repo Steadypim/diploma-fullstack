@@ -10,6 +10,7 @@ public record StorageRequestDTO(
         Address address,
         UUID warehouseId,
         RequestStatus requestStatus,
-        UUID shipmentId
+        UUID shipmentId,
+        double storagePrice
 ) {
 }

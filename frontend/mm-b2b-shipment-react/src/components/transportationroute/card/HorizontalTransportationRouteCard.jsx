@@ -51,7 +51,7 @@ export default function HorizontalTransportationRouteCard({
                     <Stat>
                         <StatLabel
                             fontSize={'16px'}>Маршрут: {sourceWarehouseName} {"->"} {destinationWarehouseName}</StatLabel>
-                        <StatNumber>{formattedPrice}</StatNumber>
+                        <StatNumber>{formattedPrice}/кг</StatNumber>
                         <StatHelpText>Тип транспорта: <Text
                             fontSize={"25px"}>{transportIcons[transportName] || transportName}</Text></StatHelpText>
                     </Stat>

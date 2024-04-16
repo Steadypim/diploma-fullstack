@@ -28,6 +28,7 @@ export default function LogisticianRequestCard({logisticianRequest, fetchLogisti
 
     const [paymentAmount, setPaymentAmount] = useState('');
 
+
     const isPending = requestStatus === 'PENDING';
     const isApproved = requestStatus === 'APPROVED';
     const isRejected = requestStatus === 'REJECTED';
@@ -106,7 +107,7 @@ export default function LogisticianRequestCard({logisticianRequest, fetchLogisti
                                      size={'sm'}
                                      colorScheme='green'
                                      borderRadius='full'>
-                                    {path.price.toLocaleString('ru-RU')} ₽
+                                    {(path.price * logisticianRequest.weight).toLocaleString('ru-RU')} ₽
                                 </Tag>
                             </ListItem>
                         ))}

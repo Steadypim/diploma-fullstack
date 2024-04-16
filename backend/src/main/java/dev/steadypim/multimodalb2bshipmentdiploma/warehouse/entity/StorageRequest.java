@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.math.BigDecimal;
+
 import static lombok.AccessLevel.PRIVATE;
 
 @Table(name = "storage_request")
@@ -29,4 +31,7 @@ public class StorageRequest extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private RequestStatus requestStatus;
+
+
+    private BigDecimal storagePrice;
 }

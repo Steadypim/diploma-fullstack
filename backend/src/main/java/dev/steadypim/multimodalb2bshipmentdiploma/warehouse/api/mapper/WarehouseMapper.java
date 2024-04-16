@@ -14,7 +14,13 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 @Mapper(componentModel = SPRING)
 public interface WarehouseMapper {
 
-    Address toEntityAddress(WarehouseAddressDTO dto);
+    @Mapping(source = "country", target = "address.country")
+    @Mapping(source = "region", target = "address.region")
+    @Mapping(source = "city", target = "address.city")
+    @Mapping(source = "street", target = "address.street")
+    @Mapping(source = "postalCode", target = "address.postalCode")
+    @Mapping(source = "houseNumber", target = "address.houseNumber")
+    Warehouse toEntityAddress(WarehouseAddressDTO dto);
 
     Warehouse toEntity(WarehouseDTO dto);
 

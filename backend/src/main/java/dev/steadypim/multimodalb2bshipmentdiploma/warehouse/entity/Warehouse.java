@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.math.BigDecimal;
+
 import static lombok.AccessLevel.PRIVATE;
 
 @Table(name = "warehouse")
@@ -29,4 +31,7 @@ public class Warehouse extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "userProfileId")
     UserProfile userProfile;
+
+    @Column(nullable = true)
+    BigDecimal price;
 }

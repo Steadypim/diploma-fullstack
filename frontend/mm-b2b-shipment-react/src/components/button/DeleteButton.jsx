@@ -47,8 +47,7 @@ const DeleteButton = ({onDelete, fetchEntity}) => {
                                     onClose()
                                 }).catch(err =>{
                                     errorNotification(
-                                        err.code,
-                                        err.response.data.message
+                                        "Перевозку нельзя удалить, так как на неё оформлена заявка"
                                     )
                                 }).finally(() => {
                                     onClose()

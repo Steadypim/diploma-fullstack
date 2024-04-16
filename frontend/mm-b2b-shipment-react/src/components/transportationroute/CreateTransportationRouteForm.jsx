@@ -172,7 +172,7 @@ const CreateTransportationRouteForm = ({fetchTransportationRoutes}) => {
 
 
                             <MyTextInput
-                                label="Цена"
+                                label="Цена за киллограм"
                                 name="price"
                                 type="price"
                                 placeholder="Укажите цену перевозки"
