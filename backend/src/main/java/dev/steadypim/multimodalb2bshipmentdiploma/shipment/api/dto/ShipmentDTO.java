@@ -18,6 +18,10 @@ public record ShipmentDTO(
         RequestStatus requestStatus,
         RequestStatus storageRequest,
         RequestStatus transportationRequest,
-        UserProfileDTO userProfile
+        UserProfileDTO userProfile,
+
+        double weight,
+        String name,
+        String description
 ) {
 }

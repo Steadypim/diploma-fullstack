@@ -4,6 +4,9 @@ import java.util.UUID;
 
 public record CreateShipmentArgument(
         UUID sourceWarehouse,
-        UUID destinationWarehouse
+        UUID destinationWarehouse,
+        double weight,
+        String name,
+        String description
 ) {
 }

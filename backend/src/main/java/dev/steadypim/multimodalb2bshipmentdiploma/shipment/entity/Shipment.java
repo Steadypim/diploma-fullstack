@@ -49,14 +49,23 @@ public class Shipment extends BaseEntity {
     @JoinColumn(name = "user_profile_id")
     UserProfile userProfile;
 
+    double weight;
+
+    String name;
+
+    String description;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     RequestStatus requestStatus;
 
-    public Shipment(Warehouse sourceWarehouse, Warehouse destinationWarehouse, List<TransportationRoute> optimalPath, BigDecimal fullPrice) {
+    public Shipment(Warehouse sourceWarehouse, Warehouse destinationWarehouse, List<TransportationRoute> optimalPath, BigDecimal fullPrice, double weight, String name, String description) {
         this.sourceWarehouse = sourceWarehouse;
         this.destinationWarehouse = destinationWarehouse;
         this.optimalPath = optimalPath;
         this.fullPrice = fullPrice;
+        this.weight = weight;
+        this.name = name;
+        this.description = description;
     }
 }

@@ -41,7 +41,7 @@ public class CreateShipmentAction {
 
         BigDecimal fullPrice = calculateTotalPrice(shortestPath.getEdgeList());
 
-        Shipment shipment = new Shipment(startPoint, endPoint, shortestPath.getEdgeList(), fullPrice);
+        Shipment shipment = new Shipment(startPoint, endPoint, shortestPath.getEdgeList(), fullPrice, argument.weight(), argument.name(), argument.description());
 
         return shipmentService.create(shipment, email);
     }

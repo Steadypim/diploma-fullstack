@@ -1,8 +1,20 @@
 import SidebarWithHeader from "../components/shared/SideBar.jsx";
 import CreateShipmentForm from "../components/shipment/CreateShipmentForm.jsx";
-import {Card, CardBody, CardHeader, Heading} from "@chakra-ui/react";
+import {Box, Card, CardBody, CardHeader, Heading} from "@chakra-ui/react";
 
 const Shipment = () => {
+
+    const CustomCard = ({ children, ...rest }) => (
+        <Box
+            bg="white"
+            borderRadius="lg"
+            boxShadow="md"
+            p={6}
+            {...rest}
+        >
+            {children}
+        </Box>
+    );
 
     return (
         <SidebarWithHeader>

@@ -1,10 +1,10 @@
 import {Form, Formik, useField} from 'formik';
 import * as Yup from 'yup';
-import {Alert, AlertIcon, Box, Button, FormLabel, Select, Stack} from "@chakra-ui/react";
+import {Alert, AlertIcon, Box, Button, FormLabel, Input, Select, Stack, Text} from "@chakra-ui/react";
 import {errorNotification, successNotification} from "../../services/notification.js";
 import {getAllWarehouses} from "../../services/warehouse.js";
 import {jwtDecode} from "jwt-decode";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {LuSave} from "react-icons/lu";
 import {saveShipment} from "../../services/shipment.js";
 import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet'
@@ -19,6 +19,22 @@ const MySelect = ({label, ...props}) => {
         <Box>
             <FormLabel htmlFor={props.id || props.name}>{label}</FormLabel>
             <Select {...field} {...props} />
+            {meta.touched && meta.error ? (
+                <Alert className="error" status={"error"} mt={2}>
+                    <AlertIcon/>
+                    {meta.error}
+                </Alert>
+            ) : null}
+        </Box>
+    );
+};
+
+const MyTextInput = ({label, ...props}) => {
+    const [field, meta] = useField(props);
+    return (
+        <Box margin={'0'}>
+            <FormLabel htmlFor={props.id || props.name}>{label}</FormLabel>
+            <Input className="text-input" {...field} {...props}/>
             {meta.touched && meta.error ? (
                 <Alert className="error" status={"error"} mt={2}>
                     <AlertIcon/>
@@ -63,13 +79,17 @@ const CreateShipmentForm = () => {
             <Formik
                 initialValues={{
                     sourceWarehouse: '',
-                    destinationWarehouse: ''
+                    destinationWarehouse: '',
+                    weight: '',
+                    name: '',
+                    description: ''
                 }}
                 validationSchema={Yup.object({
-                                                 sourceWarehouse: Yup.string()
-                                                                     .required('Обязательное поле'),
-                                                 destinationWarehouse: Yup.string()
-                                                                          .required('Обязательное поле')
+                                                 sourceWarehouse: Yup.string().required('Укажите точку отправления'),
+                                                 destinationWarehouse: Yup.string().required('Укажите точку получения'),
+                                                 weight: Yup.number().required('Укажите вес посылки, он влияет на цену!'),
+                                                 name: Yup.string().required('Укажите название посылки'),
+                                                 description: Yup.string().notRequired()
                                              })}
                 onSubmit={(shipment, {setSubmitting}) => {
                     setSubmitting(true);
@@ -114,7 +134,8 @@ const CreateShipmentForm = () => {
                                 ))}
                             </MySelect>
 
-                            <div style={{height: "400px"}}>
+                            <div style={{height: "400px" , marginBottom: "20px"}}>
+                                <Text align={'center'} fontSize='xl' >Вы можете выбрать точки маршрута на карте</Text>
                                 <MapContainer center={[57.071625, 87.597474]} zoom={3} style={{height: "100%"}}>
                                     <TileLayer
                                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -158,6 +179,27 @@ const CreateShipmentForm = () => {
                                     ))}
                                 </MapContainer>
                             </div>
+
+                            <MyTextInput
+                                label="Название"
+                                name="name"
+                                type="name"
+                                placeholder="Укажите название посылки. Что это?"
+                            />
+
+                            <MyTextInput
+                                label="Вес (кг)"
+                                name="weight"
+                                type="weight"
+                                placeholder="Укажите вес посылки, от него зависит цена на перевозку!"
+                            />
+
+                            <MyTextInput
+                                label="Описание"
+                                name="description"
+                                type="description"
+                                placeholder="Здесь вы можете подробнее описать ваш груз, указав требования к упаковке или другую важную информацию"
+                            />
 
                             <Button disabled={!isValid || isSubmitting} type="submit"
                                     leftIcon={<LuSave/>}>Сохранить</Button>
