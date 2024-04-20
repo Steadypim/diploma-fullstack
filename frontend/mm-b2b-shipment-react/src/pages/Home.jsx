@@ -1,18 +1,26 @@
 import {Flex, Grid, GridItem, Heading, Text} from "@chakra-ui/react";
 import SidebarWithHeader from "../components/shared/SideBar.jsx";
 import {useAuth} from "../components/context/AuthContext.jsx";
-import React from "react";
+import React, {useState} from "react";
 import InfoCard from "../components/home/card/InfoCard.jsx";
+import PdfViewer from "../components/home/PdfViewer.jsx";
+import {FaRegFilePdf} from "react-icons/fa";
 
 const Home = () => {
 
     const {userProfile} = useAuth();
+    const [numPages, setNumPages] = useState(null);
+    const [pageNumber, setPageNumber] = useState(1);
+
+    function onDocumentLoadSuccess({numPages}) {
+        setNumPages(numPages);
+    }
 
     return (
         <SidebarWithHeader>
             <Grid
-                h="100vh" // Вы можете настроить высоту сетки в соответствии с вашими потребностями
-                templateRows="repeat(2, 1fr)" // Две строки с одинаковой высотой
+                h="100vh"
+                templateRows="2fr 2fr 2fr" // Первая и третья строки занимают равную высоту, а вторая строка занимает высоту контента
                 templateColumns="1fr" // Один столбец
                 gap={4} // Пространство между элементами в сетке
             >
@@ -44,6 +52,43 @@ const Home = () => {
                         </Text>
                     </Flex>
                 </GridItem>
+                <GridItem mt={'10px'} mb={'20px'}>
+                    <Flex
+                        direction="column" // Изменено на column, чтобы элементы располагались вертикально
+                        h="100%" // Высота изменена на 100%
+                        justify="center"
+                        px={8}
+                        boxShadow="lg"
+                        border="1px solid"
+                        borderColor="gray.200"
+                        borderRadius="md"
+                        bgGradient="linear(to-r, gray.800, gray.900)"
+                        color="white"
+                        rowGap={'50px'}
+                        pl={'30px'}
+                        pr={'30px'}
+                        pb={'30px'}
+                        pt={'20px'}
+                    >
+                        <Text fontSize="2xl" textAlign={'center'}>
+                            Пожалуйста, ознакомьтесь с договором, заполните приложения и отправьте на адрес:
+                            <a href="mailto:b2b@shipment.ru" style={{
+                                marginLeft: "4px",
+                                textDecoration: "underline",
+                                color: "white"
+                            }}>b2b@shipment.ru</a>
+                        </Text>
+
+                        <Flex direction="row" justify="space-between" align="center">
+                            <Flex align="center">
+                                <FaRegFilePdf size={'36px'}/>
+                                <Text fontSize="xl" ml={2}>Договор оферты</Text>
+                            </Flex>
+                            <PdfViewer pdfUrl={"zyxmwqdobx3333efgzuvye3xva9wg7i4.pdf"}/>
+                        </Flex>
+                    </Flex>
+                </GridItem>
+
 
                 {/* Вторая строка */}
                 {userProfile?.userType == "WAREHOUSE_REP" ? (

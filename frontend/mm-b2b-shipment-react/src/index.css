@@ -1,3 +1,39 @@
 .leaflet-container{
     height: 300px;
 }
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* полупрозрачный фон */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* установка самого высокого значения z-index */
+}
+
+.modal {
+    background-color: white;
+    width: 90%; /* ширина модального окна */
+    max-width: 1920px; /* максимальная ширина модального окна */
+    height: 90%; /* высота модального окна */
+    max-height: 1080px; /* максимальная высота модального окна */
+    overflow: auto;
+    position: relative;
+    z-index: 10000; /* установка значения z-index выше, чем у фона */
+}
+
+.close {
+    position: absolute;
+    top: 0px; /* сдвигаем крестик чуть выше по вертикали */
+    right: 0px; /* сдвигаем крестик чуть правее по горизонтали */
+    cursor: pointer;
+    width: 30px; /* увеличиваем ширину крестика */
+    height: 30px; /* увеличиваем высоту крестика */
+    background-color: rgba(255, 255, 255, 0.8); /* полупрозрачный фон */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
