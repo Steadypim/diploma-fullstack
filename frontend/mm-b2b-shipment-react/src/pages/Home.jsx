@@ -70,7 +70,7 @@ const Home = () => {
                         pb={'30px'}
                         pt={'20px'}
                     >
-                        <Text fontSize="2xl" textAlign={'center'}>
+                        <Text fontSize="xl" textAlign={'center'}>
                             Пожалуйста, ознакомьтесь с договором, заполните приложения и отправьте на адрес:
                             <a href="mailto:b2b@shipment.ru" style={{
                                 marginLeft: "4px",
