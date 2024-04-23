@@ -7,6 +7,7 @@ import {getTransportationRequestByUserEmail} from "../services/tranportationRequ
 import TransportationRequestCard from "../components/reqeuests/TransportationRequestCard.jsx";
 import {useAuth} from "../components/context/AuthContext.jsx";
 import {CiSearch} from "react-icons/ci";
+import {getUserProfileByEmail} from "../services/userProfile.js";
 
 const TransportationRequests = () => {
 
@@ -17,6 +18,29 @@ const TransportationRequests = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("");
     const [tagVariant, setTagVariant] = useState("outline");
+
+    const [userProfileStatus, setUserProfileStatus] = useState([]);
+
+    const fetchUserProfile = () => {
+        let token = localStorage.getItem("access_token");
+        if (token) {
+            token = jwtDecode(token);
+            getUserProfileByEmail(token.sub).then(res => {
+                setUserProfileStatus(res.data)
+            }).catch(err => {
+                setError(err.response.data.message)
+                errorNotification(
+                    err.code,
+                    err.response.data.message
+                )
+            }).finally(() => {
+            })
+        }
+    }
+
+    useEffect(() => {
+        fetchUserProfile();
+    }, [])
 
     const fetchTransportationRequests = () => {
         setLoading(true);
@@ -46,7 +70,7 @@ const TransportationRequests = () => {
 
         // Проходимся по всем заявкам на транспортировку
         transportationRequests.forEach(transportationRequest => {
-            const { shipmentId } = transportationRequest;
+            const {shipmentId} = transportationRequest;
 
             // Если в группировке уже есть запись с таким shipmentId,
             // добавляем текущую заявку в соответствующий массив
@@ -123,37 +147,49 @@ const TransportationRequests = () => {
 
     return (
         <SidebarWithHeader>
-            <InputGroup mb={'10px'}>
-                <InputLeftElement pointerEvents="none" children={<CiSearch color="gray.300" />} />
-                <Input type="text" placeholder="Поиск по маршрутам" value={searchTerm} onChange={handleSearchChange} />
-            </InputGroup>
-            <HStack spacing={4} mb={'10px'}>
-                {Object.entries(statusTranslation).map(([statusKey, {text, colorScheme}]) => (
-                    <Tag
-                        key={statusKey}
-                        size="lg"
-                        variant={selectedStatus === statusKey ? "solid" : "outline"}
-                        colorScheme={colorScheme}
-                        onClick={() => handleStatusChange(statusKey)}
-                        cursor="pointer"
-                        _selected={{color: "white", bg: colorScheme}}
-                        isSelected={selectedStatus === statusKey}
-                    >
-                        {text}
-                    </Tag>
-                ))}
-            </HStack>
+            {userProfileStatus.userStatus === 'INACTIVE' ? (
+                <Text fontSize="3xl" textAlign="center" as='em'>
+                    Пожалуйста, заполните и отправьте заявку на сотрудничество с нашей компанией на указанную
+                    электронную почту, скачав её на главной странице.
+                    После рассмотрения вашей заявки, мы предоставим вам доступ к управлению заявками.
+                    Благодарим за ваше внимание и сотрудничество.
+                </Text>
+            ) : (
+                 <>
+                     <InputGroup mb={'10px'}>
+                         <InputLeftElement pointerEvents="none" children={<CiSearch color="gray.300"/>}/>
+                         <Input type="text" placeholder="Поиск по маршрутам" value={searchTerm}
+                                onChange={handleSearchChange}/>
+                     </InputGroup>
+                     <HStack spacing={4} mb={'10px'}>
+                         {Object.entries(statusTranslation).map(([statusKey, {text, colorScheme}]) => (
+                             <Tag
+                                 key={statusKey}
+                                 size="lg"
+                                 variant={selectedStatus === statusKey ? "solid" : "outline"}
+                                 colorScheme={colorScheme}
+                                 onClick={() => handleStatusChange(statusKey)}
+                                 cursor="pointer"
+                                 _selected={{color: "white", bg: colorScheme}}
+                                 isSelected={selectedStatus === statusKey}
+                             >
+                                 {text}
+                             </Tag>
+                         ))}
+                     </HStack>
 
-            {filteredRequests.map(([shipmentId, requests]) => (
-                <Box key={shipmentId} mb={4}>
-                    <TransportationRequestCard
-                        email={userProfile?.email}
-                        shipmentId={shipmentId}  // передаем shipmentId в карточку
-                        transportationRequests={requests}  // передаем массив заявок в карточку
-                        fetchTransportationRequest={fetchTransportationRequests}
-                    />
-                </Box>
-            ))}
+                     {filteredRequests.map(([shipmentId, requests]) => (
+                         <Box key={shipmentId} mb={4}>
+                             <TransportationRequestCard
+                                 email={userProfile?.email}
+                                 shipmentId={shipmentId}  // передаем shipmentId в карточку
+                                 transportationRequests={requests}  // передаем массив заявок в карточку
+                                 fetchTransportationRequest={fetchTransportationRequests}
+                             />
+                         </Box>
+                     ))}
+                 </>
+             )}
         </SidebarWithHeader>
     );
 }

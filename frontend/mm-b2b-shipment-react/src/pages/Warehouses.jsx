@@ -6,12 +6,35 @@ import {errorNotification} from "../services/notification.js";
 import {Box, SimpleGrid, Spinner, Text} from "@chakra-ui/react";
 import {getWarehousesByUserEmail} from "../services/warehouse.js";
 import WarehouseCard from "../components/warehouse/card/WarehouseCard.jsx";
+import {getUserProfileByEmail} from "../services/userProfile.js";
 
 const Warehouses = () => {
 
     const [warehouses, setWarehouses] = useState([]);
     const [loading, setLoading] = useState(false);
     const [, setError] = useState("");
+    const [userProfileStatus, setUserProfileStatus] = useState({});
+
+    const fetchUserProfile = () => {
+        let token = localStorage.getItem("access_token");
+        if (token) {
+            token = jwtDecode(token);
+            getUserProfileByEmail(token.sub).then(res => {
+                setUserProfileStatus(res.data)
+            }).catch(err => {
+                setError(err.response.data.message)
+                errorNotification(
+                    err.code,
+                    err.response.data.message
+                )
+            }).finally(() => {
+            })
+        }
+    }
+
+    useEffect(() => {
+        fetchUserProfile();
+    }, [])
 
 
     const fetchWarehouses = () => {
@@ -52,7 +75,7 @@ const Warehouses = () => {
         )
     }
 
-    if(warehouses.length <= 0){
+    if (warehouses.length <= 0) {
         return (
             <SidebarWithHeader>
                 <CreateWarehouseDrawer
@@ -65,15 +88,27 @@ const Warehouses = () => {
 
     return (
         <SidebarWithHeader>
-            <Box mb={4}><CreateWarehouseDrawer
-                fetchWarehouses={fetchWarehouses}
-            /></Box>
-            <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
-            {warehouses.map((warehouse ) => (
+            {userProfileStatus.userStatus === 'INACTIVE' ? (
+                <Text fontSize="3xl" textAlign="center" as='em'>
+                    Пожалуйста, заполните и отправьте заявку на сотрудничество с нашей компанией на указанную
+                    электронную почту, скачав её на главной странице.
+                    После рассмотрения вашей заявки, мы предоставим вам доступ к управлению вашими складами.
+                    Благодарим за ваше внимание и сотрудничество.
+                </Text>
+            ) : (
+                 <>
+                     <Box mb={4}><CreateWarehouseDrawer
+                         fetchWarehouses={fetchWarehouses}
+                     /></Box>
+                     <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
+                         {warehouses.map((warehouse) => (
 
-                    <WarehouseCard key={warehouse.warehouseId} warehouse={warehouse} fetchWarehouses={fetchWarehouses}/>
+                             <WarehouseCard key={warehouse.warehouseId} warehouse={warehouse}
+                                            fetchWarehouses={fetchWarehouses}/>
 
-            ))}</SimpleGrid>
+                         ))}</SimpleGrid>
+                 </>
+             )}
         </SidebarWithHeader>
     )
 }

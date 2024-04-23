@@ -2,12 +2,12 @@ import SidebarWithHeader from "../components/shared/SideBar.jsx";
 import {useEffect, useState} from "react";
 import {jwtDecode} from "jwt-decode";
 import {errorNotification} from "../services/notification.js";
-import {Box, HStack, Input, InputGroup, InputLeftElement, SimpleGrid, Spinner, Tag, Text} from "@chakra-ui/react";
+import {Box, HStack, Input, InputGroup, InputLeftElement, Spinner, Tag, Text} from "@chakra-ui/react";
 import {getWarehousesForStorageByUserEmail} from "../services/warehouseRequests.js";
 import WarehouseRequestCard from "../components/reqeuests/WarehouseRequestCard.jsx";
-import TransportationRequestCard from "../components/reqeuests/TransportationRequestCard.jsx";
 import {useAuth} from "../components/context/AuthContext.jsx";
 import {CiSearch} from "react-icons/ci";
+import {getUserProfileByEmail} from "../services/userProfile.js";
 
 const WarehouseRequests = () => {
 
@@ -18,6 +18,28 @@ const WarehouseRequests = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("");
     const [tagVariant, setTagVariant] = useState("outline");
+    const [userProfileStatus, setUserProfileStatus] = useState([]);
+
+    const fetchUserProfile = () => {
+        let token = localStorage.getItem("access_token");
+        if (token) {
+            token = jwtDecode(token);
+            getUserProfileByEmail(token.sub).then(res => {
+                setUserProfileStatus(res.data)
+            }).catch(err => {
+                setError(err.response.data.message)
+                errorNotification(
+                    err.code,
+                    err.response.data.message
+                )
+            }).finally(() => {
+            })
+        }
+    }
+
+    useEffect(() => {
+        fetchUserProfile();
+    }, [])
 
 
     const fetchWarehousesForStorage = () => {
@@ -48,7 +70,7 @@ const WarehouseRequests = () => {
 
         // Проходимся по всем заявкам на транспортировку
         warehouses.forEach(warehouse => {
-            const { shipmentId } = warehouse;
+            const {shipmentId} = warehouse;
 
             // Если в группировке уже есть запись с таким shipmentId,
             // добавляем текущую заявку в соответствующий массив
@@ -78,13 +100,13 @@ const WarehouseRequests = () => {
     }
 
     const filteredRequests = Array.from(groupedStorageRequests.entries()).filter(([shipmentId, requests]) =>
-                                                                                            requests.some(request => {
-                                                                                                const sourceCity = request.address.city.toLowerCase();
-                                                                                                const searchText = searchTerm.toLowerCase();
-                                                                                                const statusMatches = !selectedStatus || request.requestStatus === selectedStatus; // Если не выбран статус, игнорируем его при фильтрации
-                                                                                                const warehouseMathes = sourceCity.includes(searchText);
-                                                                                                return statusMatches && warehouseMathes;
-                                                                                            })
+                                                                                     requests.some(request => {
+                                                                                         const sourceCity = request.address.city.toLowerCase();
+                                                                                         const searchText = searchTerm.toLowerCase();
+                                                                                         const statusMatches = !selectedStatus || request.requestStatus === selectedStatus; // Если не выбран статус, игнорируем его при фильтрации
+                                                                                         const warehouseMathes = sourceCity.includes(searchText);
+                                                                                         return statusMatches && warehouseMathes;
+                                                                                     })
     );
 
 
@@ -98,7 +120,6 @@ const WarehouseRequests = () => {
             setTagVariant("solid");
         }
     };
-
 
 
     if (loading) {
@@ -115,7 +136,7 @@ const WarehouseRequests = () => {
         )
     }
 
-    if(warehouses.length <= 0){
+    if (warehouses.length <= 0) {
         return (
             <SidebarWithHeader>
                 <Text>У вас пока нет заявок</Text>
@@ -125,36 +146,48 @@ const WarehouseRequests = () => {
 
     return (
         <SidebarWithHeader>
-            <InputGroup mb={'10px'}>
-                <InputLeftElement pointerEvents="none" children={<CiSearch color="gray.300" />} />
-                <Input type="text" placeholder="Поиск по складам" value={searchTerm} onChange={handleSearchChange} />
-            </InputGroup>
-            <HStack spacing={4} mb={'10px'}>
-                {Object.entries(statusTranslation).map(([statusKey, {text, colorScheme}]) => (
-                    <Tag
-                        key={statusKey}
-                        size="md"
-                        variant={selectedStatus === statusKey ? "solid" : "outline"}
-                        colorScheme={colorScheme}
-                        onClick={() => handleStatusChange(statusKey)}
-                        cursor="pointer"
-                        _selected={{color: "white", bg: colorScheme}}
-                        isSelected={selectedStatus === statusKey}
-                    >
-                        {text}
-                    </Tag>
-                ))}
-            </HStack>
-            {filteredRequests.map(([shipmentId, requests]) => (
-                <Box key={shipmentId} mb={4}>
-                    <WarehouseRequestCard
-                        email={userProfile?.email}
-                        shipmentId={shipmentId}  // передаем shipmentId в карточку
-                        storageRequests={requests}  // передаем массив заявок в карточку
-                        fetchWarehousesForStorage={fetchWarehousesForStorage}
-                    />
-                </Box>
-            ))}
+            {userProfileStatus.userStatus === 'INACTIVE' ? (
+                <Text fontSize="3xl" textAlign="center" as='em'>
+                    Пожалуйста, заполните и отправьте заявку на сотрудничество с нашей компанией на указанную
+                    электронную почту, скачав её на главной странице.
+                    После рассмотрения вашей заявки, мы предоставим вам доступ к управлению заявками.
+                    Благодарим за ваше внимание и сотрудничество.
+                </Text>
+            ) : (
+                 <>
+                     <InputGroup mb={'10px'}>
+                         <InputLeftElement pointerEvents="none" children={<CiSearch color="gray.300"/>}/>
+                         <Input type="text" placeholder="Поиск по складам" value={searchTerm}
+                                onChange={handleSearchChange}/>
+                     </InputGroup>
+                     <HStack spacing={4} mb={'10px'}>
+                         {Object.entries(statusTranslation).map(([statusKey, {text, colorScheme}]) => (
+                             <Tag
+                                 key={statusKey}
+                                 size="md"
+                                 variant={selectedStatus === statusKey ? "solid" : "outline"}
+                                 colorScheme={colorScheme}
+                                 onClick={() => handleStatusChange(statusKey)}
+                                 cursor="pointer"
+                                 _selected={{color: "white", bg: colorScheme}}
+                                 isSelected={selectedStatus === statusKey}
+                             >
+                                 {text}
+                             </Tag>
+                         ))}
+                     </HStack>
+                     {filteredRequests.map(([shipmentId, requests]) => (
+                         <Box key={shipmentId} mb={4}>
+                             <WarehouseRequestCard
+                                 email={userProfile?.email}
+                                 shipmentId={shipmentId}  // передаем shipmentId в карточку
+                                 storageRequests={requests}  // передаем массив заявок в карточку
+                                 fetchWarehousesForStorage={fetchWarehousesForStorage}
+                             />
+                         </Box>
+                     ))}
+                 </>
+             )}
         </SidebarWithHeader>
     )
 }

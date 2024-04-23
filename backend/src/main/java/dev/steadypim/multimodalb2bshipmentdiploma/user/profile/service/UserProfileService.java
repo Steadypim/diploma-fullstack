@@ -1,6 +1,7 @@
 package dev.steadypim.multimodalb2bshipmentdiploma.user.profile.service;
 
 import dev.steadypim.multimodalb2bshipmentdiploma.address.entity.Address;
+import dev.steadypim.multimodalb2bshipmentdiploma.user.enums.UserStatus;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.api.dto.UserProfileUpdateDto;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.entity.UserProfile;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.repository.UserProfileRepository;
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static dev.steadypim.multimodalb2bshipmentdiploma.user.enums.UserStatus.ACTIVE;
+import static dev.steadypim.multimodalb2bshipmentdiploma.user.enums.UserStatus.INACTIVE;
+
 @Service
 @RequiredArgsConstructor
 public class UserProfileService {
@@ -21,6 +25,7 @@ public class UserProfileService {
 
     public void register(UserProfile profile) {
         profile.setPassword(passwordEncoder.encode(profile.getPassword()));
+        profile.setUserStatus(INACTIVE);
         repository.save(profile);
     }
 
@@ -60,4 +65,23 @@ public class UserProfileService {
 
         return repository.save(profile);
     }
+
+    public void activate(String email) {
+        UserProfile userProfile = repository.findUserProfileByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        userProfile.setUserStatus(ACTIVE);
+
+        repository.save(userProfile);
+    }
+
+    public void deactivate(String email) {
+        UserProfile userProfile = repository.findUserProfileByEmail(email)
+                                            .orElseThrow(() -> new RuntimeException("User not found"));
+
+        userProfile.setUserStatus(INACTIVE);
+
+        repository.save(userProfile);
+    }
+
 }

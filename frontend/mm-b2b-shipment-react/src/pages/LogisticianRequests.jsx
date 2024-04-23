@@ -6,6 +6,7 @@ import {errorNotification} from "../services/notification.js";
 import {getAllShipmentsByUserProfileEmail} from "../services/shipment.js";
 import LogisticianRequestCard from "../components/reqeuests/LogisticianRequestCard.jsx";
 import {CiSearch} from "react-icons/ci";
+import {getUserProfileByEmail} from "../services/userProfile.js";
 
 const LogisticianRequests = () => {
 
@@ -15,6 +16,30 @@ const LogisticianRequests = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("");
     const [tagVariant, setTagVariant] = useState("outline");
+    const [userProfile, setUserProfile] = useState([]);
+
+    const fetchUserProfile = () => {
+        setLoading(true);
+        let token = localStorage.getItem("access_token");
+        if (token) {
+            token = jwtDecode(token);
+            getUserProfileByEmail(token.sub).then(res => {
+                setUserProfile(res.data)
+            }).catch(err => {
+                setError(err.response.data.message)
+                errorNotification(
+                    err.code,
+                    err.response.data.message
+                )
+            }).finally(() => {
+                setLoading(false)
+            })
+        }
+    }
+
+    useEffect(() => {
+        fetchUserProfile();
+    }, [])
 
 
     const fetchLogisticianRequests = () => {
@@ -98,36 +123,46 @@ const LogisticianRequests = () => {
 
     return (
         <SidebarWithHeader>
-            <InputGroup mb={'10px'}>
-                <InputLeftElement pointerEvents="none" children={<CiSearch color="gray.300" />} />
-                <Input type="text" placeholder="Поиск по маршрутам" value={searchTerm} onChange={handleSearchChange} />
-            </InputGroup>
-            <HStack spacing={4} mb={'10px'}>
-                {Object.entries(statusTranslation).map(([statusKey, {text, colorScheme}]) => (
-                    <Tag
-                        key={statusKey}
-                        size="lg"
-                        variant={selectedStatus === statusKey ? "solid" : "outline"}
-                        colorScheme={colorScheme}
-                        onClick={() => handleStatusChange(statusKey)}
-                        cursor="pointer"
-                        _selected={{color: "white", bg: colorScheme}}
-                        isSelected={selectedStatus === statusKey}
-                    >
-                        {text}
-                    </Tag>
-                ))}
-            </HStack>
+            {userProfile.userStatus === 'INACTIVE' ? (
+                <Text fontSize="3xl" textAlign="center" as='em'>
+                    Пожалуйста, заполните и отправьте заявку на сотрудничество с нашей компанией на указанную электронную почту, скачав её на главной странице.
+                    После рассмотрения вашей заявки, мы предоставим вам доступ к управлению заявками.
+                    Благодарим за ваше внимание и сотрудничество.
+                </Text>
+            ) : (
+                <>
+                    <InputGroup mb={'10px'}>
+                        <InputLeftElement pointerEvents="none" children={<CiSearch color="gray.300" />} />
+                        <Input type="text" placeholder="Поиск по маршрутам" value={searchTerm} onChange={handleSearchChange} />
+                    </InputGroup>
+                    <HStack spacing={4} mb={'10px'}>
+                        {Object.entries(statusTranslation).map(([statusKey, {text, colorScheme}]) => (
+                            <Tag
+                                key={statusKey}
+                                size="lg"
+                                variant={selectedStatus === statusKey ? "solid" : "outline"}
+                                colorScheme={colorScheme}
+                                onClick={() => handleStatusChange(statusKey)}
+                                cursor="pointer"
+                                _selected={{color: "white", bg: colorScheme}}
+                                isSelected={selectedStatus === statusKey}
+                            >
+                                {text}
+                            </Tag>
+                        ))}
+                    </HStack>
 
-            {filteredRequests.map((logisticianRequest, index) => (
-                <Box key={logisticianRequest.id} mb={4}>
-                    <LogisticianRequestCard
-                        key={index}
-                        logisticianRequest={logisticianRequest}
-                        fetchLogisticianRequest={fetchLogisticianRequests}
-                    />
-                </Box>
-            ))}
+                    {filteredRequests.map((logisticianRequest, index) => (
+                        <Box key={logisticianRequest.id} mb={4}>
+                            <LogisticianRequestCard
+                                key={index}
+                                logisticianRequest={logisticianRequest}
+                                fetchLogisticianRequest={fetchLogisticianRequests}
+                            />
+                        </Box>
+                    ))}
+                </>
+            )}
         </SidebarWithHeader>
     )
 }

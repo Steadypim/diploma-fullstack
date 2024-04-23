@@ -84,9 +84,11 @@ const SidebarContent = ({onClose, ...rest}) => {
                 />
                 <CloseButton display={{base: 'flex', md: 'none'}} onClick={onClose}/>
             </Flex>
-            <NavItem icon={LuHome} to={"/main"}>
-                Главная
-            </NavItem>
+            {userProfile?.userType != "ADMIN" ? (
+                <NavItem icon={LuHome} to={"/main"}>
+                    Главная
+                </NavItem>
+            ) : null}
             {userProfile?.userType == "LOGISTICIAN" ? (
                 <NavItem icon={LuCalculator} to={"/calculate"}>
                     Расчёт маршрутов
@@ -122,9 +124,10 @@ const SidebarContent = ({onClose, ...rest}) => {
                     Транспорт
                 </NavItem>
             ) : null}
-            <NavItem icon={SlSettings} to={"/profile"}>
-                Настройки
-            </NavItem>
+            {userProfile?.userType != "ADMIN" ? (
+                <NavItem icon={SlSettings} to={"/profile"}>
+                    Настройки
+                </NavItem>) : null}
         </Box>
     );
 };

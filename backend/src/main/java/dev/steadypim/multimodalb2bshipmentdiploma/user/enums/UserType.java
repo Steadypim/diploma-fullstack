@@ -6,7 +6,8 @@ import lombok.NoArgsConstructor;
 public enum UserType {
     LOGISTICIAN("LOGISTICIAN"),
     TRANSPORT_COMPANY_REP("TRANSPORT_COMPANY_REP"),
-    WAREHOUSE_REP("WAREHOUSE_REP");
+    WAREHOUSE_REP("WAREHOUSE_REP"),
+    ADMIN("ADMIN");
 
     String type;
 

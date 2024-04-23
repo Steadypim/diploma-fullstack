@@ -82,27 +82,27 @@ const UserProfile = ({fetchEntity, entity}) => {
                                                  email: Yup.string()
                                                            .email('Это должен быть email')
                                                            .required('Обязательное поле'),
-                                                 firstName: Yup.string().required('Укажите имя'),
-                                                 lastName: Yup.string().required('Укажите фамилию'),
-                                                 patronymic: Yup.string().required('Укажите отчество'),
-                                                 password: Yup.string(),
+                                                 firstName: Yup.string().notRequired(),
+                                                 lastName: Yup.string().notRequired(),
+                                                 patronymic: Yup.string().notRequired(),
+                                                 password: Yup.string().notRequired(),
                                                  phone: Yup.string().matches(phoneRegExp, 'Номер не действительный').max(12, "Номер должен состоять из 11 цифр")
-                                                           .required('Укажите номер телефона'),
-                                                 companyName: Yup.string().required('Укажите название компании'),
+                                                           .notRequired(),
+                                                 companyName: Yup.string().notRequired(),
                                                  INN: Yup.string()
                                                          .min(10, 'ИНН должен содержать 10 символов')
                                                          .max(10, 'ИНН должен содержать 10 символов')
-                                                     .required('Укажите ИНН'),
+                                                     .notRequired(),
                                                  OGRN:Yup.string()
                                                          .min(13, 'ОГРН/ОГРНИП должен содержать не менее 13 символов')
                                                          .max(13, 'ОГРН/ОГРНИП должен содержать не более 15 символов')
-                                                     .required('Укажите ОГРН/ОГРНИП'),
-                                                 country: Yup.string().required('Укажите страну'),
-                                                 region: Yup.string().required('Укажите регион'),
-                                                 city: Yup.string().required('Укажите город'),
-                                                 street: Yup.string().required('Укажите улицу'),
+                                                     .notRequired(),
+                                                 country: Yup.string().notRequired(),
+                                                 region: Yup.string().notRequired(),
+                                                 city: Yup.string().notRequired(),
+                                                 street: Yup.string().notRequired(),
                                                  postalCode: Yup.string().notRequired(),
-                                                 houseNumber: Yup.string().required('Укажите номер дома')
+                                                 houseNumber: Yup.string().notRequired()
 
 
                                              })}
@@ -183,7 +183,7 @@ const UserProfile = ({fetchEntity, entity}) => {
                                         label="Номер телефона"
                                         name="phone"
                                         type="phone"
-                                        placeholder="Укажите ваш номер телефона"
+                                        placeholder="Укажите номер с +7"
                                     />
                                     <MyTextInput
                                         label="ИНН"

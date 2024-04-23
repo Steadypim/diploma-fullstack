@@ -53,4 +53,14 @@ public class UserProfileController {
         return mapper.toDto(service.update(email, dto));
     }
 
+    @GetMapping("{email}/activate")
+    public void activate(@PathVariable("email") String email) {
+        service.activate(email);
+    }
+
+    @GetMapping("{email}/deactivate")
+    public void deactivate(@PathVariable("email") String email) {
+        service.deactivate(email);
+    }
+
 }

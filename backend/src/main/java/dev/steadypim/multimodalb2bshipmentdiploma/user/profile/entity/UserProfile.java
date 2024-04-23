@@ -2,6 +2,7 @@ package dev.steadypim.multimodalb2bshipmentdiploma.user.profile.entity;
 
 import dev.steadypim.multimodalb2bshipmentdiploma.address.entity.Address;
 import dev.steadypim.multimodalb2bshipmentdiploma.general.BaseEntity;
+import dev.steadypim.multimodalb2bshipmentdiploma.user.enums.UserStatus;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.enums.UserType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -35,6 +36,9 @@ public class UserProfile extends BaseEntity implements UserDetails {
     @Enumerated(STRING)
     UserType userType;
 
+    @Enumerated(STRING)
+    UserStatus userStatus;
+
     @Column(name = "first_name", length = 30)
     String firstName;
 
@@ -52,6 +56,8 @@ public class UserProfile extends BaseEntity implements UserDetails {
     String INN;
 
     String OGRN;
+
+
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")

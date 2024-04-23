@@ -50,3 +50,36 @@ export const getUserProfileByEmail = async (email) => {
         throw e;
     }
 }
+
+export const getAllUsers = async () => {
+    try {
+        return await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/user/`,
+            getAuthConfig()
+        )
+    } catch (e) {
+        throw e;
+    }
+}
+
+export const activate = async (email) => {
+    try {
+        return await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/user/${email}/activate`,
+            getAuthConfig()
+        )
+    } catch (e) {
+        throw e;
+    }
+}
+
+export const deactivate = async (email) => {
+    try {
+        return await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/user/${email}/deactivate`,
+            getAuthConfig()
+        )
+    } catch (e) {
+        throw e;
+    }
+}

@@ -1,5 +1,6 @@
 package dev.steadypim.multimodalb2bshipmentdiploma.user.profile.api.dto;
 
+import dev.steadypim.multimodalb2bshipmentdiploma.user.enums.UserStatus;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.enums.UserType;
 
 public record UserProfileDTO(
@@ -17,6 +18,7 @@ public record UserProfileDTO(
         String city,
         String street,
         String postalCode,
-        String houseNumber
+        String houseNumber,
+        UserStatus userStatus
 ) {
 }
