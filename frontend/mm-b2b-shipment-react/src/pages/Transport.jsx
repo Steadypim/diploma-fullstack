@@ -84,21 +84,25 @@ const Transport = () => {
                     После рассмотрения вашей заявки, мы предоставим вам доступ к управлению вашим транспортом.
                     Благодарим за ваше внимание и сотрудничество.
                 </Text>
-            ) : (transports.length <= 0 ? <Text>Вы еще не добавили ни один транспорт</Text> :
-                 <>
-                     <Box mb={4}><CreateTransportDrawer
-                         fetchTransports={fetchTransports}
-                     /></Box>
-                     <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
-                         {transports.map((transport) => (
+            ) : (transports.length <= 0 ?
+                 <> <CreateTransportDrawer
+                    fetchTransports={fetchTransports}
+                />
+                <Text>Вы еще не добавили ни один транспорт</Text> </>:
+                <>
+                    <Box mb={4}><CreateTransportDrawer
+                        fetchTransports={fetchTransports}
+                    /></Box>
+                    <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
+                        {transports.map((transport) => (
 
-                             <TransportCard transport={transport} fetchTansports={fetchTransports} key={transport.id}/>
+                            <TransportCard transport={transport} fetchTansports={fetchTransports} key={transport.id}/>
 
-                         ))}</SimpleGrid>
-                 </>
-             )}
-        </SidebarWithHeader>
-    )
-}
+                        ))}</SimpleGrid>
+                </>
+                )}
+                </SidebarWithHeader>
+             )
+            }
 
-export default Transport;
+            export default Transport;

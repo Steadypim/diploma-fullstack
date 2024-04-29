@@ -84,7 +84,10 @@ const Warehouses = () => {
                     После рассмотрения вашей заявки, мы предоставим вам доступ к управлению вашими складами.
                     Благодарим за ваше внимание и сотрудничество.
                 </Text>
-            ) : (warehouses.length <= 0 ? <Text>Вы еще не добавили ни один склад</Text> :
+            ) : (warehouses.length <= 0 ? <><CreateWarehouseDrawer
+                    fetchWarehouses={fetchWarehouses}
+                />
+                <Text>Вы еще не добавили ни один склад</Text> </> :
                  <>
                      <Box mb={4}><CreateWarehouseDrawer
                          fetchWarehouses={fetchWarehouses}
