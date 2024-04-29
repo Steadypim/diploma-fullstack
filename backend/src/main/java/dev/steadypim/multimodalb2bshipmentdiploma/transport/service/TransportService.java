@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+import static dev.steadypim.multimodalb2bshipmentdiploma.enumerated.EntityStatus.ACTIVE;
+import static dev.steadypim.multimodalb2bshipmentdiploma.enumerated.EntityStatus.DELETED;
+
 @Service
 @RequiredArgsConstructor
 public class TransportService {
@@ -21,6 +24,7 @@ public class TransportService {
         UserProfile userProfile = userProfileRepository.findUserProfileByEmail(email)
                                                        .orElseThrow(() -> new RuntimeException("User profile not found while creating a transport"));
         transport.setUserProfile(userProfile);
+        transport.setStatus(ACTIVE);
         return repository.save(transport);
     }
 
@@ -41,12 +45,20 @@ public class TransportService {
         repository.deleteById(uuid);
     }
 
+    public void deleteByStatus(UUID id){
+        Transport transport = repository.findById(id).orElseThrow(() -> new RuntimeException("Transport not found"));
+
+        transport.setStatus(DELETED);
+
+        repository.save(transport);
+    }
+
     public Transport get(UUID uuid) {
         return repository.findById(uuid)
                          .orElseThrow(() -> new RuntimeException("Transport not found"));
     }
 
     public List<Transport> getAllWithUserEmail(String email) {
-        return repository.findAllByUserProfileEmail(email);
+        return repository.findAllByUserProfileEmailAndStatus(email, ACTIVE);
     }
 }

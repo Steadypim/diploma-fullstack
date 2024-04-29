@@ -115,8 +115,9 @@ const CreateShipmentForm = () => {
             >
                 {({isValid, isSubmitting, setFieldValue}) => (
                     <Form>
+                        {warehouses.length <= 0 ? <Text align={'center'} fontSize='xl' >К сожалению, пока нет доступных складов для перевозки</Text> : ''}
                         <Stack spacing={"24px"}>
-                            <MySelect label="Склад отправления" name="sourceWarehouse">
+                            <MySelect label="Склад отправления" name="sourceWarKehouse">
                                 <option value="">Выбрать склад</option>
                                 {warehouses.map((warehouse) => (
                                     <option key={warehouse.warehouseId} value={warehouse.warehouseId}>

@@ -1,6 +1,7 @@
 package dev.steadypim.multimodalb2bshipmentdiploma.warehouse.entity;
 
 import dev.steadypim.multimodalb2bshipmentdiploma.address.entity.Address;
+import dev.steadypim.multimodalb2bshipmentdiploma.enumerated.EntityStatus;
 import dev.steadypim.multimodalb2bshipmentdiploma.general.BaseEntity;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.entity.UserProfile;
 import jakarta.persistence.*;
@@ -34,4 +35,7 @@ public class Warehouse extends BaseEntity {
 
     @Column(nullable = true)
     BigDecimal price;
+
+    @Enumerated(value = EnumType.STRING)
+    EntityStatus status;
 }

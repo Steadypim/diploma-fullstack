@@ -40,6 +40,17 @@ export const deleteTransport = async (id) => {
     }
 }
 
+export const deleteTransportByStatus = async (id) => {
+    try {
+        return await axios.delete(
+            `${import.meta.env.VITE_API_BASE_URL}/transport/status/${id}`,
+            getAuthConfig()
+        )
+    } catch (e) {
+        throw e;
+    }
+}
+
 export const updateTransport = async (transport, id) => {
     try {
         return await axios.put(

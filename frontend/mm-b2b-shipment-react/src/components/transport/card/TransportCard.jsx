@@ -5,7 +5,7 @@ import React from "react";
 import {GiCargoShip, GiCommercialAirplane} from "react-icons/gi";
 import {FaTrain} from "react-icons/fa";
 import {FaTruckFast} from "react-icons/fa6";
-import {deleteTransport} from "../../../services/transport.js";
+import {deleteTransport, deleteTransportByStatus} from "../../../services/transport.js";
 import ExtraInfoPopover from "../../shared/ExtraInfoPopover.jsx";
 import UpdateTransportForm from "../UpdateTransportForm.jsx";
 
@@ -41,7 +41,7 @@ export default function TransportCard({transport, fetchTansports}) {
                 </CardBody>
                 <Divider/>
                 <CardFooter>
-                    <DeleteButton onDelete={() => deleteTransport(transport.id)} fetchEntity={fetchTansports}/>
+                    <DeleteButton onDelete={() => deleteTransportByStatus(transport.id)} fetchEntity={fetchTansports}/>
                     <UpdateButton fetchEntity={fetchTansports} UpdateFormComponent={UpdateTransportForm}
                                   entity={transport}/>
                 </CardFooter>

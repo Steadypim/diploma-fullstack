@@ -53,3 +53,14 @@ export const deleteTransportationRoute = async (id) => {
         throw e;
     }
 }
+
+export const deleteTransportationRouteByStatus = async (id) => {
+    try {
+        return await axios.delete(
+            `${import.meta.env.VITE_API_BASE_URL}/transportationRoute/status/${id}`,
+            getAuthConfig()
+        )
+    } catch (e) {
+        throw e;
+    }
+}

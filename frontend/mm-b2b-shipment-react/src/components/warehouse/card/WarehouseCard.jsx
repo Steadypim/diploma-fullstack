@@ -2,7 +2,7 @@ import {Card, CardBody, CardFooter, CardHeader, Divider, Heading, Icon, Stack, T
 import DeleteButton from "../../button/DeleteButton.jsx";
 import UpdateButton from "../../button/UpdateButton.jsx";
 import React from "react";
-import {deleteWarehouse} from "../../../services/warehouse.js";
+import {deleteWarehouse, deleteWarehouseByStatus} from "../../../services/warehouse.js";
 import {MdOutlineWarehouse} from "react-icons/md";
 import UpdateWarehouseForm from "../UpdateWarehouseForm.jsx";
 
@@ -35,7 +35,7 @@ export default function WarehouseCard({warehouse, fetchWarehouses}) {
                 </CardBody>
                 <Divider/>
                 <CardFooter>
-                    <DeleteButton onDelete={() => deleteWarehouse(warehouseId)} fetchEntity={fetchWarehouses}/>
+                    <DeleteButton onDelete={() => deleteWarehouseByStatus(warehouseId)} fetchEntity={fetchWarehouses}/>
                     <UpdateButton fetchEntity={fetchWarehouses} UpdateFormComponent={UpdateWarehouseForm}
                                   entity={warehouse}/>
                 </CardFooter>

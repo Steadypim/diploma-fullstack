@@ -1,6 +1,6 @@
 import {Card, CardBody, CardFooter, Stack, Stat, StatHelpText, StatLabel, StatNumber, Text} from "@chakra-ui/react";
 import DeleteButton from "../../button/DeleteButton.jsx";
-import {deleteTransportationRoute} from "../../../services/transportationRoute.js";
+import {deleteTransportationRoute, deleteTransportationRouteByStatus} from "../../../services/transportationRoute.js";
 import UpdateButton from "../../button/UpdateButton.jsx";
 import UpdateTransportationRouteForm from "../UpdateTransportationRouteForm.jsx";
 import React from "react";
@@ -59,7 +59,7 @@ export default function HorizontalTransportationRouteCard({
 
                 </CardBody>
                 <CardFooter>
-                    <DeleteButton onDelete={() => deleteTransportationRoute(id)}
+                    <DeleteButton onDelete={() => deleteTransportationRouteByStatus(id)}
                                   fetchEntity={fetchTransportationRoutes}/>
                     <UpdateButton fetchEntity={fetchTransportationRoutes}
                                   UpdateFormComponent={UpdateTransportationRouteForm}

@@ -50,6 +50,17 @@ export const deleteWarehouse = async (id) => {
     }
 }
 
+export const deleteWarehouseByStatus = async (id) => {
+    try {
+        return await axios.delete(
+            `${import.meta.env.VITE_API_BASE_URL}/warehouse/status/${id}`,
+            getAuthConfig()
+        )
+    } catch (e) {
+        throw e;
+    }
+}
+
 export const updateWarehouse = async (warehouse, id) => {
     try {
         return await axios.put(

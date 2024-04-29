@@ -48,6 +48,9 @@ public class WarehouseController {
         service.delete(id);
     }
 
+    @DeleteMapping("status/{id}")
+    public void deleteByStatus(@PathVariable("id") UUID id) {service.deleteByStatus(id);}
+
     @GetMapping("all/{email}")
     public List<WarehouseDTO> getAllByUserProfileEmail(
             @PathVariable("email") String email) {

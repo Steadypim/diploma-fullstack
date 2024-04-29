@@ -1,6 +1,8 @@
 package dev.steadypim.multimodalb2bshipmentdiploma.warehouse.service;
 
+import dev.steadypim.multimodalb2bshipmentdiploma.enumerated.EntityStatus;
 import dev.steadypim.multimodalb2bshipmentdiploma.general.geocode.GeocodingService;
+import dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.entity.TransportationRoute;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.entity.UserProfile;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.repository.UserProfileRepository;
 import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.entity.Warehouse;
@@ -11,6 +13,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import static dev.steadypim.multimodalb2bshipmentdiploma.enumerated.EntityStatus.ACTIVE;
+import static dev.steadypim.multimodalb2bshipmentdiploma.enumerated.EntityStatus.DELETED;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +33,7 @@ public class WarehouseService {
         warehouse.setLatitude(geocodeResponse.get("lat"));
         warehouse.setLongitude(geocodeResponse.get("lng"));
         warehouse.setUserProfile(userProfile);
+        warehouse.setStatus(ACTIVE);
 
         return repository.save(warehouse);
     }
@@ -51,12 +57,20 @@ public class WarehouseService {
         repository.deleteById(uuid);
     }
 
+    public void deleteByStatus(UUID id) {
+        Warehouse warehouse = repository.findById(id).orElseThrow(() -> new RuntimeException("Transportation route not found"));
+
+        warehouse.setStatus(DELETED);
+
+        repository.save(warehouse);
+    }
+
     public List<Warehouse> getAllWithUserEmail(String email) {
-        return repository.findAllByUserProfileEmail(email);
+        return repository.findAllByUserProfileEmailAndStatus(email, ACTIVE);
     }
 
     public List<Warehouse> getAllWarehouses() {
-        return repository.findAll();
+        return repository.findAllByStatus(ACTIVE);
     }
 
 }

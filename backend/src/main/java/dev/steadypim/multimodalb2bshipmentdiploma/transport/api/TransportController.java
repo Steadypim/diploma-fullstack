@@ -34,6 +34,9 @@ public class TransportController {
         service.delete(id);
     }
 
+    @DeleteMapping("status/{id}")
+    public void deleteByStatus(@PathVariable("id") UUID id) {service.deleteByStatus(id);}
+
     @GetMapping("all/{email}")
     public List<TransportDTO> getAllByUserProfileEmail(@PathVariable("email") String email) {
         return mapper.toEntityList(service.getAllWithUserEmail(email));

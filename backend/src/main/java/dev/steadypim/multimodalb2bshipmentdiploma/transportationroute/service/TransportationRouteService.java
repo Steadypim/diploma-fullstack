@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+import static dev.steadypim.multimodalb2bshipmentdiploma.enumerated.EntityStatus.ACTIVE;
+import static dev.steadypim.multimodalb2bshipmentdiploma.enumerated.EntityStatus.DELETED;
+
 @Service
 @RequiredArgsConstructor
 public class TransportationRouteService {
@@ -32,6 +35,7 @@ public class TransportationRouteService {
         UserProfile userProfile = userProfileRepository.findUserProfileByEmail(email)
                                                        .orElseThrow(() -> new RuntimeException("User profile not found while creating a route"));
         route.setUserProfile(userProfile);
+        route.setStatus(ACTIVE);
         return repository.save(route);
     }
 
@@ -51,16 +55,24 @@ public class TransportationRouteService {
         repository.deleteById(uuid);
     }
 
+    public void deleteByStatus(UUID id) {
+        TransportationRoute transportationRoute = repository.findById(id).orElseThrow(() -> new RuntimeException("Transportation route not found"));
+
+        transportationRoute.setStatus(DELETED);
+
+        repository.save(transportationRoute);
+    }
+
     public TransportationRoute get(UUID uuid) {
         return repository.findById(uuid)
                          .orElseThrow(() -> new RuntimeException("Route not found"));
     }
 
     public List<TransportationRoute> getAllWithUserProfileEmail(String email) {
-        return repository.findAllByUserProfileEmail(email);
+        return repository.findAllByUserProfileEmailAndStatus(email, ACTIVE);
     }
 
     public List<TransportationRoute> getAllTransportationRoutes() {
-        return repository.findAll();
+        return repository.findAllByStatus(ACTIVE);
     }
 }
