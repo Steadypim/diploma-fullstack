@@ -11,7 +11,7 @@ import {
 import {useState} from "react";
 import {activate, deactivate} from "../../services/userProfile.js";
 
-const UserUpdateModalButton = ({user}) => {
+const UserUpdateModalButton = ({user, refreshData}) => {
 
     const [showModal, setShowModal] = useState(false);
     const {email, userStatus} = user
@@ -25,12 +25,14 @@ const UserUpdateModalButton = ({user}) => {
         if (userStatus === 'INACTIVE') {
             activate(email).then(response => {
                 console.log("activated")
+                refreshData();
             }).catch(error => {
                 console.error('Error activating user:', error);
             });
         } else {
             deactivate(email).then(response => {
                 console.log("deactivated")
+                refreshData();
             }).catch(error => {
                 console.error('Error deactivating user:', error);
             });

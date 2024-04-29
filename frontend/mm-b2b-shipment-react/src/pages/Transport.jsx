@@ -75,17 +75,6 @@ const Transport = () => {
         )
     }
 
-    if (transports.length <= 0) {
-        return (
-            <SidebarWithHeader>
-                <CreateTransportDrawer
-                    fetchTransports={fetchTransports}
-                />
-                <Text>Вы еще не добавили ни один транспорт</Text>
-            </SidebarWithHeader>
-        )
-    }
-
     return (
         <SidebarWithHeader>
             {userProfileStatus.userStatus === 'INACTIVE' ? (
@@ -95,7 +84,7 @@ const Transport = () => {
                     После рассмотрения вашей заявки, мы предоставим вам доступ к управлению вашим транспортом.
                     Благодарим за ваше внимание и сотрудничество.
                 </Text>
-            ) : (
+            ) : (transports.length <= 0 ? <Text>Вы еще не добавили ни один транспорт</Text> :
                  <>
                      <Box mb={4}><CreateTransportDrawer
                          fetchTransports={fetchTransports}

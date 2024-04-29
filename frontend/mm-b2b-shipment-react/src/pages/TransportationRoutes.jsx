@@ -76,17 +76,6 @@ const TransportationRoutes = () => {
         )
     }
 
-    if (transportationRoutes.length <= 0) {
-        return (
-            <SidebarWithHeader>
-                <CreateTransportationRouteDrawer
-                    fetchTransportationRoutes={fetchTransportationRoutes}
-                />
-                <Text>Вы еще не создали ни одной перевозки</Text>
-            </SidebarWithHeader>
-        )
-    }
-
     return (
         <SidebarWithHeader>
             {userProfileStatus.userStatus === 'INACTIVE' ? (
@@ -96,7 +85,7 @@ const TransportationRoutes = () => {
                     После рассмотрения вашей заявки, мы предоставим вам доступ к размещению перевозок.
                     Благодарим за ваше внимание и сотрудничество.
                 </Text>
-            ) : (
+            ) : (transportationRoutes.length <= 0 ? <Text>Вы еще не создали ни одной перевозки</Text> :
                  <>
                      <Box mb={4}><CreateTransportationRouteDrawer
                          fetchTransportationRoutes={fetchTransportationRoutes}

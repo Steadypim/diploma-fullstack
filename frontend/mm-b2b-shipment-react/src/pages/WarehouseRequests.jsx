@@ -136,14 +136,6 @@ const WarehouseRequests = () => {
         )
     }
 
-    if (warehouses.length <= 0) {
-        return (
-            <SidebarWithHeader>
-                <Text>У вас пока нет заявок</Text>
-            </SidebarWithHeader>
-        )
-    }
-
     return (
         <SidebarWithHeader>
             {userProfileStatus.userStatus === 'INACTIVE' ? (
@@ -153,7 +145,7 @@ const WarehouseRequests = () => {
                     После рассмотрения вашей заявки, мы предоставим вам доступ к управлению заявками.
                     Благодарим за ваше внимание и сотрудничество.
                 </Text>
-            ) : (
+            ) : (warehouses.length <= 0 ? <Text>У вас пока нет заявок</Text> :
                  <>
                      <InputGroup mb={'10px'}>
                          <InputLeftElement pointerEvents="none" children={<CiSearch color="gray.300"/>}/>

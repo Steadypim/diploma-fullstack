@@ -24,6 +24,10 @@ const UserProfileTable = () => {
             });
     };
 
+    const refreshData = () => {
+        fetchUsers();
+    };
+
     const handleSearchChange = event => {
         setSearchTerm(event.target.value);
     };
@@ -90,7 +94,7 @@ const UserProfileTable = () => {
                             <Td>{user.phone || 'Не указано'}</Td>
                             <Td>{user.companyName || 'Не указано'}</Td>
                             <Td>
-                                <UserUpdateModalButton user={user}/>
+                                <UserUpdateModalButton user={user} refreshData={refreshData}/>
                             </Td>
                         </Tr>
                     ))}
