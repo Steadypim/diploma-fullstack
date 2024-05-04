@@ -144,7 +144,7 @@ const CreateTransportationRouteForm = ({fetchTransportationRoutes}) => {
                                 <option value="">Выбрать склад</option>
                                 {warehouses.map((warehouse) => (
                                     <option key={warehouse.warehouseId} value={warehouse.warehouseId}>
-                                        {warehouse.address.city}, {warehouse.address.street}
+                                        {warehouse.address.region}, {warehouse.address.city}, {warehouse.address.street},
                                     </option>
                                 ))}
                             </MySelect>
@@ -153,7 +153,7 @@ const CreateTransportationRouteForm = ({fetchTransportationRoutes}) => {
                                 <option value="">Выбрать склад</option>
                                 {warehouses.map((warehouse) => (
                                     <option key={warehouse.warehouseId} value={warehouse.warehouseId}>
-                                        {warehouse.address.city}, {warehouse.address.street}
+                                        {warehouse.address.region}, {warehouse.address.city}, {warehouse.address.street}
                                     </option>
                                 ))}
                             </MySelect>
