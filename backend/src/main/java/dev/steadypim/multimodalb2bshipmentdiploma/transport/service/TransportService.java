@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
-import static dev.steadypim.multimodalb2bshipmentdiploma.enumerated.EntityStatus.ACTIVE;
-import static dev.steadypim.multimodalb2bshipmentdiploma.enumerated.EntityStatus.DELETED;
+import static dev.steadypim.multimodalb2bshipmentdiploma.general.enums.EntityStatus.ACTIVE;
+import static dev.steadypim.multimodalb2bshipmentdiploma.general.enums.EntityStatus.DELETED;
 
 @Service
 @RequiredArgsConstructor

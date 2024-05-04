@@ -1,6 +1,7 @@
 package dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.api.dto;
 
 import dev.steadypim.multimodalb2bshipmentdiploma.general.enums.RequestStatus;
+import dev.steadypim.multimodalb2bshipmentdiploma.general.enums.ShipmentStatus;
 import dev.steadypim.multimodalb2bshipmentdiploma.transport.api.dto.TransportDTO;
 import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.api.dto.WarehouseDTO;
 
@@ -15,6 +16,8 @@ public record TransportationRequestDTO(
         BigDecimal price,
         UUID userProfileId,
         RequestStatus requestStatus,
-        UUID shipmentId
+        UUID shipmentId,
+        ShipmentStatus shipmentStatus,
+        UUID transportationRouteId
 ) {
 }

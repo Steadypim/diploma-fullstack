@@ -1,12 +1,13 @@
-import {Box, HStack, Input, InputGroup, InputLeftElement, Spinner, Tag, Text} from "@chakra-ui/react";
+import {Box, Button, HStack, Input, InputGroup, InputLeftElement, Spinner, Tag, Text} from "@chakra-ui/react";
 import SidebarWithHeader from "../components/shared/SideBar.jsx";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {jwtDecode} from "jwt-decode";
 import {errorNotification} from "../services/notification.js";
 import {getAllShipmentsByUserProfileEmail} from "../services/shipment.js";
 import LogisticianRequestCard from "../components/reqeuests/LogisticianRequestCard.jsx";
 import {CiSearch} from "react-icons/ci";
 import {getUserProfileByEmail} from "../services/userProfile.js";
+import ShipmentRouteModal from "../components/reqeuests/ShipmentRouteModal.jsx";
 
 const LogisticianRequests = () => {
 
@@ -67,6 +68,16 @@ const LogisticianRequests = () => {
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
+    };
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
     };
 
     const statusTranslation = {

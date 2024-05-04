@@ -1,8 +1,6 @@
 package dev.steadypim.multimodalb2bshipmentdiploma.warehouse.service;
 
-import dev.steadypim.multimodalb2bshipmentdiploma.enumerated.EntityStatus;
 import dev.steadypim.multimodalb2bshipmentdiploma.general.geocode.GeocodingService;
-import dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.entity.TransportationRoute;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.entity.UserProfile;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.repository.UserProfileRepository;
 import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.entity.Warehouse;
@@ -14,8 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import static dev.steadypim.multimodalb2bshipmentdiploma.enumerated.EntityStatus.ACTIVE;
-import static dev.steadypim.multimodalb2bshipmentdiploma.enumerated.EntityStatus.DELETED;
+import static dev.steadypim.multimodalb2bshipmentdiploma.general.enums.EntityStatus.ACTIVE;
+import static dev.steadypim.multimodalb2bshipmentdiploma.general.enums.EntityStatus.DELETED;
 
 @Service
 @RequiredArgsConstructor

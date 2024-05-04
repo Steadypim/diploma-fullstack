@@ -2,27 +2,28 @@ import {GiCargoShip, GiCommercialAirplane} from "react-icons/gi";
 import {FaTrain} from "react-icons/fa";
 import {FaTruckFast} from "react-icons/fa6";
 import {
-    Badge, Box,
+    Badge,
+    Box, Button,
     Card,
     CardBody,
     CardFooter,
     CardHeader,
-    Heading,
+    Heading, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger,
     Stack,
     Stat,
-    StatHelpText,
     StatLabel,
-    StatNumber,
+    StatNumber, Tag,
     Text
 } from "@chakra-ui/react";
 import React, {useEffect, useState} from "react";
 import AcceptButton from "../button/AcceptButton.jsx";
 import DeclineButton from "../button/DeclineButton.jsx";
 import {updateTransportationRequestStatus} from "../../services/tranportationRequests.js";
-import {jwtDecode} from "jwt-decode";
-import {getAllShipmentsByUserProfileEmail, getShipmentById} from "../../services/shipment.js";
+import {getShipmentById} from "../../services/shipment.js";
 import {errorNotification} from "../../services/notification.js";
 import RequestInfo from "../button/RequestInfo.jsx";
+import {done, in_progress} from "../../services/transportationRoute.js";
+import ChangeStatusPopover from "./ChangeStatusPopover.jsx";
 
 export default function TransportationRequestCard({
                                                       shipmentId,
@@ -69,6 +70,12 @@ export default function TransportationRequestCard({
         'REJECTED': {text: 'Отклонена', colorScheme: 'red'},
         'PAID': {text: 'Оплачена', colorScheme: 'green'},
     }
+
+    const shipmentStatusTranslation = {
+        'AWAITING': {text: 'Ожидает отправки', colorScheme: 'gray'},
+        'IN_PROGRESS': {text: 'В пути', colorScheme: 'yellow'},
+        'DONE': {text: 'Прибыло', colorScheme: 'green'},
+    }
     // Переменная для хранения суммарной цены всех перевозок
     let totalPrice = 0;
 
@@ -76,14 +83,15 @@ export default function TransportationRequestCard({
     const routeStrings = [];
 
     transportationRequests.forEach((transportationRequest, index) => {
-        const {sourceWarehouse, destinationWarehouse, price, transport} = transportationRequest;
+        const {sourceWarehouse, destinationWarehouse, price, transport, shipmentStatus, requestStatus, transportationRouteId} = transportationRequest;
+        const shipmentStatusInfo = shipmentStatus ? shipmentStatusTranslation[shipmentStatus] : ""
 
         // Добавляем цену каждой перевозки к суммарной цене
         totalPrice += price;
 
         // Формируем строку с маршрутом и добавляем ее в массив
         const routeString = (
-            <Text key={index} display="flex" alignItems="center">
+            <Text key={index} display="flex" alignItems="center" mt={'5px'}>
                 {/* Иконка транспорта */}
                 <Box mr={2}>
                     {transportIcons[transport.transportType] || transport.transportType}
@@ -93,7 +101,9 @@ export default function TransportationRequestCard({
                 {' '}
 
                 {/* Текст маршрута */}
+
                 {sourceWarehouse.address.city} ⟶ {destinationWarehouse.address.city}
+                {requestStatus === 'PAID' ? <ChangeStatusPopover status={shipmentStatusInfo} id={transportationRouteId}/> : ''}
             </Text>
         );
         routeStrings.push(routeString);

@@ -1,4 +1,4 @@
-package dev.steadypim.multimodalb2bshipmentdiploma.enumerated;
+package dev.steadypim.multimodalb2bshipmentdiploma.general.enums;
 
 import lombok.NoArgsConstructor;
 

@@ -64,3 +64,25 @@ export const deleteTransportationRouteByStatus = async (id) => {
         throw e;
     }
 }
+
+export const done = async (id) => {
+    try {
+        return await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/transportationRoute/done/${id}`,
+            getAuthConfig()
+        )
+    } catch (e) {
+        throw e;
+    }
+}
+
+export const in_progress = async (id) => {
+    try {
+        return await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/transportationRoute/in-progress/${id}`,
+            getAuthConfig()
+        )
+    } catch (e) {
+        throw e;
+    }
+}

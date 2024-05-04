@@ -2,7 +2,7 @@ import {GiCargoShip, GiCommercialAirplane} from "react-icons/gi";
 import {FaTrain} from "react-icons/fa";
 import {FaTruckFast} from "react-icons/fa6";
 import {
-    Badge,
+    Badge, Button,
     Card,
     CardBody,
     CardFooter,
@@ -20,11 +20,12 @@ import {
 } from "@chakra-ui/react";
 import React, {useState} from "react";
 import QRCodeButton from "../button/QRCodeButton.jsx";
+import ShipmentRouteModal from "./ShipmentRouteModal.jsx";
 
 
 export default function LogisticianRequestCard({logisticianRequest, fetchLogisticianRequest}) {
 
-    const {fullPrice, sourceWarehouse, destinationWarehouse, optimalPath, id, requestStatus} = logisticianRequest;
+    const {fullPrice, sourceWarehouse, destinationWarehouse, optimalPath, id, requestStatus, shipmentStatus} = logisticianRequest;
 
     const [paymentAmount, setPaymentAmount] = useState('');
 
@@ -71,6 +72,8 @@ export default function LogisticianRequestCard({logisticianRequest, fetchLogisti
         currentSource = currentPath.destinationWarehouse; // следующая точка отправления - точка назначения текущего маршрута
     }
 
+    console.log(logisticianRequest)
+
     return (
         <Card
             direction={{base: 'column', sm: 'row'}}
@@ -83,8 +86,6 @@ export default function LogisticianRequestCard({logisticianRequest, fetchLogisti
             color="white"
             size={'sm'}
         >
-
-
             <Stack spacing={0}>
                 <CardHeader>
                     <Heading size='md'>Заявка на перевозку
@@ -140,9 +141,8 @@ export default function LogisticianRequestCard({logisticianRequest, fetchLogisti
                     )}
                     {isPaid && (
                         <Text fontSize={"sm"} as='i'>Ваша заявка успешно оплачена, компании уже занимаются
-                            транспортировкой вашего груза.</Text>
+                            транспортировкой вашего груза. <ShipmentRouteModal requests={sortedPaths}/> </Text>
                     )}
-                    {/*<Button ml={'10px'}>Отменить</Button>*/}
                 </CardFooter>
             </Stack>
         </Card>);

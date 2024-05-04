@@ -24,6 +24,8 @@ public interface TransportationRequestMapper {
     @Mapping(source = "request.transportationRoute.price", target = "price")
     @Mapping(source = "request.transportationRoute.userProfile.id", target = "userProfileId")
     @Mapping(source = "request.shipment.id", target = "shipmentId")
+    @Mapping(source = "request.transportationRoute.shipmentStatus", target = "shipmentStatus")
+    @Mapping(source = "request.transportationRoute.id", target = "transportationRouteId")
     TransportationRequestDTO toTransportationRouteForShipmentControllerDTO(TransportationRequest request);
 
     List<TransportationRequestDTO> toTransportationRouteForShipmentControllerDTOList(List<TransportationRequest> requests);

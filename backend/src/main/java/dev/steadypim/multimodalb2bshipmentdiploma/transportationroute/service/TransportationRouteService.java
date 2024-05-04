@@ -11,8 +11,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
-import static dev.steadypim.multimodalb2bshipmentdiploma.enumerated.EntityStatus.ACTIVE;
-import static dev.steadypim.multimodalb2bshipmentdiploma.enumerated.EntityStatus.DELETED;
+import static dev.steadypim.multimodalb2bshipmentdiploma.general.enums.EntityStatus.ACTIVE;
+import static dev.steadypim.multimodalb2bshipmentdiploma.general.enums.EntityStatus.DELETED;
+import static dev.steadypim.multimodalb2bshipmentdiploma.general.enums.ShipmentStatus.*;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +37,7 @@ public class TransportationRouteService {
                                                        .orElseThrow(() -> new RuntimeException("User profile not found while creating a route"));
         route.setUserProfile(userProfile);
         route.setStatus(ACTIVE);
+        route.setShipmentStatus(AWAITING);
         return repository.save(route);
     }
 
@@ -49,6 +51,24 @@ public class TransportationRouteService {
         routeToUpdate.setSourceWarehouse(route.getSourceWarehouse());
 
         repository.save(routeToUpdate);
+    }
+
+    public void shipmentDone(UUID id){
+        TransportationRoute route = repository.findById(id)
+                                              .orElseThrow(() -> new RuntimeException("Route not found"));
+
+        route.setShipmentStatus(DONE);
+
+        repository.save(route);
+    }
+
+    public void shipmentInProgress(UUID id){
+        TransportationRoute route = repository.findById(id)
+                                              .orElseThrow(() -> new RuntimeException("Route not found"));
+
+        route.setShipmentStatus(IN_PROGRESS);
+
+        repository.save(route);
     }
 
     public void delete(UUID uuid) {

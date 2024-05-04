@@ -1,7 +1,8 @@
 package dev.steadypim.multimodalb2bshipmentdiploma.transportationroute.entity;
 
-import dev.steadypim.multimodalb2bshipmentdiploma.enumerated.EntityStatus;
+import dev.steadypim.multimodalb2bshipmentdiploma.general.enums.EntityStatus;
 import dev.steadypim.multimodalb2bshipmentdiploma.general.BaseEntity;
+import dev.steadypim.multimodalb2bshipmentdiploma.general.enums.ShipmentStatus;
 import dev.steadypim.multimodalb2bshipmentdiploma.transport.entity.Transport;
 import dev.steadypim.multimodalb2bshipmentdiploma.user.profile.entity.UserProfile;
 import dev.steadypim.multimodalb2bshipmentdiploma.warehouse.entity.Warehouse;
@@ -46,4 +47,7 @@ public class TransportationRoute extends BaseEntity {
 
     @Enumerated(value = EnumType.STRING)
     EntityStatus status;
+
+    @Enumerated(value = EnumType.STRING)
+    ShipmentStatus shipmentStatus;
 }
